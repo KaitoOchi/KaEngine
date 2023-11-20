@@ -11,6 +11,7 @@ namespace nsKaEngine{
 		enButtonA,
 		enButtonS,
 		enButtonD,
+		enButtonEsc,
 		enButtonNum,
 	};
 
@@ -103,6 +104,33 @@ namespace nsKaEngine{
 			return m_mouseAxis;
 		}
 
+		/// <summary>
+		/// カーソルを固定にする。
+		/// </summary>
+		void LockCursor()
+		{
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			m_cursorLock = true;
+		}
+
+		/// <summary>
+		/// カーソルの固定を解除。
+		/// </summary>
+		void UnLockCursor()
+		{
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			m_cursorLock = false;
+		}
+
+		/// <summary>
+		/// カーソルの固定状態を取得。
+		/// </summary>
+		/// <returns></returns>
+		const bool GetCursorLock() const
+		{
+			return m_cursorLock;
+		}
+
 	private:
 		/// <summary>
 		/// キーの入力処理。
@@ -120,6 +148,7 @@ namespace nsKaEngine{
 		Vector3			m_mouseAxis;				//マウスの入力。
 		bool			m_trigger[enButtonNum];		//トリガー判定。
 		bool			m_press[enButtonNum];		//プレス判定。
+		bool			m_cursorLock = false;		//カーソルが固定かどうか。
 	};
 }
 

@@ -60,5 +60,11 @@ namespace nsKaEngine {
 
 		float rotX = m_sensitivity * (mouse.x - (m_height / 2.0f)) / m_height;
 		float rotY = m_sensitivity * (mouse.y - (m_height / 2.0f)) / m_height;
+
+
+
+		if (Input::GetInstance()->GetKey(enButtonEsc)) {
+			Input::GetInstance()->UnLockCursor();
+		}
 	}
 }

@@ -74,14 +74,14 @@
     <TargetExt>.lib</TargetExt>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
     <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -120,6 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>KaEnginePreCompile.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>KaEnginePreCompile.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +159,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Math\Transform.cpp" />
+    <ClCompile Include="Math\Vector.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -172,8 +176,11 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="KaEngine.h" />
     <ClInclude Include="KaEnginePreCompile.h" />
+    <ClInclude Include="Math\Transform.h" />
+    <ClInclude Include="Math\Vector.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="util\Noncopyable.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
   </ItemGroup>

@@ -1,2 +1,2 @@
-#include "stdafx.h"
+#include "KaEnginePreCompile.h"
 #include "Transform.h"

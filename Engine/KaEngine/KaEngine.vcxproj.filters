@@ -12,6 +12,12 @@
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="KaEngine.cpp" />
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -23,9 +29,26 @@
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="KaEngine.h" />
+    <ClInclude Include="Math\Transform.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Noncopyable.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag" />
     <None Include="default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="util">
+      <UniqueIdentifier>{e3142ad9-10b8-4d10-ae2d-99abadf65f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{d92e7340-9799-41f5-93d7-0237e39a0701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

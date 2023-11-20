@@ -461,13 +461,12 @@ namespace nsKaEngine {
 		/// <param name="angle">回転角度。単位ラジアン。</param>
 		void SetRotation(const Vector3& axis, float angle)
 		{
-			//float halfAngle = angle * 0.5f;
-			//float s = sinf(halfAngle);
-			//w = cosf(halfAngle);
-			//x = axis.x * s;
-			//y = axis.y * s;
-			//z = axis.z * s;
-
+			float halfAngle = angle * 0.5f;
+			float s = sinf(halfAngle);
+			w = cosf(halfAngle);
+			x = axis.x * s;
+			y = axis.y * s;
+			z = axis.z * s;
 		}
 	};
 

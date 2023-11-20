@@ -7,12 +7,4 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Filter Include="util">
-      <UniqueIdentifier>{a91f8580-efa8-4487-aeb2-13777805e9c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{1b484657-500a-4f53-b89c-bf0cb672e8d5}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
 </Project>

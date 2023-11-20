@@ -72,11 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDIr)../KaEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <AllProjectBMIsArePublic>false</AllProjectBMIsArePublic>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDIr)../KaEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <AllProjectBMIsArePublic>false</AllProjectBMIsArePublic>
+    <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +122,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;KaEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

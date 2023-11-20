@@ -13,10 +13,11 @@ namespace nsKaEngine {
 		};
 
 		const VirtualPadToKeyPad keyPadTable[enButtonNum] = {
-			{ enButtonW, GLFW_KEY_W },
-			{ enButtonA, GLFW_KEY_A },
-			{ enButtonS, GLFW_KEY_S },
-			{ enButtonD, GLFW_KEY_D },
+			{ enButtonW,		GLFW_KEY_W			},
+			{ enButtonA,		GLFW_KEY_A			},
+			{ enButtonS,		GLFW_KEY_S			},
+			{ enButtonD,		GLFW_KEY_D			},
+			{ enButtonEsc,		GLFW_KEY_ESCAPE		},
 		};
 	}
 
@@ -87,8 +88,17 @@ namespace nsKaEngine {
 			m_mouseAxis = Vector3::Zero;
 		}
 
-		//if (isnan(m_mouseAxis.x)) {
-		//	m_mouseAxis = Vector3::Zero;
-		//}
+		if (isnan(m_mouseAxis.x)) {
+			m_mouseAxis = Vector3::Zero;
+		}
+
+		if (m_cursorLock) {
+			//カーソルの位置を固定。
+			glfwSetCursorPos(m_window, 1600.0f / 2.0f, 900.0f / 2.0f);
+			glfwGetCursorPos(m_window, &mouseX, &mouseY);
+			//座標を保存する。
+			m_mousePosition.x = mouseX;
+			m_mousePosition.y = mouseY;
+		}
 	}
 }
