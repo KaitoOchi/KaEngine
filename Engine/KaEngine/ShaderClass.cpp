@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "KaEnginePreCompile.h"
 #include "ShaderClass.h"
 
 // Reads a text file and outputs a string with everything in the text file

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "KaEnginePreCompile.h"
 #include "VAO.h"
 
 VAO::VAO()

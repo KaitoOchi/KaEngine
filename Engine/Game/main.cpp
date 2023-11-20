@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#include <math.h>
-#include <cmath>
 #include <stb/stb_image.h>
 
 #include "VAO.h"
