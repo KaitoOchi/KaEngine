@@ -15,6 +15,17 @@ namespace nsKaEngine{
 		enButtonNum,
 	};
 
+	/// <summary>
+	/// マウスボタン。
+	/// </summary>
+	enum MouseButton
+	{
+		enMouseButtonLeft,
+		enMouseButtonRight,
+		enMouseButtonMiddle,
+		enMouseButtonNum,
+	};
+
 
 	/// <summary>
 	/// 入力クラス。
@@ -73,7 +84,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKeyDown(const KeyCode code) const
 		{
-			return m_trigger[code];
+			return m_keyTrigger[code];
 		}
 
 		/// <summary>
@@ -83,7 +94,47 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKey(const KeyCode code) const
 		{
-			return m_press[code];
+			return m_keyPress[code];
+		}
+
+		/// <summary>
+		/// ボタンが離された瞬間を取得。
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
+		const bool GetKeyUp(const KeyCode code) const
+		{
+			return m_keyRelease[code];
+		}
+
+		/// <summary>
+		/// マウスボタンが押された瞬間を取得。
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		const bool GetMouseButtonDown(const MouseButton button) const
+		{
+			return m_mouseTrigger[button];
+		}
+
+		/// <summary>
+		/// マウスボタンが押されているかを取得。
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		const bool GetMouseButton(const MouseButton button) const
+		{
+			return m_mousePress[button];
+		}
+
+		/// <summary>
+		/// マウスボタンが離された瞬間を取得。
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		const bool GetMouseButtonUp(const MouseButton button) const
+		{
+			return m_mouseRelease[button];
 		}
 
 		/// <summary>
@@ -142,13 +193,17 @@ namespace nsKaEngine{
 		void InputMouse();
 
 	private:
-		static Input*	m_instance;					//インスタンス。
-		GLFWwindow*		m_window = nullptr;			//ウィンドウ。
-		Vector3			m_mousePosition;			//マウスの座標。
-		Vector3			m_mouseAxis;				//マウスの入力。
-		bool			m_trigger[enButtonNum];		//トリガー判定。
-		bool			m_press[enButtonNum];		//プレス判定。
-		bool			m_cursorLock = false;		//カーソルが固定かどうか。
+		static Input*	m_instance;							//インスタンス。
+		GLFWwindow*		m_window = nullptr;					//ウィンドウ。
+		Vector3			m_mousePosition;					//マウスの座標。
+		Vector3			m_mouseAxis;						//マウスの入力。
+		bool			m_keyTrigger[enButtonNum];			//キーのトリガー判定。
+		bool			m_keyPress[enButtonNum];			//キーのプレス判定。
+		bool			m_keyRelease[enButtonNum];			//キーのリリース判定。
+		bool			m_mouseTrigger[enMouseButtonNum];	//マウスのトリガー判定。
+		bool			m_mousePress[enMouseButtonNum];		//マウスのプレス判定。
+		bool			m_mouseRelease[enMouseButtonNum];	//マウスのリリース判定。
+		bool			m_cursorLock = false;				//カーソルが固定かどうか。
 	};
 }
 

@@ -458,7 +458,7 @@ namespace nsKaEngine {
 		/// 任意の軸周りの回転クォータニオンを作成。
 		/// </summary>
 		/// <param name="axis">回転軸</param>
-		/// <param name="angle">回転角度。単位ラジアン。</param>
+		/// <param name="angle">回転角度。単位ラジアン</param>
 		void SetRotation(const Vector3& axis, float angle)
 		{
 			float halfAngle = angle * 0.5f;

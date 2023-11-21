@@ -55,6 +55,10 @@ namespace nsKaEngine {
 		m_position.x += Input::GetInstance()->GetMouseAxis().x * m_cameraSpeed;
 		m_position.y += Input::GetInstance()->GetMouseAxis().y * m_cameraSpeed;
 
+		if (Input::GetInstance()->GetMouseButtonUp(enMouseButtonLeft)) {
+			m_position.x += m_cameraSpeed * 1000.0f;
+		}
+
 		Vector3 mouse;
 		mouse = Input::GetInstance()->GetMousePosition();
 

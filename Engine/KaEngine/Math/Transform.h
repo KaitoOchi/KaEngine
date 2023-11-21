@@ -57,9 +57,9 @@ namespace nsKaEngine {
 		/// Šg‘å—¦‚ğæ“¾B
 		/// </summary>
 		/// <returns></returns>
-		const Vector3& GetPosition() const
+		const Vector3& GetScale () const
 		{
-			return m_position;
+			return m_scale;
 		}
 
 		
