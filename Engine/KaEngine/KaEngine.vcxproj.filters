@@ -40,10 +40,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="util">
       <UniqueIdentifier>{e3142ad9-10b8-4d10-ae2d-99abadf65f97}</UniqueIdentifier>
     </Filter>

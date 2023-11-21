@@ -65,6 +65,7 @@ namespace nsKaEngine {
 	/// </summary>
 	void Input::InputMouse()
 	{
+		//マウスの座標を取得。
 		double mouseX, mouseY;
 		glfwGetCursorPos(m_window, &mouseX, &mouseY);
 
@@ -95,8 +96,8 @@ namespace nsKaEngine {
 		if (m_cursorLock) {
 			//カーソルの位置を固定。
 			glfwSetCursorPos(m_window, 1600.0f / 2.0f, 900.0f / 2.0f);
-			glfwGetCursorPos(m_window, &mouseX, &mouseY);
 			//座標を保存する。
+			glfwGetCursorPos(m_window, &mouseX, &mouseY);
 			m_mousePosition.x = mouseX;
 			m_mousePosition.y = mouseY;
 		}

@@ -1,6 +1,4 @@
-#ifndef TEXTURE_CLASS_H
-#define TEXTUTRE_CLASS_H
-
+#pragma once
 #include <stb/stb_image.h>
 
 #include "ShaderClass.h"
@@ -18,5 +16,3 @@ public:
 	void UnBind();
 	void Delete();
 };
-
-#endif
