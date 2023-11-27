@@ -81,7 +81,6 @@ namespace nsKaEngine {
 
 		//“ü—ÍƒNƒ‰ƒXB
 		Input::CreateInstance(m_window);
-		Input::GetInstance()->LockCursor();
 
 
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);

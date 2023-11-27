@@ -11,9 +11,20 @@ public:
 	void Update();
 
 private:
-	Vector3		m_position;
-	Quaternion m_rotation;
-	float		m_cameraSpeed = 0.0001f;		//カメラ速度。
-	float		m_sensitivity = 0.01f;		//カメラ感度。
+	/// <summary>
+	/// 移動処理。
+	/// </summary>
+	void Move();
+
+	/// <summary>
+	/// 回転処理。
+	/// </summary>
+	void Rotation();
+
+private:
+	Vector2			m_rotSpeed;					//回転角度。
+	Vector3			m_position;					//座標。
+	Vector3			m_target;					//注視点。
+	float			m_sensitivity = 0.01f;		//カメラ感度。
 };
 

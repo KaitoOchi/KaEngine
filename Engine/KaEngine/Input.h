@@ -130,6 +130,21 @@ namespace nsKaEngine{
 		}
 
 		/// <summary>
+		/// 何かしらのボタンが押されているかを取得。
+		/// </summary>
+		/// <returns></returns>
+		const bool GetAnyKey() const
+		{
+			for (auto& press : m_keyPress)
+			{
+				if (press == true) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
 		/// マウスボタンが押された瞬間を取得。
 		/// </summary>
 		/// <param name="button"></param>
@@ -157,6 +172,21 @@ namespace nsKaEngine{
 		const bool GetMouseButtonUp(const MouseButton button) const
 		{
 			return m_mouseRelease[button];
+		}
+
+		/// <summary>
+		/// 何かしらのマウスボタンが押されているかを取得。
+		/// </summary>
+		/// <returns></returns>
+		const bool GetAnyMouseButton() const
+		{
+			for (auto& mouseButton : m_mousePress)
+			{
+				if (mouseButton == true) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		/// <summary>

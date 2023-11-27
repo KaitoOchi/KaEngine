@@ -17,7 +17,7 @@ namespace nsKaEngine {
 	{
 		m_shader = shader;
 
-		m_target = m_forward * 1000.0f;
+		m_target = m_forward * 10000.0f;
 	}
 
 	void Camera::Update()
