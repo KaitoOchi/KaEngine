@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
 </Project>

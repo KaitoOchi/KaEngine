@@ -12,6 +12,9 @@ namespace nsKaEngine {
 	const Vector3 Vector3::Up = { 0.0f, 1.0f, 0.0f };
 	const Vector3 Vector3::Forward = { 0.0f, 0.0f, 1.0f };
 	const Vector3 Vector3::Backward = { 0.0f, 0.0f, -1.0f };
+	const Vector3 Vector3::AxisX = { 1.0f,  0.0f,  0.0f };
+	const Vector3 Vector3::AxisY = { 0.0f,  1.0f,  0.0f };
+	const Vector3 Vector3::AxisZ = { 0.0f,  0.0f,  1.0f };
 
 	const Vector4 Vector4::White = { 1.0f, 1.0f, 1.0f, 1.0f };
 	const Vector4 Vector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };

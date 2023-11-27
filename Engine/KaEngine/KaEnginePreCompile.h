@@ -11,7 +11,8 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
+const float FRAME_BUFFER_WIDTH = 1600.0f;
+const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // util
 #include "util/Noncopyable.h"
@@ -21,11 +22,10 @@
 // Shader
 #include "ShaderClass.h"
 
-//Math
-#include "Math.h"
-
 // Vector
+#include "math/Mathf.h"
 #include "math/Vector.h"
+#include "math/Matrix.h"
 
 // Transform
 #include "math/Transform.h"

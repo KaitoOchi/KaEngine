@@ -1,14 +1,21 @@
 #pragma once
 
-class EBO
-{
-public:
-	// ID reference of Elements Buffer Object
-	GLuint ID;
-	// generates a Elements Buffer Object and links it to indices
-	EBO(GLuint* indices, GLsizeiptr size);
+namespace nsKaEngine {
 
-	void Bind();
-	void UnBind();
-	void Delete();
-};
+	class EBO
+	{
+	public:
+		// ID reference of Elements Buffer Object
+		GLuint ID;
+
+		EBO();
+		~EBO();
+
+		// generates a Elements Buffer Object and links it to indices
+		void Init(GLuint* indices, GLsizeiptr size);
+
+		void Bind();
+		void UnBind();
+		void Delete();
+	};
+}

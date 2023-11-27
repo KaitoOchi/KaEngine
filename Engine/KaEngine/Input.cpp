@@ -18,10 +18,32 @@ namespace nsKaEngine {
 		};
 
 		const VirtualPadToKeyPad keyPadTable[enButtonNum] = {
+			{ enButtonQ,		GLFW_KEY_Q			},
 			{ enButtonW,		GLFW_KEY_W			},
+			{ enButtonE,		GLFW_KEY_E			},
+			{ enButtonR,		GLFW_KEY_R			},
+			{ enButtonT,		GLFW_KEY_T			},
+			{ enButtonY,		GLFW_KEY_Y			},
+			{ enButtonU,		GLFW_KEY_U			},
+			{ enButtonI,		GLFW_KEY_I			},
+			{ enButtonO,		GLFW_KEY_O			},
+			{ enButtonP,		GLFW_KEY_P			},
 			{ enButtonA,		GLFW_KEY_A			},
 			{ enButtonS,		GLFW_KEY_S			},
 			{ enButtonD,		GLFW_KEY_D			},
+			{ enButtonF,		GLFW_KEY_F			},
+			{ enButtonG,		GLFW_KEY_G			},
+			{ enButtonH,		GLFW_KEY_H			},
+			{ enButtonJ,		GLFW_KEY_J			},
+			{ enButtonK,		GLFW_KEY_K			},
+			{ enButtonL,		GLFW_KEY_L			},
+			{ enButtonZ,		GLFW_KEY_Z			},
+			{ enButtonX,		GLFW_KEY_X			},
+			{ enButtonC,		GLFW_KEY_C			},
+			{ enButtonV,		GLFW_KEY_V			},
+			{ enButtonB,		GLFW_KEY_B			},
+			{ enButtonN,		GLFW_KEY_N			},
+			{ enButtonM,		GLFW_KEY_M			},
 			{ enButtonEsc,		GLFW_KEY_ESCAPE		},
 		};
 

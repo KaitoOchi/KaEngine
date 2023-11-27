@@ -18,6 +18,9 @@
     <ClCompile Include="Math\Vector.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="Math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -37,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="util\Noncopyable.h">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Mathf.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

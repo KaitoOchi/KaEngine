@@ -3,19 +3,9 @@
 
 namespace nsKaEngine {
 
-	Camera::Camera(const float width, const float height, Shader* shader)
+	Camera::Camera()
 	{
-		m_width = width;
-		m_height = height;
 
-		m_shader = shader;
-
-		m_position.y = 0.5f;
-		m_position.z = -1.0f;
-		m_forward.z = 1.0f;
-		m_up.y = 1.0f;
-
-		m_cameraSpeed = 0.0001f;
 	}
 
 	Camera::~Camera()
@@ -23,52 +13,26 @@ namespace nsKaEngine {
 
 	}
 
-	void Camera::Update()
+	void Camera::Init(Shader* shader)
 	{
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 projection = glm::mat4(1.0f);
+		m_shader = shader;
 
-		view = glm::lookAt(m_position.vec, m_position.vec + m_forward.vec, m_up.vec);
-		projection = glm::perspective(glm::radians(m_fov), (float)(m_width / m_height), m_near, m_far);
-
-		glUniformMatrix4fv(glGetUniformLocation(m_shader->ID, "cameraMatrix"), 1, GL_FALSE, glm::value_ptr(projection * view));
+		m_target = m_forward * 1000.0f;
 	}
 
-	void Camera::Input()
+	void Camera::Update()
 	{
-		//if (Input::GetInstance()->GetKey(enButtonW)) {
-		//	m_position += m_cameraSpeed * m_forward;
-		//}
+		float aspect = (float)(FRAME_BUFFER_WIDTH / FRAME_BUFFER_HEIGHT);
 
-		//if (Input::GetInstance()->GetKey(enButtonA)) {
-		//	m_position += m_cameraSpeed * Vector3(1.0f, 0.0f, 0.0f);
-		//}
+		m_viewMatrix.MakeLookAt(m_position, m_target, m_up);
+		m_projectionMatrix.MakeProjecionMatrix(m_fov, aspect, m_near, m_far);
 
-		//if (Input::GetInstance()->GetKey(enButtonS)) {
-		//	m_position -= m_cameraSpeed * m_forward;
-		//}
+		m_viewMatrixInv.Inverse(m_viewMatrix);
+		
+		//‰E•ûŒü‚Æã•ûŒü‚ðÝ’èB
+		m_forward.Set(m_viewMatrixInv.m[2][0], m_viewMatrixInv.m[2][1], m_viewMatrixInv.m[2][2]);
+		m_right.Set(m_viewMatrixInv.m[0][0], m_viewMatrixInv.m[0][1], m_viewMatrixInv.m[0][2]);
 
-		//if (Input::GetInstance()->GetKey(enButtonD)) {
-		//	m_position -= m_cameraSpeed * Vector3(1.0f, 0.0f, 0.0f);
-		//}
-
-		m_position.x += Input::GetInstance()->GetMouseAxis().x * m_cameraSpeed;
-		m_position.y += Input::GetInstance()->GetMouseAxis().y * m_cameraSpeed;
-
-		if (Input::GetInstance()->GetMouseButtonUp(enMouseButtonLeft)) {
-			m_position.x += m_cameraSpeed * 1000.0f;
-		}
-
-		Vector3 mouse;
-		mouse = Input::GetInstance()->GetMousePosition();
-
-		float rotX = m_sensitivity * (mouse.x - (m_height / 2.0f)) / m_height;
-		float rotY = m_sensitivity * (mouse.y - (m_height / 2.0f)) / m_height;
-
-
-
-		if (Input::GetInstance()->GetKey(enButtonEsc)) {
-			Input::GetInstance()->UnLockCursor();
-		}
+		glUniformMatrix4fv(glGetUniformLocation(m_shader->ID, "cameraMatrix"), 1, GL_FALSE, glm::value_ptr(m_projectionMatrix.mat * m_viewMatrix.mat));
 	}
 }

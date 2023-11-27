@@ -2,7 +2,17 @@
 #include "Texture.h"
 
 
-Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
+Texture::Texture()
+{
+
+}
+
+Texture::~Texture()
+{
+
+}
+
+void Texture::Init(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
 {
 	type = texType;
 

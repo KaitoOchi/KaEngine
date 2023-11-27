@@ -32,6 +32,25 @@ namespace nsKaEngine {
 		/// </summary>
 		~Vector2() {}
 
+		union {
+			glm::vec2 vec;
+			struct { float x, y; };
+			float v[2];
+		};
+
+	public:
+		/// <summary>
+		/// 線形補間。
+		/// </summary>
+		/// <param name="v0">補完開始のベクトル</param>
+		/// <param name="v1">補完終了のベクトル</param>
+		/// <param name="t">補完率</param>
+		/// <returns></returns>
+		void Lerp(const Vector2& v0, const Vector2& v1, const float t)
+		{
+			vec = glm::mix(v0.vec, v1.vec, t);
+		}
+
 		/// <summary>
 		/// 代入演算子。
 		/// </summary>
@@ -43,11 +62,6 @@ namespace nsKaEngine {
 			return *this;
 		}
 
-		union {
-			glm::vec2 vec;
-			struct { float x, y; };
-			float v[2];
-		};
 	};
 
 
@@ -62,6 +76,9 @@ namespace nsKaEngine {
 		static const Vector3 Up;
 		static const Vector3 Forward;
 		static const Vector3 Backward;
+		static const Vector3 AxisX;
+		static const Vector3 AxisY;
+		static const Vector3 AxisZ;
 
 	public:
 		/// <summary>
@@ -92,6 +109,19 @@ namespace nsKaEngine {
 		};
 
 	public:
+		/// <summary>
+		/// ベクトルを設定。
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="z"></param>
+		void Set(const float x, const float y, const float z)
+		{
+			vec.x = x;
+			vec.y = y;
+			vec.z = z;
+		}
+
 		/// <summary>
 		/// ベクトル同士の加算。
 		/// </summary>
@@ -140,7 +170,11 @@ namespace nsKaEngine {
 		/// </summary>
 		void Normalize()
 		{
-			vec = glm::normalize(vec);
+			glm::vec3 v;
+			v = glm::normalize(vec);
+			if (!isnan(v.x)) {
+				vec = v;
+			}
 		}
 
 		/// <summary>
@@ -188,6 +222,18 @@ namespace nsKaEngine {
 		const float LengthSq() const
 		{
 			return glm::length2(vec);
+		}
+
+		/// <summary>
+		/// 線形補間。
+		/// </summary>
+		/// <param name="v0">補完開始のベクトル</param>
+		/// <param name="v1">補完終了のベクトル</param>
+		/// <param name="t">補完率</param>
+		/// <returns></returns>
+		void Lerp(const Vector3& v0, const Vector3& v1, const float t)
+		{
+			vec = glm::mix(v0.vec, v1.vec, t);
 		}
 
 		/// <summary>
@@ -293,6 +339,22 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
+		/// ベクトルを設定。
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="z"></param>
+		/// <param name="w"></param>
+		void Set(const float x, const float y, const float z, const float w)
+		{
+			vec.x = x;
+			vec.y = y;
+			vec.z = z;
+			vec.w = w;
+		}
+
+
+		/// <summary>
 		/// ベクトル同士の加算。
 		/// </summary>
 		/// <param name="v"></param>
@@ -376,6 +438,18 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// 線形補間。
+		/// </summary>
+		/// <param name="v0">補完開始のベクトル</param>
+		/// <param name="v1">補完終了のベクトル</param>
+		/// <param name="t">補完率</param>
+		/// <returns></returns>
+		void Lerp(const Vector4& v0, const Vector4& v1, const float t)
+		{
+			vec = glm::mix(v0.vec, v1.vec, t);
+		}
+
+		/// <summary>
 		/// 代入演算子。
 		/// </summary>
 		/// <param name="v"></param>
@@ -455,6 +529,145 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
+		/// クォータニオン同士の乗算。
+		/// </summary>
+		/// <param name="rot0"></param>
+		/// <param name="rot1"></param>
+		void Multiply(const Quaternion& rot0, const Quaternion& rot1)
+		{
+			float pw, px, py, pz;
+			float qw, qx, qy, qz;
+
+			qw = rot0.w; qx = rot0.x; qy = rot0.y; qz = rot0.z;
+			pw = rot1.w; px = rot1.x; py = rot1.y; pz = rot1.z;
+
+			w = pw * qw - px * qx - py * qy - pz * qz;
+			x = pw * qx + px * qw + py * qz - pz * qy;
+			y = pw * qy - px * qz + py * qw + pz * qx;
+			z = pw * qz + px * qy - py * qx + pz * qw;
+		}
+
+		/// <summary>
+		/// X軸周りの回転クォータニオンを作成(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationX(const float angle)
+		{
+			SetRotation(Vector3::AxisX, angle);
+		}
+
+		/// <summary>
+		/// X軸周りの回転クォータニオンを作成(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationDegX(const float angle)
+		{
+			SetRotation(Vector3::AxisX, Mathf::DegToRad(angle));
+		}
+
+		/// <summary>
+		/// Y軸周りの回転クォータニオンを作成(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationY(const float angle)
+		{
+			SetRotation(Vector3::AxisY, angle);
+		}
+
+		/// <summary>
+		/// Y軸周りの回転クォータニオンを作成(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationDegY(const float angle)
+		{
+			SetRotation(Vector3::AxisY, Mathf::DegToRad(angle));
+		}
+
+		/// <summary>
+		/// Z軸周りの回転クォータニオンを作成(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationZ(const float angle)
+		{
+			SetRotation(Vector3::AxisZ, angle);
+		}
+
+		/// <summary>
+		/// Z軸周りの回転クォータニオンを作成(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void SetRotationDegZ(const float angle)
+		{
+			SetRotation(Vector3::AxisZ, Mathf::DegToRad(angle));
+		}
+
+		/// <summary>
+		/// X軸周りの回転クォータニオンを加算(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationX(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisX, angle);
+			*this *= addRot;
+		}
+
+		/// <summary>
+		/// X軸周りの回転クォータニオンを加算(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationDegX(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisX, Mathf::DegToRad(angle));
+			*this *= addRot;
+		}
+
+		/// <summary>
+		/// Y軸周りの回転クォータニオンを加算(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationY(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisY, angle);
+			*this *= addRot;
+		}
+
+		/// <summary>
+		/// Y軸周りの回転クォータニオンを加算(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationDegY(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisY, Mathf::DegToRad(angle));
+			*this *= addRot;
+		}
+
+		/// <summary>
+		/// Z軸周りの回転クォータニオンを加算(単位Radian)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationZ(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisZ, angle);
+			*this *= addRot;
+		}
+
+		/// <summary>
+		/// Z軸周りの回転クォータニオンを加算(単位Degree)。
+		/// </summary>
+		/// <param name="angle"></param>
+		void AddRotationDegZ(float angle)
+		{
+			Quaternion addRot;
+			addRot.SetRotation(Vector3::AxisZ, Mathf::DegToRad(angle));
+			*this *= addRot;
+		}
+
+		/// <summary>
 		/// 任意の軸周りの回転クォータニオンを作成。
 		/// </summary>
 		/// <param name="axis">回転軸</param>
@@ -467,6 +680,45 @@ namespace nsKaEngine {
 			x = axis.x * s;
 			y = axis.y * s;
 			z = axis.z * s;
+		}
+
+		/// <summary>
+		/// fromベクトルからtoベクトルに回転させるクォータニオンを作成。
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to"></param>
+		void SetRotationFromVector(const Vector3& from, const Vector3& to)
+		{
+			glm::quat quat;
+			quat.x = vec.x;
+			quat.y = vec.y;
+			quat.z = vec.z;
+			quat.w = vec.w;
+			quat = glm::rotation(to.vec, from.vec);
+			Set(quat.x, quat.y, quat.z, quat.w);
+		}
+
+		/// <summary>
+		/// ベクトルにクォータニオンを適用。
+		/// </summary>
+		/// <param name="v"></param>
+		void Apply(Vector3& v)
+		{
+			glm::quat quat;
+			quat.x = vec.x;
+			quat.y = vec.y;
+			quat.z = vec.z;
+			quat.w = vec.w;
+			v.vec = glm::rotate(quat, v.vec);
+		}
+
+		/// <summary>
+		/// 乗算代入演算子。
+		/// </summary>
+		const Quaternion& operator*=(const Quaternion& rot)
+		{
+			Multiply(rot, *this);
+			return *this;
 		}
 	};
 
