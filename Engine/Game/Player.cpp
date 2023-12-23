@@ -4,14 +4,14 @@
 
 namespace
 {
-	const float MOVE_SPEED = 0.0001f;				//移動速度。
+	const float MOVE_SPEED = 1.0f;								//移動速度。
 	const float ANGLE_LIMIT = Mathf::PI / 2.0f - 0.001f;		//角度の限界値。
-	const float TARGET_FORWARD = 10000.0f;			//注視点の前方向。
+	const float TARGET_FORWARD = 10000.0f;						//注視点の前方向。
 }
 
 Player::Player()
 {
-	m_position = Vector3(0.0f, 0.5f, 1.0f);
+	m_position = Vector3(50.0f, 50.0f, 50.0f);
 	m_rotSpeed.x = Mathf::PI / 2.0f;
 }
 

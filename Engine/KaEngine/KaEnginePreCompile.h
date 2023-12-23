@@ -11,13 +11,14 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// C++
+#include <Windows.h>
+
 const float FRAME_BUFFER_WIDTH = 1600.0f;
 const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // util
 #include "util/Noncopyable.h"
-
-#include "KaEngine.h"
 
 // Shader
 #include "ShaderClass.h"
@@ -30,8 +31,13 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 // Transform
 #include "math/Transform.h"
 
+// Time
+#include "timer/FPSLimiter.h"
+
 // Camera
 #include "Camera.h"
 
 // Input
 #include "Input.h"
+
+#include "KaEngine.h"

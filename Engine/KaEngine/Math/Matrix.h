@@ -8,6 +8,7 @@ namespace nsKaEngine {
 	{
 	public:
 		static const Matrix Identity;
+		static const Matrix One;
 	public:
 		/// <summary>
 		/// コンストラクタ。
@@ -19,7 +20,7 @@ namespace nsKaEngine {
 			mat[0][2] = 0.0f;
 			mat[0][3] = 0.0f;
 
-			mat[0][0] = 0.0f;
+			mat[1][0] = 0.0f;
 			mat[1][1] = 1.0f;
 			mat[1][2] = 0.0f;
 			mat[1][3] = 0.0f;
@@ -63,6 +64,15 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
+		/// 平行移動行列を作成。
+		/// </summary>
+		/// <param name="v0"></param>
+		void MakeTranslate(const Vector3& v0)
+		{
+			mat = glm::translate(mat, v0.vec);
+		}
+
+		/// <summary>
 		/// カメラ行列を作成。
 		/// </summary>
 		/// <param name="position">座標</param>
@@ -87,10 +97,10 @@ namespace nsKaEngine {
 		void MakeProjecionMatrix(
 			const float fov,
 			const float aspect,
-			const float near,
-			const float far)
+			const float nearV,
+			const float farV)
 		{
-			mat = glm::perspective(glm::radians(fov), aspect, near, far);
+			mat = glm::perspective(glm::radians(fov), aspect, nearV, farV);
 		}
 
 		/// <summary>
@@ -134,4 +144,17 @@ namespace nsKaEngine {
 			return *this;
 		}
 	};
+
+	/// <summary>
+	/// 行列同士の乗算。
+	/// </summary>
+	/// <param name="m1"></param>
+	/// <param name="m2"></param>
+	/// <returns></returns>
+	static inline Matrix operator*(const Matrix& m0, const Matrix m1)
+	{
+		Matrix m;
+		m.Multiply(m0, m1);
+		return m;
+	}
 }

@@ -13,9 +13,9 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="deg"></param>
 		/// <returns></returns>
-		constexpr static float DegToRad(const float deg)
+		const static float DegToRad(const float deg)
 		{
-			return deg * (PI / 180.0f);
+			return glm::radians(deg);
 		}
 
 		/// <summary>
@@ -23,9 +23,9 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="rad"></param>
 		/// <returns></returns>
-		constexpr static float RadToDeg(const float rad)
+		const static float RadToDeg(const float rad)
 		{
-			return rad / (PI / 180.0f);
+			return glm::degrees(rad);
 		}
 
 		/// <summary>

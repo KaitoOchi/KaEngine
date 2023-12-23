@@ -776,14 +776,4 @@ namespace nsKaEngine {
 		result.Div(s);
 		return result;
 	}
-
-	/// <summary>
-	/// ベクトルとスカラーの除算。
-	/// </summary>
-	static Vector3 operator/(const float s, const Vector3& v)
-	{
-		Vector3 result = v;
-		result.Div(s);
-		return result;
-	}
 }
