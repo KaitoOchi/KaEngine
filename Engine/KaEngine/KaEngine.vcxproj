@@ -154,6 +154,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="graphics\light\DirectionLight.cpp" />
+    <ClCompile Include="graphics\light\PointLight.cpp" />
+    <ClCompile Include="graphics\Material.cpp" />
+    <ClCompile Include="graphics\Mesh.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KaEngine.cpp" />
     <ClCompile Include="KaEnginePreCompile.cpp">
@@ -177,6 +181,10 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
+    <ClInclude Include="graphics\light\DirectionLight.h" />
+    <ClInclude Include="graphics\light\PointLight.h" />
+    <ClInclude Include="graphics\Material.h" />
+    <ClInclude Include="graphics\Mesh.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KaEngine.h" />
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -190,6 +198,7 @@
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="UniformBuffer.h" />
     <ClInclude Include="util\Noncopyable.h" />
+    <ClInclude Include="util\TResourceBank.h" />
     <ClInclude Include="VAO.h" />
     <ClInclude Include="VBO.h" />
   </ItemGroup>

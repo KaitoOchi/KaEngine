@@ -12,7 +12,7 @@ namespace nsKaEngine {
 		~EBO();
 
 		// generates a Elements Buffer Object and links it to indices
-		void Init(GLuint* indices, GLsizeiptr size);
+		void Init(std::vector<GLuint>& indices);
 
 		void Bind();
 		void UnBind();

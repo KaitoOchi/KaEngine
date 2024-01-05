@@ -10,20 +10,32 @@ namespace nsKaEngine {
 
 	UniformBuffer::~UniformBuffer()
 	{
-		glDeleteBuffers(1, &ubo);
+		glDeleteBuffers(1, &m_ubo);
 	}
 
-	void UniformBuffer::Init(void* data, const int size)
-	{
+	void UniformBuffer::Init(
+		const int size,
+		GLuint shaderID,
+		const char* blockName
+	) {
 		//UniformBufferを作成。
-		glGenBuffers(1, &ubo);
-		glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-		glBufferData(GL_UNIFORM_BUFFER, size, &data, GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		glGenBuffers(1, &m_ubo);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
+		glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_STATIC_DRAW);
+
+		//UBOをシェーダーと紐付ける。
+		m_blockIndex = glGetUniformBlockIndex(shaderID, blockName);
+		glUniformBlockBinding(shaderID, m_blockIndex, m_blockIndex);
+
+		glBindBufferBase(GL_UNIFORM_BUFFER, m_blockIndex, m_ubo);
 	}
 
-	void UniformBuffer::Update(const int index)
+	void UniformBuffer::Update(void* data, const int size)
 	{
-		glBindBufferBase(GL_UNIFORM_BUFFER, index, ubo);
+		glBindBufferBase(GL_UNIFORM_BUFFER, m_blockIndex, m_ubo);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
+		//データを送信。
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 }

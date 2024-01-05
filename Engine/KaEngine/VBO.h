@@ -2,6 +2,17 @@
 
 namespace nsKaEngine {
 
+	/// <summary>
+	/// í∏ì_èÓïÒÅB
+	/// </summary>
+	struct Vertex
+	{
+		Vector3 position;
+		Vector3 normal;
+		Vector3 color;
+		Vector2 uv;
+	};
+
 	class VBO
 	{
 	public:
@@ -12,7 +23,7 @@ namespace nsKaEngine {
 		~VBO();
 
 		// generates a Vertex Buffer Object and links it o vertices
-		void Init(GLfloat* verices, GLsizeiptr size);
+		void Init(std::vector<Vertex>& vertices);
 
 		void Bind();
 		void UnBind();

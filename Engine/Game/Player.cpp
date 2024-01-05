@@ -11,7 +11,7 @@ namespace
 
 Player::Player()
 {
-	m_position = Vector3(50.0f, 50.0f, 50.0f);
+	m_position = Vector3(0.0f, 50.0f, 250.0f);
 	m_rotSpeed.x = Mathf::PI / 2.0f;
 }
 

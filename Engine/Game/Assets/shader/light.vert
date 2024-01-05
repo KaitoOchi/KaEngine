@@ -1,11 +1,22 @@
 #version 330 core
 
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec3 pos;
 
-uniform mat4 model;
-uniform mat4 cameraMatrix;
+/// <summary>
+/// モデル用定数バッファ。
+/// </summary>
+layout (std140) uniform ModelUB
+{
+	mat4 mModel;
+	mat4 mView;
+	mat4 mProj;
+} modelUB;
 
 void main()
 {
-	gl_Position = cameraMatrix * model * vec4(aPos, 1.0f);
+	vec4 position;
+	position = modelUB.mModel * vec4(pos, 1.0f);
+	position = modelUB.mView * position;
+	position = modelUB.mProj * position;
+	gl_Position = position;
 }

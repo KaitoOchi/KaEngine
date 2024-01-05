@@ -12,16 +12,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // C++
-#include <Windows.h>
+#include <map>
+#include <vector>
 
 const float FRAME_BUFFER_WIDTH = 1600.0f;
 const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // util
 #include "util/Noncopyable.h"
-
-// Shader
-#include "ShaderClass.h"
+#include "util/TResourceBank.h"
 
 // Vector
 #include "math/Mathf.h"
@@ -30,6 +29,9 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // Transform
 #include "math/Transform.h"
+
+#include "graphics/Material.h"
+#include "graphics/Mesh.h"
 
 // Time
 #include "timer/FPSLimiter.h"

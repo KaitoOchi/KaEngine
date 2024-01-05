@@ -148,6 +148,24 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// ビュー行列を取得。
+		/// </summary>
+		/// <returns></returns>
+		const Matrix& GetViewMatrix() const
+		{
+			return m_viewMatrix;
+		}
+
+		/// <summary>
+		/// プロジェクション行列を取得。
+		/// </summary>
+		/// <returns></returns>
+		const Matrix& GetProjectionMatrix() const
+		{
+			return m_projectionMatrix;
+		}
+
+		/// <summary>
 		/// ビュープロジェクション行列を取得。
 		/// </summary>
 		/// <returns></returns>

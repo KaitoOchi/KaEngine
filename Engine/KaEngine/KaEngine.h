@@ -6,6 +6,11 @@
 #include "Camera.h"
 #include "UniformBuffer.h"
 
+#include "graphics/light/DirectionLight.h"
+#include "graphics/light/PointLight.h"
+#include "timer/FPSLimiter.h"
+#include "graphics/Mesh.h"
+
 namespace nsKaEngine {
 
 	/// <summary>
@@ -19,15 +24,10 @@ namespace nsKaEngine {
 		/// </summary>
 		struct LightUB
 		{
-			alignas(4) GLfloat ambient;
-		};
-
-		/// <summary>
-		/// モデル用UB。
-		/// </summary>
-		struct ModelUB
-		{
-			alignas(64) Matrix mView;
+			DirectionLightUB dirLig;
+			PointLightUB ptLig;
+			Vector3 eyePos;
+			float pad;
 		};
 
 	public:
@@ -66,9 +66,54 @@ namespace nsKaEngine {
 		}
 
 	public:
-		Shader* GetShader()
+		/// <summary>
+		/// テクスチャバンクに登録。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <param name="texture"></param>
+		void RegistTextureBank(const char* filePath, Texture* texture)
 		{
-			return m_shaderProgram;
+			m_textureBank.Regist(filePath, texture);
+		}
+
+		/// <summary>
+		/// バンクからテクスチャを取得。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		Texture* GetTextureBank(const char* filePath)
+		{
+			return m_textureBank.Get(filePath);
+		}
+
+		/// <summary>
+		/// シェーダーバンクに登録。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <param name="shader"></param>
+		void RegistShaderBank(const char* filePath, GLuint* shader)
+		{
+			m_shaderBank.Regist(filePath, shader);
+		}
+
+		/// <summary>
+		/// バンクからシェーダーを取得。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		GLuint* GetShaderBank(const char* filePath)
+		{
+			return m_shaderBank.Get(filePath);
+		}
+
+		void RegistUniformBufferBank(const char* uniformBufferName, UniformBuffer* uniformBuffer)
+		{
+			m_uniformBufferBank.Regist(uniformBufferName, uniformBuffer);
+		}
+
+		UniformBuffer* GetUniformBufferBank(const char* uniformBufferName)
+		{
+			return m_uniformBufferBank.Get(uniformBufferName);
 		}
 
 		/// <summary>
@@ -102,28 +147,25 @@ namespace nsKaEngine {
 
 		FPSLimiter m_fpsLimiter;			//FPSリミッター。
 
-		UniformBuffer m_modelUniformBuffer;
-		ModelUB m_modelUB;
-		GLuint scene_block_index = 0;
+		TResourceBank<Texture> m_textureBank;	//テクスチャバンク。
+		TResourceBank<GLuint> m_shaderBank;		//シェーダーバンク。
+		TResourceBank<UniformBuffer> m_uniformBufferBank;
 
-		Shader* m_shaderProgram = nullptr;
-		VAO m_vao;
-		VBO m_vbo;
-		EBO m_ebo;
-		Texture m_albedoTexture;
-		Texture m_normalTexture;
-		Texture m_metallicSmoothTexture;
+		UniformBuffer m_lightUniformBuffer;
+		LightUB m_lightUB;
 
-		Shader* m_lightShader = nullptr;
-		VAO m_lightVAO;
-		VBO m_lightVBO;
-		EBO m_lightEBO;
+		Mesh m_floorMesh;
+		Texture m_textures[3];
+		Vector3 m_floorPos;
+		Matrix m_floorModel;
 
+		Mesh m_lightMesh;
 		Vector3 m_lightPos;
 		Matrix m_lightModel;
+
+		Mesh m_pyramidMesh;
 		Vector3 m_pyramidPos;
 		Matrix m_pyramidModel;
-		Vector4 m_lightColor = Vector4::White;
 	};
 	extern Camera* g_camera3D;
 }

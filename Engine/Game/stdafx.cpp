@@ -1,3 +1,3 @@
 #include "stdafx.h"
 
-Camera* g_camera3D = nullptr;
+nsKaEngine::Camera* g_camera3D = nullptr;

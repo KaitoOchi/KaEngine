@@ -22,7 +22,21 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="UniformBuffer.cpp" />
-    <ClCompile Include="graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="graphics\Material.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GraphicsEngine.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\light\DirectionLight.cpp">
+      <Filter>graphics\light</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\light\PointLight.cpp">
+      <Filter>graphics\light</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Mesh.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -50,12 +64,29 @@
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="UniformBuffer.h" />
-    <ClInclude Include="graphics\GraphicsEngine.h" />
     <ClInclude Include="timer\FPSLimiter.h">
       <Filter>time</Filter>
     </ClInclude>
     <ClInclude Include="timer\Timer.h">
       <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="util\TResourceBank.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Material.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GraphicsEngine.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\light\DirectionLight.h">
+      <Filter>graphics\light</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\light\PointLight.h">
+      <Filter>graphics\light</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Mesh.h">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +101,9 @@
     </Filter>
     <Filter Include="time">
       <UniqueIdentifier>{8b45a476-e4c6-4d4e-9bb1-e4403b8b06bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics\light">
+      <UniqueIdentifier>{47d4a000-32cf-42bb-9238-47bfa91221db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

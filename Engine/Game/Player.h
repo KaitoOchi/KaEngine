@@ -25,6 +25,6 @@ private:
 	Vector2			m_rotSpeed;					//回転角度。
 	Vector3			m_position;					//座標。
 	Vector3			m_target;					//注視点。
-	float			m_sensitivity = 0.01f;		//カメラ感度。
+	float			m_sensitivity = 0.05f;		//カメラ感度。
 };
 
