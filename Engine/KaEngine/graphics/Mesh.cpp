@@ -1,8 +1,6 @@
 #include "KaEnginePreCompile.h"
 #include "Mesh.h"
 
-#include "UniformBuffer.h"
-
 namespace nsKaEngine {
 
 	namespace
@@ -20,18 +18,20 @@ namespace nsKaEngine {
 
 	Mesh::~Mesh()
 	{
-		m_vao.Delete();
-		m_vbo.Delete();
-		m_ebo.Delete();
-		m_shaderProgram.Delete();
+
 	}
 
 	void Mesh::Init(
 		std::vector<Vertex>& vertices,
 		std::vector<GLuint>& indices,
 		std::vector<Texture>& textures,
-		const char* vertexShaderFile,
-		const char* fragmentShaderFile
+		std::string fbxFilePath,
+		std::string vertexShaderFile,
+		std::string fragmentShaderFile,
+		std::array<std::string, 8> addIncludeFile,
+		void* expandUniformBuffer,
+		int expandUniformBufferSize,
+		std::string expandUniformBufferName
 	) {
 		m_vertices = vertices;
 		m_indices = indices;
@@ -61,9 +61,16 @@ namespace nsKaEngine {
 		m_vbo.UnBind();
 		m_ebo.UnBind();
 
-		m_shaderProgram.Init(vertexShaderFile, fragmentShaderFile);
+		m_shaderProgram.Init(vertexShaderFile.c_str(), fragmentShaderFile.c_str(), addIncludeFile);
 		m_shaderProgram.Activate();
+
 		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.ID, "ModelUB");
+
+		if (expandUniformBuffer != nullptr) {
+			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram.ID, expandUniformBufferName.c_str());
+			m_expandUB = expandUniformBuffer;
+			m_expandUBSize = expandUniformBufferSize;
+		}
 	}
 
 	void Mesh::Draw(Matrix& modelMatrix)
@@ -73,7 +80,12 @@ namespace nsKaEngine {
 		m_modelUB.mModel = modelMatrix;
 		m_modelUB.mView = g_camera3D->GetViewMatrix();
 		m_modelUB.mProj = g_camera3D->GetProjectionMatrix();
+
 		m_modelUniformBuffer.Update(&m_modelUB, sizeof(ModelUB));
+
+		if (m_expandUB != nullptr) {
+			m_expandUniformBuffer.Update(m_expandUB, m_expandUBSize);
+		}
 
 		m_vao.Bind();
 
@@ -84,5 +96,13 @@ namespace nsKaEngine {
 
 		// Draw the triangles using the GL_TRIANGLES primive
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, 0);
+	}
+
+	void Mesh::Delete()
+	{
+		m_vao.Delete();
+		m_vbo.Delete();
+		m_ebo.Delete();
+		m_shaderProgram.Delete();
 	}
 }

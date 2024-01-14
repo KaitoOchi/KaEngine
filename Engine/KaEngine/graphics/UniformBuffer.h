@@ -5,7 +5,7 @@ namespace nsKaEngine {
 	/// <summary>
 	/// ユニフォームバッファ。
 	/// </summary>
-	class UniformBuffer : Noncopyable
+	class UniformBuffer
 	{
 	public:
 		UniformBuffer();

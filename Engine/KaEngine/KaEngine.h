@@ -1,10 +1,7 @@
 #pragma once
-#include "VAO.h"
-#include "VBO.h"
-#include "EBO.h"
+
 #include "Texture.h"
 #include "Camera.h"
-#include "UniformBuffer.h"
 
 #include "graphics/light/DirectionLight.h"
 #include "graphics/light/PointLight.h"
@@ -12,6 +9,11 @@
 #include "graphics/Mesh.h"
 
 namespace nsKaEngine {
+
+	namespace
+	{
+		const int ADD_INCLUDE_FILE_MAX = 8;
+	}
 
 	/// <summary>
 	/// エンジンクラス。
@@ -28,6 +30,20 @@ namespace nsKaEngine {
 			PointLightUB ptLig;
 			Vector3 eyePos;
 			float pad;
+		};
+
+		/// <summary>
+		/// 初期化用のモデルデータ
+		/// </summary>
+		struct ModelInitData
+		{
+			std::string fbxFilePath;
+			std::string vertexShaderFilePath;
+			std::string fragmentShaderFilePath;
+			std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = {""};
+			void* expandUniformBuffer = nullptr;
+			int expandUniformBufferSize = 0;
+			std::string expandUniformBufferName;
 		};
 
 	public:
@@ -62,6 +78,7 @@ namespace nsKaEngine {
 		/// </summary>
 		static void DeleteInstance()
 		{
+			m_instance->Delete();
 			delete m_instance;
 		}
 
@@ -106,12 +123,12 @@ namespace nsKaEngine {
 			return m_shaderBank.Get(filePath);
 		}
 
-		void RegistUniformBufferBank(const char* uniformBufferName, UniformBuffer* uniformBuffer)
+		void RegistUniformBufferBank(const char* uniformBufferName, GLuint* uniformBuffer)
 		{
 			m_uniformBufferBank.Regist(uniformBufferName, uniformBuffer);
 		}
 
-		UniformBuffer* GetUniformBufferBank(const char* uniformBufferName)
+		GLuint* GetUniformBufferBank(const char* uniformBufferName)
 		{
 			return m_uniformBufferBank.Get(uniformBufferName);
 		}
@@ -149,13 +166,12 @@ namespace nsKaEngine {
 
 		TResourceBank<Texture> m_textureBank;	//テクスチャバンク。
 		TResourceBank<GLuint> m_shaderBank;		//シェーダーバンク。
-		TResourceBank<UniformBuffer> m_uniformBufferBank;
+		TResourceBank<GLuint> m_uniformBufferBank;
 
-		UniformBuffer m_lightUniformBuffer;
+		Texture m_textures[3];
 		LightUB m_lightUB;
 
 		Mesh m_floorMesh;
-		Texture m_textures[3];
 		Vector3 m_floorPos;
 		Matrix m_floorModel;
 

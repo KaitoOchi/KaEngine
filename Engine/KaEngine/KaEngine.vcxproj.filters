@@ -3,25 +3,12 @@
   <ItemGroup>
     <ClCompile Include="KaEnginePreCompile.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="EBO.cpp" />
     <ClCompile Include="gl.c" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="VAO.cpp" />
-    <ClCompile Include="VBO.cpp" />
     <ClCompile Include="KaEngine.cpp" />
-    <ClCompile Include="Math\Transform.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="UniformBuffer.cpp" />
     <ClCompile Include="graphics\Material.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -37,33 +24,38 @@
     <ClCompile Include="graphics\Mesh.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Transform.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\EBO.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\VAO.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\VBO.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\UniformBuffer.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="EBO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="VAO.h" />
-    <ClInclude Include="VBO.h" />
     <ClInclude Include="KaEngine.h" />
-    <ClInclude Include="Math\Transform.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Vector.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="util\Noncopyable.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Matrix.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Mathf.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="UniformBuffer.h" />
     <ClInclude Include="timer\FPSLimiter.h">
       <Filter>time</Filter>
     </ClInclude>
@@ -88,6 +80,33 @@
     <ClInclude Include="graphics\Mesh.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="debug\KaDebug.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Mathf.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Transform.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\EBO.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\VAO.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\VBO.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\UniformBuffer.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="util">
@@ -104,6 +123,9 @@
     </Filter>
     <Filter Include="graphics\light">
       <UniqueIdentifier>{47d4a000-32cf-42bb-9238-47bfa91221db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{bf81401d-0b89-4bcb-9af2-871bd58b0e3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

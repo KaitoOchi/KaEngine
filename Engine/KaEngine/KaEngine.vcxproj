@@ -148,59 +148,60 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="EBO.cpp" />
     <ClCompile Include="gl.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="graphics\EBO.cpp" />
     <ClCompile Include="graphics\GraphicsEngine.cpp" />
     <ClCompile Include="graphics\light\DirectionLight.cpp" />
     <ClCompile Include="graphics\light\PointLight.cpp" />
     <ClCompile Include="graphics\Material.cpp" />
     <ClCompile Include="graphics\Mesh.cpp" />
+    <ClCompile Include="graphics\UniformBuffer.cpp" />
+    <ClCompile Include="graphics\VAO.cpp" />
+    <ClCompile Include="graphics\VBO.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KaEngine.cpp" />
     <ClCompile Include="KaEnginePreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Math\Matrix.cpp" />
-    <ClCompile Include="Math\Transform.cpp" />
-    <ClCompile Include="Math\Vector.cpp" />
+    <ClCompile Include="math\Matrix.cpp" />
+    <ClCompile Include="math\Transform.cpp" />
+    <ClCompile Include="math\Vector.cpp" />
     <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="UniformBuffer.cpp" />
-    <ClCompile Include="VAO.cpp" />
-    <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="EBO.h" />
+    <ClInclude Include="debug\KaDebug.h" />
+    <ClInclude Include="graphics\EBO.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
     <ClInclude Include="graphics\light\DirectionLight.h" />
     <ClInclude Include="graphics\light\PointLight.h" />
     <ClInclude Include="graphics\Material.h" />
     <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\UniformBuffer.h" />
+    <ClInclude Include="graphics\VAO.h" />
+    <ClInclude Include="graphics\VBO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KaEngine.h" />
     <ClInclude Include="KaEnginePreCompile.h" />
-    <ClInclude Include="Math\Mathf.h" />
-    <ClInclude Include="Math\Matrix.h" />
-    <ClInclude Include="Math\Transform.h" />
-    <ClInclude Include="Math\Vector.h" />
+    <ClInclude Include="math\Mathf.h" />
+    <ClInclude Include="math\Matrix.h" />
+    <ClInclude Include="math\Transform.h" />
+    <ClInclude Include="math\Vector.h" />
     <ClInclude Include="ShaderClass.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="timer\FPSLimiter.h" />
     <ClInclude Include="timer\Timer.h" />
-    <ClInclude Include="UniformBuffer.h" />
     <ClInclude Include="util\Noncopyable.h" />
     <ClInclude Include="util\TResourceBank.h" />
-    <ClInclude Include="VAO.h" />
-    <ClInclude Include="VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

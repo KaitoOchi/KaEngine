@@ -7,8 +7,6 @@
 
 namespace nsKaEngine {
 
-	std::string get_file_contents(const char* fileName);
-
 	class Shader
 	{
 	public:
@@ -23,7 +21,12 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="vertexFile"></param>
 		/// <param name="fragmentFile"></param>
-		void Init(const char* vertexFile, const char* fragmentFile);
+		/// <param name="addIncludeFile"></param>
+		void Init(
+			const char* vertexFile,
+			const char* fragmentFile,
+			std::array<std::string, 8> addIncludeFile
+		);
 
 		/// <summary>
 		/// シェーダーにインクルードファイルを挿入する。
@@ -37,8 +40,25 @@ namespace nsKaEngine {
 		void Delete();
 
 	private:
-		void compileErrors(unsigned int shader, const char* type);
+		/// <summary>
+		/// ファイルからテキストを出力。
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		std::string GetFileContents(const char* fileName);
 
+		/// <summary>
+		/// コンパイルエラーを出力。
+		/// </summary>
+		/// <param name="shader"></param>
+		/// <param name="type"></param>
+		void ShaderCompileErrors(
+			GLuint shader,
+			const char* type,
+			const char* filePath
+		);
+
+	private:
 		GLuint m_vertexShader = 0;
 		GLuint m_fragmentShader = 0;
 	};

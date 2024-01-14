@@ -8,6 +8,9 @@
 
 namespace nsKaEngine {
 
+	/// <summary>
+	/// メッシュクラス。
+	/// </summary>
 	class Mesh : Noncopyable
 	{
 	public:
@@ -34,8 +37,13 @@ namespace nsKaEngine {
 			std::vector<Vertex>& vertices,
 			std::vector<GLuint>& indices,
 			std::vector<Texture>& textures,
-			const char* vertexShaderFile,
-			const char* fragmentShaderFile
+			std::string fbxFilePath,
+			std::string vertexShaderFile,
+			std::string fragmentShaderFile,
+			std::array<std::string, 8> addIncludeFile,
+			void* expandUniformBuffer,
+			int expandUniformBufferSize,
+			std::string expandUniformBufferName
 		);
 
 		/// <summary>
@@ -43,26 +51,24 @@ namespace nsKaEngine {
 		/// </summary>
 		void Draw(Matrix& modelMatrix);
 
-		void ShaderActivate()
-		{
-			m_shaderProgram.Activate();
-		}
-
-		GLuint GetShaderID()
-		{
-			return m_shaderProgram.ID;
-		}
+		/// <summary>
+		/// 削除処理。
+		/// </summary>
+		void Delete();
 
 	private:
-		std::vector<Vertex>		m_vertices;
-		std::vector<GLuint>		m_indices;
-		std::vector<Texture>	m_textures;
-		VAO m_vao;
-		VBO m_vbo;
-		EBO m_ebo;
-		Shader m_shaderProgram;
-		UniformBuffer m_modelUniformBuffer;
-		ModelUB m_modelUB;
+		std::vector<Vertex>		m_vertices;					//頂点情報。
+		std::vector<GLuint>		m_indices;					//インデックス。
+		std::vector<Texture>	m_textures;					//テクスチャ。
+		VAO						m_vao;						//VertexArraysObject。
+		VBO						m_vbo;						//VertexBufferObject。
+		EBO						m_ebo;						//ElementsBufferObject。
+		Shader					m_shaderProgram;			//シェーダー。
+		UniformBuffer			m_modelUniformBuffer;		//モデル用UniformBufferObject。
+		UniformBuffer			m_expandUniformBuffer;		//ユーザー拡張用UniformBufferObject。
+		ModelUB					m_modelUB;					//モデル用構造体。
+		void*					m_expandUB;					//ユーザー拡張用構造体。
+		int						m_expandUBSize;				//構造体のサイズ。
 	};
 }
 

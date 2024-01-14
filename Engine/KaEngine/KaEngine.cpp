@@ -110,6 +110,15 @@ namespace nsKaEngine {
 		//背面カリングを有効にする。
 		//glEnable(GL_CULL_FACE);
 
+		ModelInitData modelInitData;
+		modelInitData.vertexShaderFilePath = "Assets/shader/default.vert";
+		modelInitData.fragmentShaderFilePath = "Assets/shader/default.frag";
+		modelInitData.addIncludeFile[0] = "PBRLighting.h";
+		modelInitData.addIncludeFile[1] = "PBRLighting_struct.h";
+		modelInitData.expandUniformBuffer = &m_lightUB;
+		modelInitData.expandUniformBufferSize = sizeof(LightUB);
+		modelInitData.expandUniformBufferName = "LightUB";
+
 		m_textures[0].Init("Assets/sprite/nullAlbedoMap.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
 		m_textures[1].Init("Assets/sprite/nullNormalMap.png", GL_TEXTURE_2D, 1, GL_RGBA, GL_UNSIGNED_BYTE);
 		m_textures[2].Init("Assets/sprite/nullMetallicSmoothMap.png", GL_TEXTURE_2D, 2, GL_RGBA, GL_UNSIGNED_BYTE);
@@ -118,41 +127,63 @@ namespace nsKaEngine {
 		std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
 		std::vector <Texture> tex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
 		// Create floor mesh
-		m_floorMesh.Init(verts, ind, tex, "Assets/shader/default.vert", "Assets/shader/default.frag");
+		m_floorMesh.Init(
+			verts,
+			ind,
+			tex,
+			"",
+			modelInitData.vertexShaderFilePath,
+			modelInitData.fragmentShaderFilePath,
+			modelInitData.addIncludeFile,
+			modelInitData.expandUniformBuffer,
+			modelInitData.expandUniformBufferSize,
+			modelInitData.expandUniformBufferName
+		);
 
 		m_floorPos = Vector3(0.0f, 0.0f, 0.0f);
 		m_floorModel.MakeTranslate(m_floorPos);
-
-		m_floorMesh.ShaderActivate();
-
-		m_lightUniformBuffer.Init(sizeof(LightUB), m_floorMesh.GetShaderID(), "LightUB");
-
-
 
 
 		std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 		std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 		// Create light mesh
-		m_lightMesh.Init(lightVerts, lightInd, tex, "Assets/shader/light.vert", "Assets/shader/light.frag");
+		m_lightMesh.Init(
+			lightVerts,
+			lightInd,
+			tex,
+			"",
+			"Assets/shader/light.vert",
+			"Assets/shader/light.frag",
+			modelInitData.addIncludeFile,
+			nullptr,
+			modelInitData.expandUniformBufferSize,
+			modelInitData.expandUniformBufferName
+		);
 
 		m_lightPos = Vector3(50.0f, 100.0f, 50.0f);
 		m_lightModel.MakeTranslate(m_lightPos);
 
-		m_lightMesh.ShaderActivate();
 
 
 		std::vector <Vertex> pyramidVerts(pyramidVertices, pyramidVertices + sizeof(pyramidVertices) / sizeof(Vertex));
 		std::vector <GLuint> pyramidInd(pyramidIndices, pyramidIndices + sizeof(pyramidIndices) / sizeof(GLuint));
 		std::vector <Texture> pyramidTex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
 
-		m_pyramidMesh.Init(pyramidVerts, pyramidInd, pyramidTex, "Assets/shader/default.vert", "Assets/shader/default.frag");
+		m_pyramidMesh.Init(
+			pyramidVerts,
+			pyramidInd,
+			pyramidTex,
+			"",
+			modelInitData.vertexShaderFilePath,
+			modelInitData.fragmentShaderFilePath,
+			modelInitData.addIncludeFile,
+			modelInitData.expandUniformBuffer,
+			modelInitData.expandUniformBufferSize,
+			modelInitData.expandUniformBufferName
+		);
 
 		m_pyramidPos = Vector3(-50.0f, 50.0f, 0.0f);
 		m_pyramidModel.MakeTranslate(m_pyramidPos);
-
-		m_pyramidMesh.ShaderActivate();
-
-		m_lightUniformBuffer.Init(sizeof(LightUB), m_pyramidMesh.GetShaderID(), "LightUB");
 
 
 
@@ -194,17 +225,10 @@ namespace nsKaEngine {
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 	
 
-		m_floorMesh.ShaderActivate();
-		m_lightUniformBuffer.Update(&m_lightUB, sizeof(LightUB));
 		m_floorMesh.Draw(m_floorModel);
 
-
-		m_lightMesh.ShaderActivate();
 		m_lightMesh.Draw(m_lightModel);
 
-
-		m_pyramidMesh.ShaderActivate();
-		m_lightUniformBuffer.Update(&m_lightUB, sizeof(LightUB));
 		m_pyramidMesh.Draw(m_pyramidModel);
 
 
@@ -215,6 +239,10 @@ namespace nsKaEngine {
 
 		m_fpsLimiter.EndFrame();
 		//std::cout << m_fpsLimiter.Get() << "\n" << std::endl;
+
+		if (Input::GetInstance()->GetKey(enButtonR)) {
+			m_pyramidMesh.Delete();
+		}
 	}
 
 	void KaEngine::Delete()
@@ -223,7 +251,8 @@ namespace nsKaEngine {
 		m_textures[1].Delete();
 		m_textures[2].Delete();
 
-		// Delete all the objects we've created
-
+		m_floorMesh.Delete();
+		m_lightMesh.Delete();
+		m_pyramidMesh.Delete();
 	}
 }

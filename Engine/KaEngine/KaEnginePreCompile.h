@@ -1,5 +1,13 @@
-#include <iostream>
+#pragma once
 
+// C++
+#include <iostream>
+#include <map>
+#include <vector>
+#include <array>
+#include <Windows.h>
+
+// openGL
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
@@ -11,9 +19,6 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-// C++
-#include <map>
-#include <vector>
 
 const float FRAME_BUFFER_WIDTH = 1600.0f;
 const float FRAME_BUFFER_HEIGHT = 900.0f;
@@ -21,6 +26,9 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 // util
 #include "util/Noncopyable.h"
 #include "util/TResourceBank.h"
+
+// debug
+#include "debug/KaDebug.h"
 
 // Vector
 #include "math/Mathf.h"
