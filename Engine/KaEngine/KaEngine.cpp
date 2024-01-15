@@ -240,7 +240,7 @@ namespace nsKaEngine {
 		m_fpsLimiter.EndFrame();
 		//std::cout << m_fpsLimiter.Get() << "\n" << std::endl;
 
-		if (Input::GetInstance()->GetKey(enButtonR)) {
+		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();
 		}
 	}

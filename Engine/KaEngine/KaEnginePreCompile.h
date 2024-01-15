@@ -28,7 +28,7 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "util/TResourceBank.h"
 
 // debug
-#include "debug/KaDebug.h"
+#include "dbg/KaDebug.h"
 
 // Vector
 #include "math/Mathf.h"

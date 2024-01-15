@@ -14,7 +14,7 @@ namespace nsKaEngine {
 
 		void Init();
 
-		void LinkAttribute(VBO& vbo, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr sride, void* offset);
+		void LinkAttribute(VBO& vbo, GLuint layout, GLuint numComponents, GLenum type, GLsizei sride, void* offset);
 		void Bind();
 		void UnBind();
 		void Delete();

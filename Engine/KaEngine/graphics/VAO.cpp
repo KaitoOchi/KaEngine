@@ -18,7 +18,7 @@ namespace nsKaEngine {
 		glGenVertexArrays(1, &ID);
 	}
 
-	void VAO::LinkAttribute(VBO& vbo, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset)
+	void VAO::LinkAttribute(VBO& vbo, GLuint layout, GLuint numComponents, GLenum type, GLsizei stride, void* offset)
 	{
 		vbo.Bind();
 		// Configure the Vertex Attribute so that OpenGL knows how to read the VBO

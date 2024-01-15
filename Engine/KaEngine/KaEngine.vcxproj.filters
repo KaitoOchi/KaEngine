@@ -80,9 +80,6 @@
     <ClInclude Include="graphics\Mesh.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="debug\KaDebug.h">
-      <Filter>debug</Filter>
-    </ClInclude>
     <ClInclude Include="math\Mathf.h">
       <Filter>math</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="graphics\UniformBuffer.h">
       <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="dbg\KaDebug.h">
+      <Filter>debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

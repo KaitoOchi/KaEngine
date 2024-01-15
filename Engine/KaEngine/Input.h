@@ -7,34 +7,34 @@ namespace nsKaEngine{
 	/// </summary>
 	enum KeyCode
 	{
-		enButtonQ,
-		enButtonW,
-		enButtonE,
-		enButtonR,
-		enButtonT,
-		enButtonY,
-		enButtonU,
-		enButtonI,
-		enButtonO,
-		enButtonP,
-		enButtonA,
-		enButtonS,
-		enButtonD,
-		enButtonF,
-		enButtonG,
-		enButtonH,
-		enButtonJ,
-		enButtonK,
-		enButtonL,
-		enButtonZ,
-		enButtonX,
-		enButtonC,
-		enButtonV,
-		enButtonB,
-		enButtonN,
-		enButtonM,
-		enButtonEsc,
-		enButtonNum,
+		e_buttonQ,
+		e_buttonW,
+		e_buttonE,
+		e_buttonR,
+		e_buttonT,
+		e_buttonY,
+		e_buttonU,
+		e_buttonI,
+		e_buttonO,
+		e_buttonP,
+		e_buttonA,
+		e_buttonS,
+		e_buttonD,
+		e_buttonF,
+		e_buttonG,
+		e_buttonH,
+		e_buttonJ,
+		e_buttonK,
+		e_buttonL,
+		e_buttonZ,
+		e_buttonX,
+		e_buttonC,
+		e_buttonV,
+		e_buttonB,
+		e_buttonN,
+		e_buttonM,
+		e_buttonEsc,
+		e_buttonNum,
 	};
 
 	/// <summary>
@@ -42,12 +42,11 @@ namespace nsKaEngine{
 	/// </summary>
 	enum MouseButton
 	{
-		enMouseButtonLeft,
-		enMouseButtonRight,
-		enMouseButtonMiddle,
-		enMouseButtonNum,
+		e_mouseButtonLeft,
+		e_mouseButtonRight,
+		e_mouseButtonMiddle,
+		e_mouseButtonNum,
 	};
-
 
 	/// <summary>
 	/// 入力クラス。
@@ -63,9 +62,7 @@ namespace nsKaEngine{
 		/// </summary>
 		static void CreateInstance(GLFWwindow* window)
 		{
-			if (m_instance != nullptr) {
-				std::abort();
-			}
+			Ka_Assert(m_instance == nullptr, "codeError", "Inputクラスのインスタンスは一つしか作れません。");
 			m_instance = new Input;
 			m_instance->Init(window);
 		}
@@ -86,12 +83,6 @@ namespace nsKaEngine{
 		{
 			return m_instance;
 		}
-
-		/// <summary>
-		/// 初期化処理。
-		/// </summary>
-		/// <param name="window"></param>
-		void Init(GLFWwindow* window);
 
 		/// <summary>
 		/// 更新処理。
@@ -236,6 +227,11 @@ namespace nsKaEngine{
 
 	private:
 		/// <summary>
+		/// 初期化処理。
+		/// </summary>
+		/// <param name="window"></param>
+		void Init(GLFWwindow* window);
+		/// <summary>
 		/// キーの入力処理。
 		/// </summary>
 		void InputKey();
@@ -249,12 +245,12 @@ namespace nsKaEngine{
 		GLFWwindow*		m_window = nullptr;					//ウィンドウ。
 		Vector3			m_mousePosition;					//マウスの座標。
 		Vector3			m_mouseAxis;						//マウスの入力。
-		bool			m_keyTrigger[enButtonNum];			//キーのトリガー判定。
-		bool			m_keyPress[enButtonNum];			//キーのプレス判定。
-		bool			m_keyRelease[enButtonNum];			//キーのリリース判定。
-		bool			m_mouseTrigger[enMouseButtonNum];	//マウスのトリガー判定。
-		bool			m_mousePress[enMouseButtonNum];		//マウスのプレス判定。
-		bool			m_mouseRelease[enMouseButtonNum];	//マウスのリリース判定。
+		bool			m_keyTrigger[e_buttonNum];			//キーのトリガー判定。
+		bool			m_keyPress[e_buttonNum];			//キーのプレス判定。
+		bool			m_keyRelease[e_buttonNum];			//キーのリリース判定。
+		bool			m_mouseTrigger[e_mouseButtonNum];	//マウスのトリガー判定。
+		bool			m_mousePress[e_mouseButtonNum];		//マウスのプレス判定。
+		bool			m_mouseRelease[e_mouseButtonNum];	//マウスのリリース判定。
 		bool			m_cursorLock = false;				//カーソルが固定かどうか。
 	};
 }

@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="debug\KaDebug.h" />
+    <ClInclude Include="dbg\KaDebug.h" />
     <ClInclude Include="graphics\EBO.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
     <ClInclude Include="graphics\light\DirectionLight.h" />

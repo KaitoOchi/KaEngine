@@ -13,6 +13,10 @@ Player::Player()
 {
 	m_position = Vector3(0.0f, 50.0f, 250.0f);
 	m_rotSpeed.x = Mathf::PI / 2.0f;
+
+	g_camera3D->SetPosition(m_position);
+	g_camera3D->SetTarget(Vector3::AxisZ * TARGET_FORWARD);
+	g_camera3D->Update();
 }
 
 Player::~Player()
@@ -30,7 +34,7 @@ void Player::Update()
 
 	if (Input::GetInstance()->GetCursorLock() == true) {
 
-		if (Input::GetInstance()->GetKey(enButtonEsc)) {
+		if (Input::GetInstance()->GetKey(KeyCode::e_buttonEsc)) {
 			Input::GetInstance()->UnLockCursor();
 		}
 	}
@@ -52,20 +56,24 @@ void Player::Move()
 	right.y = 0.0f;
 
 	//WASDで移動。
-	if (Input::GetInstance()->GetKey(enButtonW)) {
+	if (Input::GetInstance()->GetKey(KeyCode::e_buttonW)) {
 		moveSpeed -= forward;
 	}
 
-	if (Input::GetInstance()->GetKey(enButtonA)) {
+	if (Input::GetInstance()->GetKey(KeyCode::e_buttonA)) {
 		moveSpeed -= right;
 	}
 
-	if (Input::GetInstance()->GetKey(enButtonS)) {
+	if (Input::GetInstance()->GetKey(KeyCode::e_buttonS)) {
 		moveSpeed += forward;
 	}
 
-	if (Input::GetInstance()->GetKey(enButtonD)) {
+	if (Input::GetInstance()->GetKey(KeyCode::e_buttonD)) {
 		moveSpeed += right;
+	}
+
+	if (moveSpeed.LengthSq() < 0.001f) {
+		return;
 	}
 
 	moveSpeed.Normalize();
@@ -84,6 +92,10 @@ void Player::Rotation()
 
 	Vector3 mouse;
 	mouse = Input::GetInstance()->GetMouseAxis();
+
+	if (mouse.LengthSq() < 0.001f) {
+		return;
+	}
 
 	//スティックの入力を加算。
 	m_rotSpeed.x += -mouse.x * m_sensitivity;

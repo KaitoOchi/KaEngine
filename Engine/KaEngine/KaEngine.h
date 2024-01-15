@@ -56,9 +56,7 @@ namespace nsKaEngine {
 		/// <param name="window"></param>
 		static void CreateInstance(GLFWwindow* window)
 		{
-			if (m_instance != nullptr) {
-				std::abort();
-			}
+			Ka_Assert(m_instance == nullptr, "codeError", "KaEngineクラスのインスタンスは一つしか作れません。");
 			m_instance = new KaEngine;
 
 			m_instance->Init(window);
