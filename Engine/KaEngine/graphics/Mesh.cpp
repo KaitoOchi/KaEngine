@@ -28,7 +28,7 @@ namespace nsKaEngine {
 		std::string fbxFilePath,
 		std::string vertexShaderFile,
 		std::string fragmentShaderFile,
-		std::array<std::string, 8> addIncludeFile,
+		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile,
 		void* expandUniformBuffer,
 		int expandUniformBufferSize,
 		std::string expandUniformBufferName
@@ -38,7 +38,7 @@ namespace nsKaEngine {
 		m_textures = textures;
 
 		for (int i = 0; i < m_textures.size(); ++i) {
-			m_textures[i].TexUnit(&m_shaderProgram, TEXTURE_NAME[i], i);
+			m_textures[i].TexUnit(&m_shaderProgram, TEXTURE_NAME[i]);
 		}
 
 		// Generates Vertex Array Object and binds it
@@ -64,23 +64,26 @@ namespace nsKaEngine {
 		m_shaderProgram.Init(vertexShaderFile.c_str(), fragmentShaderFile.c_str(), addIncludeFile);
 		m_shaderProgram.Activate();
 
-		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.ID, "ModelUB");
+		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.GetShaderID(), "ModelUB");
 
 		if (expandUniformBuffer != nullptr) {
-			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram.ID, expandUniformBufferName.c_str());
+			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram.GetShaderID(), expandUniformBufferName.c_str());
 			m_expandUB = expandUniformBuffer;
 			m_expandUBSize = expandUniformBufferSize;
 		}
 	}
 
-	void Mesh::Draw(Matrix& modelMatrix)
-	{
-		m_shaderProgram.Activate();
-
+	void Mesh::Draw(
+		const Matrix& modelMatrix,
+		const Matrix& viewMatrix,
+		const Matrix& projectionMatrix
+	) {
+		//モデル用UniformBufferの更新。
 		m_modelUB.mModel = modelMatrix;
-		m_modelUB.mView = g_camera3D->GetViewMatrix();
-		m_modelUB.mProj = g_camera3D->GetProjectionMatrix();
+		m_modelUB.mView = viewMatrix;
+		m_modelUB.mProj = projectionMatrix;
 
+		m_shaderProgram.Activate();
 		m_modelUniformBuffer.Update(&m_modelUB, sizeof(ModelUB));
 
 		if (m_expandUB != nullptr) {

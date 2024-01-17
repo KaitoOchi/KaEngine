@@ -32,18 +32,7 @@ void Player::Update()
 
 	g_camera3D->Update();
 
-	if (Input::GetInstance()->GetCursorLock() == true) {
-
-		if (Input::GetInstance()->GetKey(KeyCode::e_buttonEsc)) {
-			Input::GetInstance()->UnLockCursor();
-		}
-	}
-	else {
-
-		if (Input::GetInstance()->GetAnyMouseButton()) {
-			Input::GetInstance()->LockCursor();
-		}
-	}
+	CursorLock();
 }
 
 void Player::Move()
@@ -72,7 +61,7 @@ void Player::Move()
 		moveSpeed += right;
 	}
 
-	if (moveSpeed.LengthSq() < 0.001f) {
+	if (moveSpeed.LengthSq() < FLT_MIN) {
 		return;
 	}
 
@@ -90,10 +79,10 @@ void Player::Rotation()
 		return;
 	}
 
-	Vector3 mouse;
+	Vector2 mouse;
 	mouse = Input::GetInstance()->GetMouseAxis();
 
-	if (mouse.LengthSq() < 0.001f) {
+	if (mouse.LengthSq() < FLT_MIN) {
 		return;
 	}
 
@@ -117,4 +106,20 @@ void Player::Rotation()
 	m_target += m_position;
 
 	g_camera3D->SetTarget(m_target);
+}
+
+void Player::CursorLock()
+{
+	if (Input::GetInstance()->GetCursorLock() == true) {
+		//Escでロック解除。
+		if (Input::GetInstance()->GetKey(KeyCode::e_buttonEsc)) {
+			Input::GetInstance()->UnLockCursor();
+		}
+	}
+	else {
+		//クリックでロック。
+		if (Input::GetInstance()->GetAnyMouseButton()) {
+			Input::GetInstance()->LockCursor();
+		}
+	}
 }

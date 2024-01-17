@@ -7,26 +7,49 @@ namespace nsKaEngine {
 	/// </summary>
 	struct Vertex
 	{
-		Vector3 position;
-		Vector3 normal;
-		Vector3 color;
-		Vector2 uv;
+		Vector3 position = Vector3::Zero;
+		Vector3 normal = Vector3::Zero;
+		Vector3 color = Vector3::Zero;
+		Vector2 uv = Vector2::Zero;
 	};
 
-	class VBO
+	/// <summary>
+	/// VertexBufferObject。
+	/// </summary>
+	class VBO : Noncopyable
 	{
 	public:
-		// Reference ID of the Vertex Buffer Object
-		GLuint ID;
-
 		VBO();
 		~VBO();
 
-		// generates a Vertex Buffer Object and links it o vertices
+		/// <summary>
+		/// 初期化処理。
+		/// </summary>
+		/// <param name="vertices">頂点情報</param>
 		void Init(std::vector<Vertex>& vertices);
+		/// <summary>
+		/// 接続。
+		/// </summary>
+		void Bind()
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, m_id);
+		}
+		/// <summary>
+		/// 解除。
+		/// </summary>
+		void UnBind()
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+		/// <summary>
+		/// 削除。
+		/// </summary>
+		void Delete()
+		{
+			glDeleteBuffers(1, &m_id);
+		}
 
-		void Bind();
-		void UnBind();
-		void Delete();
+	private:
+		GLuint m_id = 0;	//ID。
 	};
 }

@@ -30,10 +30,11 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 // debug
 #include "dbg/KaDebug.h"
 
-// Vector
+// math
 #include "math/Mathf.h"
 #include "math/Vector.h"
 #include "math/Matrix.h"
+#include "math/BitFlag.h"
 
 // Transform
 #include "math/Transform.h"

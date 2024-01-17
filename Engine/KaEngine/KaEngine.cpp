@@ -164,7 +164,6 @@ namespace nsKaEngine {
 		m_lightModel.MakeTranslate(m_lightPos);
 
 
-
 		std::vector <Vertex> pyramidVerts(pyramidVertices, pyramidVertices + sizeof(pyramidVertices) / sizeof(Vertex));
 		std::vector <GLuint> pyramidInd(pyramidIndices, pyramidIndices + sizeof(pyramidIndices) / sizeof(GLuint));
 		std::vector <Texture> pyramidTex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
@@ -184,7 +183,6 @@ namespace nsKaEngine {
 
 		m_pyramidPos = Vector3(-50.0f, 50.0f, 0.0f);
 		m_pyramidModel.MakeTranslate(m_pyramidPos);
-
 
 
 		m_lightUB.dirLig.dirDirection = Vector3(0.0f, -0.5f, -1.0f);
@@ -225,11 +223,11 @@ namespace nsKaEngine {
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 	
 
-		m_floorMesh.Draw(m_floorModel);
+		m_floorMesh.Draw(m_floorModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
-		m_lightMesh.Draw(m_lightModel);
+		m_lightMesh.Draw(m_lightModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
-		m_pyramidMesh.Draw(m_pyramidModel);
+		m_pyramidMesh.Draw(m_pyramidModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
 
 		//Swap the back buffer with the front buffer

@@ -40,7 +40,7 @@ namespace nsKaEngine {
 			std::string fbxFilePath,
 			std::string vertexShaderFile,
 			std::string fragmentShaderFile,
-			std::array<std::string, 8> addIncludeFile,
+			std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile,
 			void* expandUniformBuffer,
 			int expandUniformBufferSize,
 			std::string expandUniformBufferName
@@ -49,7 +49,11 @@ namespace nsKaEngine {
 		/// <summary>
 		/// 描画処理。
 		/// </summary>
-		void Draw(Matrix& modelMatrix);
+		void Draw(
+			const Matrix& modelMatrix,
+			const Matrix& viewMatrix,
+			const Matrix& projectionMatrix
+		);
 
 		/// <summary>
 		/// 削除処理。
@@ -67,8 +71,8 @@ namespace nsKaEngine {
 		UniformBuffer			m_modelUniformBuffer;		//モデル用UniformBufferObject。
 		UniformBuffer			m_expandUniformBuffer;		//ユーザー拡張用UniformBufferObject。
 		ModelUB					m_modelUB;					//モデル用構造体。
-		void*					m_expandUB;					//ユーザー拡張用構造体。
-		int						m_expandUBSize;				//構造体のサイズ。
+		void*					m_expandUB = nullptr;		//ユーザー拡張用構造体。
+		int						m_expandUBSize = 0;			//構造体のサイズ。
 	};
 }
 

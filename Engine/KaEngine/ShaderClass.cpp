@@ -16,7 +16,7 @@ namespace nsKaEngine {
 	void Shader::Init(
 		const char* vertexFile,
 		const char* fragmentFile,
-		std::array<std::string, 8> addIncludeFile
+		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile
 	) {
 		//VertexShaderを作成。
 		GLuint* vertexShaderPtr = KaEngine::GetInstance()->GetShaderBank(vertexFile);
@@ -85,13 +85,13 @@ namespace nsKaEngine {
 		}
 
 		// Creae Shader Program Object and get its reference
-		ID = glCreateProgram();
+		m_id = glCreateProgram();
 		// Attach the Vertex and Fragment Shaders to he Shader Program
-		glAttachShader(ID, m_vertexShader);
-		glAttachShader(ID, m_fragmentShader);
+		glAttachShader(m_id, m_vertexShader);
+		glAttachShader(m_id, m_fragmentShader);
 		// Wrap-up/Link all ther shaders together ino the Shader Program
-		glLinkProgram(ID);
-		ShaderCompileErrors(ID, "PROGRAM", nullptr);
+		glLinkProgram(m_id);
+		ShaderCompileErrors(m_id, "PROGRAM", nullptr);
 	}
 
 	std::string Shader::AddIncludeShaderFile(std::string mainShader, const char* includeFile)
@@ -109,28 +109,13 @@ namespace nsKaEngine {
 			//シェーダーに挿入する。
 			mainShader.replace(includePos, strlen(const_cast<char*>(includeFileStr.c_str())), includedShaderCode);
 		}
-
 		return mainShader;
-	}
-
-	void Shader::Activate()
-	{
-		glUseProgram(ID);
-	}
-
-	void Shader::Delete()
-	{
-		glDeleteProgram(ID);
-		// Delete the now useless ertext and Fragment Shader Objects
-		glDeleteShader(m_vertexShader);
-		glDeleteShader(m_fragmentShader);
 	}
 
 	std::string Shader::GetFileContents(const char* filename)
 	{
 		std::ifstream in(filename, std::ios::binary);
-		if (in)
-		{
+		if (in) {
 			std::string contents;
 			in.seekg(0, std::ios::end);
 			contents.resize(in.tellg());
@@ -148,10 +133,12 @@ namespace nsKaEngine {
 		const char* filePath
 	) {
 		GLint hasCompiled;
-		char infoLog[1024];
-
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
+
 		if (hasCompiled == GL_FALSE) {
+
+			char infoLog[1024];
+
 			if (type != "PROGRAM") {
 				glGetShaderInfoLog(shader, 1024, NULL, infoLog);
 				char errorMessage[1024];

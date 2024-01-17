@@ -10,11 +10,6 @@
 
 namespace nsKaEngine {
 
-	namespace
-	{
-		const int ADD_INCLUDE_FILE_MAX = 8;
-	}
-
 	/// <summary>
 	/// エンジンクラス。
 	/// </summary>

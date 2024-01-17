@@ -7,12 +7,17 @@
 
 namespace nsKaEngine {
 
-	class Shader
+	namespace
+	{
+		const int ADD_INCLUDE_FILE_MAX = 8;		//追加インクルードファイルの最大数。
+	}
+
+	/// <summary>
+	/// シェーダークラス。
+	/// </summary>
+	class Shader : Noncopyable
 	{
 	public:
-		// Reference ID of the Shader Program
-		GLuint ID = 0;
-		// build the Shader Program from 2 different shaders
 		Shader();
 		~Shader();
 
@@ -25,19 +30,35 @@ namespace nsKaEngine {
 		void Init(
 			const char* vertexFile,
 			const char* fragmentFile,
-			std::array<std::string, 8> addIncludeFile
+			std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile
 		);
 
 		/// <summary>
-		/// シェーダーにインクルードファイルを挿入する。
+		/// シェーダーIDを取得。
 		/// </summary>
-		/// <param name="mainShader">元になるシェーダー</param>
-		/// <param name="includeFile">インクルードしたいファイル</param>
 		/// <returns></returns>
-		std::string AddIncludeShaderFile(std::string mainShader, const char* includeFile);
+		const GLuint GetShaderID() const
+		{
+			return m_id;
+		}
 
-		void Activate();
-		void Delete();
+		/// <summary>
+		/// 有効化。
+		/// </summary>
+		void Activate()
+		{
+			glUseProgram(m_id);
+		}
+
+		/// <summary>
+		/// 削除。
+		/// </summary>
+		void Delete()
+		{
+			glDeleteProgram(m_id);
+			glDeleteShader(m_vertexShader);
+			glDeleteShader(m_fragmentShader);
+		}
 
 	private:
 		/// <summary>
@@ -46,7 +67,16 @@ namespace nsKaEngine {
 		/// <param name="fileName"></param>
 		/// <returns></returns>
 		std::string GetFileContents(const char* fileName);
-
+		/// <summary>
+		/// シェーダーにインクルードファイルを挿入する。
+		/// </summary>
+		/// <param name="mainShader">元になるシェーダー</param>
+		/// <param name="includeFile">インクルードしたいファイル</param>
+		/// <returns></returns>
+		std::string AddIncludeShaderFile(
+			std::string mainShader,
+			const char* includeFile
+		);
 		/// <summary>
 		/// コンパイルエラーを出力。
 		/// </summary>
@@ -59,7 +89,8 @@ namespace nsKaEngine {
 		);
 
 	private:
-		GLuint m_vertexShader = 0;
-		GLuint m_fragmentShader = 0;
+		GLuint m_id = 0;				//シェーダープログラム。
+		GLuint m_vertexShader = 0;		//頂点シェーダー。
+		GLuint m_fragmentShader = 0;	//フラグメントシェーダー。
 	};
 }

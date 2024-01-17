@@ -2,11 +2,38 @@
 
 namespace nsKaEngine{
 
+	namespace
+	{
+		const int		INPUT_BIT_NUM_MAX = 8;				//BitFlagの最大ビット数。
+	}
+
 	/// <summary>
 	/// キーコード。
 	/// </summary>
 	enum KeyCode
 	{
+		e_buttonSpace,
+		e_buttonApostrophe,
+		e_buttonComma,
+		e_buttonMinus,
+		e_buttonPeriod,
+		e_buttonSlash,
+		e_buttonBackSlash,
+		e_buttonSemicolon,
+		e_buttonEqual,
+		e_buttonLeftBracket,
+		e_buttonRightBracket,
+		e_buttonGraveAccent,
+		e_button0,
+		e_button1,
+		e_button2,
+		e_button3,
+		e_button4,
+		e_button5,
+		e_button6,
+		e_button7,
+		e_button8,
+		e_button9,
 		e_buttonQ,
 		e_buttonW,
 		e_buttonE,
@@ -34,6 +61,19 @@ namespace nsKaEngine{
 		e_buttonN,
 		e_buttonM,
 		e_buttonEsc,
+		e_buttonEnter,
+		e_buttonTab,
+		e_buttonBackSpace,
+		e_buttonRight,
+		e_buttonLeft,
+		e_buttonUp,
+		e_buttonDown,
+		e_buttonLeftShift,
+		e_buttonRightShift,
+		e_buttonLeftCtrl,
+		e_buttonRightCtrl,
+		e_buttonLeftAlt,
+		e_buttonRightAlt,
 		e_buttonNum,
 	};
 
@@ -97,7 +137,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKeyDown(const KeyCode code) const
 		{
-			return m_keyTrigger[code];
+			return m_keyTriggerBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
 		}
 
 		/// <summary>
@@ -107,7 +147,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKey(const KeyCode code) const
 		{
-			return m_keyPress[code];
+			return m_keyPressBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
 		}
 
 		/// <summary>
@@ -117,7 +157,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKeyUp(const KeyCode code) const
 		{
-			return m_keyRelease[code];
+			return m_keyReleaseBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
 		}
 
 		/// <summary>
@@ -126,9 +166,9 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetAnyKey() const
 		{
-			for (auto& press : m_keyPress)
+			for (auto& press : m_keyPressBit)
 			{
-				if (press == true) {
+				if (press.IsSetMaskFlagOR(BitFlag::All)) {
 					return true;
 				}
 			}
@@ -184,7 +224,7 @@ namespace nsKaEngine{
 		/// マウスの座標を取得。
 		/// </summary>
 		/// <returns></returns>
-		const Vector3& GetMousePosition() const
+		const Vector2& GetMousePosition() const
 		{
 			return m_mousePosition;
 		}
@@ -193,7 +233,7 @@ namespace nsKaEngine{
 		/// マウスの入力を取得。
 		/// </summary>
 		/// <returns>-1～1の間</returns>
-		const Vector3& GetMouseAxis() const
+		const Vector2& GetMouseAxis() const
 		{
 			return m_mouseAxis;
 		}
@@ -243,11 +283,11 @@ namespace nsKaEngine{
 	private:
 		static Input*	m_instance;							//インスタンス。
 		GLFWwindow*		m_window = nullptr;					//ウィンドウ。
-		Vector3			m_mousePosition;					//マウスの座標。
-		Vector3			m_mouseAxis;						//マウスの入力。
-		bool			m_keyTrigger[e_buttonNum];			//キーのトリガー判定。
-		bool			m_keyPress[e_buttonNum];			//キーのプレス判定。
-		bool			m_keyRelease[e_buttonNum];			//キーのリリース判定。
+		Vector2			m_mousePosition;					//マウスの座標。
+		Vector2			m_mouseAxis;						//マウスの入力。
+		BitFlag			m_keyTriggerBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];	//キーのトリガー判定。
+		BitFlag			m_keyPressBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];		//キーのプレス判定。
+		BitFlag			m_keyReleaseBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];	//キーのリリース判定。
 		bool			m_mouseTrigger[e_mouseButtonNum];	//マウスのトリガー判定。
 		bool			m_mousePress[e_mouseButtonNum];		//マウスのプレス判定。
 		bool			m_mouseRelease[e_mouseButtonNum];	//マウスのリリース判定。

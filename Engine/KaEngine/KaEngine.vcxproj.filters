@@ -45,6 +45,9 @@
     <ClCompile Include="graphics\UniformBuffer.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Math\BitFlag.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="dbg\KaDebug.h">
       <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\BitFlag.h">
+      <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

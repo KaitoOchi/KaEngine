@@ -40,6 +40,76 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
+		/// ベクトル同士の加算。
+		/// </summary>
+		/// <param name="v"></param>
+		void Add(const Vector2& v)
+		{
+			vec.x += v.x;
+			vec.y += v.y;
+		}
+
+		/// <summary>
+		/// ベクトル同士の減算。
+		/// </summary>
+		/// <param name="v"></param>
+		void Subtract(const Vector2& v)
+		{
+			vec.x -= v.x;
+			vec.y -= v.y;
+		}
+
+		/// <summary>
+		/// ベクトルをスカラーで拡大。
+		/// </summary>
+		/// <param name="s"></param>
+		void Scale(const float s)
+		{
+			vec.x *= s;
+			vec.y *= s;
+		}
+
+		/// <summary>
+		/// ベクトルをスカラーで除算。
+		/// </summary>
+		/// <param name="s"></param>
+		void Div(const float s)
+		{
+			float scale = 1.0f / s;
+			Scale(scale);
+		}
+
+		/// <summary>
+		/// 正規化をする。
+		/// </summary>
+		void Normalize()
+		{
+			glm::vec2 v;
+			v = glm::normalize(vec);
+			if (!isnan(v.x)) {
+				vec = v;
+			}
+		}
+
+		/// <summary>
+		/// ベクトルの長さを取得。
+		/// </summary>
+		/// <returns></returns>
+		const float Length() const
+		{
+			return glm::length(vec);
+		}
+
+		/// <summary>
+		/// ベクトルの長さの2乗を取得。
+		/// </summary>
+		/// <returns></returns>
+		const float LengthSq() const
+		{
+			return glm::length2(vec);
+		}
+
+		/// <summary>
 		/// 線形補間。
 		/// </summary>
 		/// <param name="v0">補完開始のベクトル</param>
@@ -59,6 +129,50 @@ namespace nsKaEngine {
 		Vector2& operator=(const Vector2& v)
 		{
 			vec = v.vec;
+			return *this;
+		}
+
+		/// <summary>
+		/// 加算代入演算子。
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		Vector2& operator+=(const Vector2& v)
+		{
+			Add(v);
+			return *this;
+		}
+
+		/// <summary>
+		/// 減算代入演算子。
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		Vector2& operator-=(const Vector2& v)
+		{
+			Subtract(v);
+			return *this;
+		}
+
+		/// <summary>
+		/// 乗算代入演算子。
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		Vector2& operator*=(const float s)
+		{
+			Scale(s);
+			return *this;
+		}
+
+		/// <summary>
+		/// 除算代入演算子。
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		Vector2& operator/=(const float s)
+		{
+			Div(s);
 			return *this;
 		}
 

@@ -15,7 +15,7 @@ namespace nsKaEngine {
 
 	void VAO::Init()
 	{
-		glGenVertexArrays(1, &ID);
+		glGenVertexArrays(1, &m_id);
 	}
 
 	void VAO::LinkAttribute(VBO& vbo, GLuint layout, GLuint numComponents, GLenum type, GLsizei stride, void* offset)
@@ -25,20 +25,5 @@ namespace nsKaEngine {
 		glVertexAttribPointer(layout, numComponents, type, GL_FALSE, stride, offset);
 		glEnableVertexAttribArray(layout);
 		vbo.UnBind();
-	}
-
-	void VAO::Bind()
-	{
-		glBindVertexArray(ID);
-	}
-
-	void VAO::UnBind()
-	{
-		glBindVertexArray(0);
-	}
-
-	void VAO::Delete()
-	{
-		glDeleteVertexArrays(1, &ID);
 	}
 }

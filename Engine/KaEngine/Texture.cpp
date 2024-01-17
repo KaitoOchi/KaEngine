@@ -13,57 +13,45 @@ namespace nsKaEngine {
 
 	}
 
-	void Texture::Init(const char* image, GLenum texType, GLuint slot, GLenum format, GLenum pixelType)
-	{
-		type = texType;
+	void Texture::Init(
+		const char* image,
+		const GLenum texType,
+		const GLuint slot,
+		const GLenum format,
+		const GLenum pixelType
+	) {
+		m_target = texType;
+		m_slot = slot;
 
 		// Texture
 		int widthImg, heightImg, numColCh;
 		stbi_set_flip_vertically_on_load(true);
 		unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
 
-		glGenTextures(1, &ID);
-		glActiveTexture(GL_TEXTURE0 + slot);
-		unit = slot;
-		glBindTexture(texType, ID);
+		glGenTextures(1, &m_id);
+		Bind();
+
 		// Configures the type of algorithm that is used to make the image smaller or bigger
-		glTexParameteri(texType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(texType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 		// Configures the way the texture repeats (if it does at all)
-		glTexParameteri(texType, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(texType, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		//float flatColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		//glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, flatColor);
-
-		glTexImage2D(texType, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes);
-		glGenerateMipmap(texType);
+		glTexImage2D(m_target, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes);
+		glGenerateMipmap(m_target);
 
 		stbi_image_free(bytes);
-		glBindTexture(texType, 0);
+		UnBind();
 	}
 
-	void Texture::TexUnit(Shader* shader, const char* uniform, GLuint unit)
-	{
-		GLuint texUni = glGetUniformLocation(shader->ID, uniform);
+	void Texture::TexUnit(
+		Shader* shader,
+		const char* uniform
+	) {
+		GLuint texUni = glGetUniformLocation(shader->GetShaderID(), uniform);
 		shader->Activate();
-		glUniform1i(texUni, unit);
-	}
-
-	void Texture::Bind()
-	{
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(type, ID);
-	}
-
-	void Texture::UnBind()
-	{
-		glBindTexture(type, 0);
-	}
-
-	void Texture::Delete()
-	{
-		glDeleteTextures(1, &ID);
+		glUniform1i(texUni, m_slot);
 	}
 }
