@@ -19,7 +19,9 @@ namespace nsKaEngine {
 		const char* blockName
 	) {
 
-		if (blockName != "ModelUB") {
+		if (blockName != "ModelUB" &&
+			blockName != "SpriteUB"
+		) {
 
 			GLuint* uboPtr = KaEngine::GetInstance()->GetUniformBufferBank(blockName);
 			if (uboPtr == nullptr) {

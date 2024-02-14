@@ -101,22 +101,24 @@ namespace nsKaEngine {
 
 	}
 
-	void Input::Init(GLFWwindow* window)
+	void Input::Init()
 	{
-		m_window = window;
+
 	}
 
 	void Input::Update()
 	{
-		InputKey();
+		auto window = GraphicsEngine::GetInstance()->GetWindow();
 
-		InputMouse();
+		InputKey(window);
+
+		InputMouse(window);
 	}
 
 	/// <summary>
 	/// キーの入力処理。
 	/// </summary>
-	void Input::InputKey()
+	void Input::InputKey(GLFWwindow* window)
 	{
 		int keyNum = 0;
 		int bitArray = 0;
@@ -126,7 +128,7 @@ namespace nsKaEngine {
 			keyNum = keyPad.keyCode % INPUT_BIT_NUM_MAX;
 			bitArray = keyPad.keyCode / INPUT_BIT_NUM_MAX;
 
-			if (glfwGetKey(m_window, keyPad.keyNumber) == GLFW_PRESS) {
+			if (glfwGetKey(window, keyPad.keyNumber) == GLFW_PRESS) {
 
 				if (m_keyPressBit[bitArray].IsSetFlag(keyNum)) {
 					m_keyTriggerBit[bitArray].FoldFlag(keyNum);
@@ -154,19 +156,19 @@ namespace nsKaEngine {
 	/// <summary>
 	/// マウスの入力処理。
 	/// </summary>
-	void Input::InputMouse()
+	void Input::InputMouse(GLFWwindow* window)
 	{
 		//マウスの座標を取得。
 		double mouseX, mouseY;
-		glfwGetCursorPos(m_window, &mouseX, &mouseY);
+		glfwGetCursorPos(window, &mouseX, &mouseY);
 
 		m_mouseAxis = m_mousePosition;
 
 		//画面の範囲内にマウスがあるなら。
 		if (mouseX > 0.0f &&
-			mouseX < FRAME_BUFFER_WIDTH &&
+			mouseX < GraphicsEngine::GetInstance()->GetWindowSize().x &&
 			mouseY > 0.0f &&
-			mouseY < FRAME_BUFFER_HEIGHT
+			mouseY < GraphicsEngine::GetInstance()->GetWindowSize().y
 		) {
 			//座標を保存する。
 			m_mousePosition.x = static_cast<float>(mouseX);
@@ -187,9 +189,9 @@ namespace nsKaEngine {
 		//カーソルが固定なら、座標を設定。
 		if (m_cursorLock) {
 			//カーソルの位置を固定。
-			glfwSetCursorPos(m_window, 1600.0f / 2.0f, 900.0f / 2.0f);
+			glfwSetCursorPos(window, 1600.0f / 2.0f, 900.0f / 2.0f);
 			//座標を保存する。
-			glfwGetCursorPos(m_window, &mouseX, &mouseY);
+			glfwGetCursorPos(window, &mouseX, &mouseY);
 			m_mousePosition.x = static_cast<float>(mouseX);
 			m_mousePosition.y = static_cast<float>(mouseY);
 		}
@@ -197,7 +199,7 @@ namespace nsKaEngine {
 		//マウスボタンの入力。
 		for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
 
-			if (glfwGetMouseButton(m_window, mouseButton.MouseNumber) == GLFW_PRESS) {
+			if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
 				m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
 				m_mousePress[mouseButton.mouseButton] = true;
 			}

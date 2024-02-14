@@ -21,7 +21,10 @@ namespace nsKaEngine {
 	class BitFlag
 	{
 	public:
+		static const BitFlag Zero;
 		static const BitFlag All;
+
+		unsigned char bit;
 
 	public:
 		/// <summary>
@@ -35,7 +38,6 @@ namespace nsKaEngine {
 		{
 			bit = b;
 		}
-
 		/// <summary>
 		/// デストラクタ。
 		/// </summary>
@@ -140,8 +142,5 @@ namespace nsKaEngine {
 		{
 			std::cout << std::bitset<8>(bit) << '\n';
 		}
-
-	private:
-		unsigned char bit;
 	};
 }

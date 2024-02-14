@@ -5,9 +5,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="gl.c" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="KaEngine.cpp" />
     <ClCompile Include="graphics\Material.cpp">
       <Filter>graphics</Filter>
@@ -48,13 +46,20 @@
     <ClCompile Include="Math\BitFlag.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\Sprite.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\ShaderClass.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Texture.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="KaEngine.h" />
     <ClInclude Include="util\Noncopyable.h">
       <Filter>util</Filter>
@@ -112,6 +117,15 @@
     </ClInclude>
     <ClInclude Include="Math\BitFlag.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Sprite.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ShaderClass.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Texture.h">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

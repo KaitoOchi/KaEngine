@@ -104,6 +104,40 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// 平行投影行列を作成。
+		/// </summary>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <param name="nearV"></param>
+		/// <param name="farV"></param>
+		void MakeOrthoProjectionMatrix(
+			const float width,
+			const float height,
+			const float nearV,
+			const float farV
+		) {
+			mat = glm::orthoLH_ZO(-width, width, -height, height, nearV, farV);
+		}
+
+		/// <summary>
+		/// クォータニオンから回転行列を作成。
+		/// </summary>
+		/// <param name="q"></param>
+		void MakeRotationFromQuaternion(const Quaternion& q)
+		{
+			mat = glm::toMat4(static_cast<glm::quat>(q.vec));
+		}
+
+		/// <summary>
+		/// 拡大行列を作成。
+		/// </summary>
+		/// <param name="scale"></param>
+		void MakeScaling(const Vector3& scale)
+		{
+			mat = glm::scale(scale.vec);
+		}
+
+		/// <summary>
 		/// 逆行列を計算。
 		/// </summary>
 		/// <param name="mat"></param>

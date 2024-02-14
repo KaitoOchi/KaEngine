@@ -20,15 +20,25 @@ namespace nsKaEngine {
 
 	void Camera::Update()
 	{
-		float aspect = (float)(FRAME_BUFFER_WIDTH / FRAME_BUFFER_HEIGHT);
-
 		if (m_isNeedUpdate) {
+
+			Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
+			float aspect = (float)(windowSize.x / windowSize.y);
+
 			//カメラ行列を作成。
 			m_viewMatrix.MakeLookAt(m_position, m_target, m_up);
 			//カメラ行列の逆行列を計算。
 			m_viewMatrixInv.Inverse(m_viewMatrix);
+
 			//プロジェクション行列を作成。
-			m_projectionMatrix.MakeProjecionMatrix(m_fov, aspect, m_near, m_far);
+			if (m_updateProjFunc == e_UpdateProjFunc_Prespective) {
+				//透視変換行列を作成。
+				m_projectionMatrix.MakeProjecionMatrix(m_fov, aspect, m_near, m_far);
+			}
+			else {
+				//平行投影行列を作成。
+				m_projectionMatrix.MakeOrthoProjectionMatrix(m_width, m_height, m_near, m_far);
+			}
 			//プロジェクション行列の逆行列を計算。
 			m_projectionMatrixInv.Inverse(m_projectionMatrix);
 			//ビュープロジェクション行列を作成。

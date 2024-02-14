@@ -4,20 +4,21 @@
 #include <stb/stb_image.h>
 
 #include "graphics/Mesh.h"
-#include "Texture.h"
+#include "graphics/Texture.h"
 
 namespace nsKaEngine {
 
 	KaEngine* KaEngine::m_instance = nullptr;
 	Camera* g_camera3D = nullptr;				//3Dカメラ。
+	Camera* g_camera2D = nullptr;				//2Dカメラ。
 
 	//頂点座標。
 	Vertex vertices[] =
-	{ //               COORDINATES           /            COLORS          /           NORMALS         /       TEXTURE COORDINATES    //
-		Vertex{Vector3(-1000.0f, 0.0f,  1000.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(-1000.0f, 0.0f, -1000.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f)},
+	{ //               COORDINATES				/            COLORS          /           NORMALS         /   TEXTURE COORDINATES    //
+		Vertex{Vector3(-1000.0f, 0.0f,  1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(-1000.0f, 0.0f, -1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f)},
 		Vertex{Vector3(1000.0f, 0.0f, -1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f)},
-		Vertex{Vector3(1000.0f, 0.0f,  1000.0f),  Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f)}
+		Vertex{Vector3(1000.0f, 0.0f,  1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0f, 0.0f)}
 	};
 
 	// Indices for vertices order
@@ -28,27 +29,27 @@ namespace nsKaEngine {
 	};
 
 	Vertex pyramidVertices[] =
-	{ //     COORDINATES     /        COLORS          /    TexCoord   /        NORMALS       //
+	{ //            COORDINATES				  /            COLORS			 /           NORMALS         /    TEXTURE COORDINATES	//
 		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, -50.5f), Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.0f, 5.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.0f, 5.0f)},
 		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(5.0f, 5.0f)},
-		Vertex{Vector3(50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(5.0f, 0.0f)},
 
 		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, -50.5f), Vector3(0.83f, 0.70f, 0.44f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),	Vector3(0.92f, 0.86f, 0.76f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
 
 		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, -0.8f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(50.5f, 0.0f, -50.5f), Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, -0.8f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),	Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, -0.8f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, -0.8f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, -0.8f), Vector2(2.5f, 5.0f)},
 
 		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.8f, 0.5f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(50.5f, 0.0f, 50.5f), Vector3(0.83f, 0.70f, 0.44f), Vector3(0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),	Vector3(0.92f, 0.86f, 0.76f), Vector3(0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
 
-		Vertex{Vector3(50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, 50.5f), Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),	Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, 0.8f), Vector2(2.5f, 5.0f)}
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, 0.8f), Vector2(2.5f, 5.0f)}
 	};
 
 	// Indices for vertices order
@@ -105,11 +106,17 @@ namespace nsKaEngine {
 		g_camera3D = new Camera;
 		g_camera3D->Init();
 
-		m_window = window;
+		g_camera2D = new Camera;
+		g_camera2D->Init();
+		g_camera2D->SetUpdateProjFunc(Camera::e_UpdateProjFunc_Ortho);
+
+		GraphicsEngine::CreateInstance(window);
+		Input::CreateInstance();
 
 		//背面カリングを有効にする。
 		//glEnable(GL_CULL_FACE);
 
+		//床モデルの生成。
 		ModelInitData modelInitData;
 		modelInitData.vertexShaderFilePath = "Assets/shader/default.vert";
 		modelInitData.fragmentShaderFilePath = "Assets/shader/default.frag";
@@ -144,6 +151,7 @@ namespace nsKaEngine {
 		m_floorModel.MakeTranslate(m_floorPos);
 
 
+		//四角形モデルの生成。
 		std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 		std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 		// Create light mesh
@@ -164,6 +172,7 @@ namespace nsKaEngine {
 		m_lightModel.MakeTranslate(m_lightPos);
 
 
+		//ピラミッドモデルの生成。
 		std::vector <Vertex> pyramidVerts(pyramidVertices, pyramidVertices + sizeof(pyramidVertices) / sizeof(Vertex));
 		std::vector <GLuint> pyramidInd(pyramidIndices, pyramidIndices + sizeof(pyramidIndices) / sizeof(GLuint));
 		std::vector <Texture> pyramidTex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
@@ -185,6 +194,17 @@ namespace nsKaEngine {
 		m_pyramidModel.MakeTranslate(m_pyramidPos);
 
 
+		//スプライトの生成。
+		SpriteInitData spriteInitData;
+		spriteInitData.filePath = "Assets/sprite/circle.png";
+		spriteInitData.vertexFilePath = "Assets/shader/sprite.vert";
+		spriteInitData.fragmentFilePath = "Assets/shader/sprite.frag";
+		spriteInitData.width = 256;
+		spriteInitData.height = 256;
+		m_sprite.Init(spriteInitData);
+
+
+		//ライト用構造体の設定。
 		m_lightUB.dirLig.dirDirection = Vector3(0.0f, -0.5f, -1.0f);
 		m_lightUB.dirLig.dirDirection.Normalize();
 		m_lightUB.dirLig.dirColor = Vector3(0.5f, 0.5f, 0.5f);
@@ -193,15 +213,6 @@ namespace nsKaEngine {
 		m_lightUB.ptLig.ptColor = Vector3(3.0f, 0.0f, 0.0f);
 		m_lightUB.ptLig.ptRange = 300.0f;
 
-
-		//Enable the Depth Buffer
-		glEnable(GL_DEPTH_TEST);
-
-		//入力クラス。
-		Input::CreateInstance(m_window);
-
-		//backBufferとfrontBufferの切り替え。
-		glfwSwapBuffers(window);
 	}
 
 	void KaEngine::Execute()
@@ -216,10 +227,13 @@ namespace nsKaEngine {
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		// Clear the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	}
 
 	void KaEngine::EndFrame()
 	{
+		g_camera2D->Update();
+
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 	
 
@@ -229,9 +243,19 @@ namespace nsKaEngine {
 
 		m_pyramidMesh.Draw(m_pyramidModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
+		Quaternion rot;
+		rot.SetRotationDegX(45.0f);
+
+		m_sprite.Update(
+			Vector3(0.5f, 0.0f, 0.0f),
+			rot,
+			Vector3(1.1f, 1.0f, 1.0f),
+			Vector2(0.0f, 0.0f)
+		);
+		//m_sprite.Draw();
 
 		//Swap the back buffer with the front buffer
-		glfwSwapBuffers(m_window);
+		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
 		glfwPollEvents();
 
 

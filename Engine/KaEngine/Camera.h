@@ -1,5 +1,5 @@
 #pragma once
-#include "ShaderClass.h"
+#include "graphics/ShaderClass.h"
 
 namespace nsKaEngine {
 
@@ -8,6 +8,16 @@ namespace nsKaEngine {
 	/// </summary>
 	class Camera
 	{
+	public:
+		/// <summary>
+		/// カメラの更新方法。
+		/// </summary>
+		enum EnUpdateProjFunc
+		{
+			e_UpdateProjFunc_Prespective,	//透視射影行列。
+			e_UpdateProjFunc_Ortho,			//平行投影。
+		};
+
 	public:
 		/// <summary>
 		/// コンストラクタ。
@@ -138,12 +148,42 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// 幅を設定。
+		/// </summary>
+		/// <param name="w"></param>
+		void SetWidth(const float w)
+		{
+			m_width = w;
+			m_isNeedUpdate = true;
+		}
+
+		/// <summary>
+		/// 高さを設定。
+		/// </summary>
+		/// <param name="h"></param>
+		void SetHeight(const float h)
+		{
+			m_height = h;
+			m_isNeedUpdate = true;
+		}
+
+		/// <summary>
 		/// 視野角を設定。
 		/// </summary>
 		/// <param name="fov"></param>
 		void SetFOV(const float fov)
 		{
 			m_fov = fov;
+			m_isNeedUpdate = true;
+		}
+
+		/// <summary>
+		/// カメラの更新方法を設定。
+		/// </summary>
+		/// <param name="en"></param>
+		void SetUpdateProjFunc(EnUpdateProjFunc en)
+		{
+			m_updateProjFunc = en;
 			m_isNeedUpdate = true;
 		}
 
@@ -175,21 +215,24 @@ namespace nsKaEngine {
 		}
 
 	private:
-		Vector3		m_position;						//座標。
-		Vector3		m_target;						//注視点。
-		Vector3		m_forward = Vector3::Forward;	//前方向。
-		Vector3		m_up = Vector3::Up;				//上方向。
-		Vector3		m_right = Vector3::AxisX;		//右方向。
-		Quaternion	m_rotation;						//回転。
-		Matrix		m_viewMatrix;					//ビュー行列。
-		Matrix		m_viewMatrixInv;				//ビュー行列の逆行列。
-		Matrix		m_projectionMatrix;				//透視変換行列。
-		Matrix		m_projectionMatrixInv;			//透視変換行列の逆行列。
-		Matrix		m_viewProjectionMatrix;			//ビュープロジェクション行列。
-		Matrix		m_viewProjectionMatrixInv;		//ビュープロジェクション行列の逆行列。
-		bool		m_isNeedUpdate = true;			//更新が必要かどうか。
-		float		m_near = 0.1f;					//近平面。
-		float		m_far = 1000.0f;				//遠平面。
-		float		m_fov = 60.0f;					//視野角。
+		Vector3			m_position = Vector3::AxisZ;	//座標。
+		Vector3			m_target;						//注視点。
+		Vector3			m_forward = Vector3::Forward;	//前方向。
+		Vector3			m_up = Vector3::Up;				//上方向。
+		Vector3			m_right = Vector3::AxisX;		//右方向。
+		Quaternion		m_rotation;						//回転。
+		Matrix			m_viewMatrix;					//ビュー行列。
+		Matrix			m_viewMatrixInv;				//ビュー行列の逆行列。
+		Matrix			m_projectionMatrix;				//透視変換行列。
+		Matrix			m_projectionMatrixInv;			//透視変換行列の逆行列。
+		Matrix			m_viewProjectionMatrix;			//ビュープロジェクション行列。
+		Matrix			m_viewProjectionMatrixInv;		//ビュープロジェクション行列の逆行列。
+		EnUpdateProjFunc m_updateProjFunc = e_UpdateProjFunc_Prespective;	//カメラの更新方法。
+		bool			m_isNeedUpdate = true;			//更新が必要かどうか。
+		float			m_near = 0.1f;					//近平面。
+		float			m_far = 1000.0f;				//遠平面。
+		float			m_fov = 60.0f;					//視野角。
+		float			m_width = FRAME_BUFFER_WIDTH;	//平行投影行列の幅。
+		float			m_height = FRAME_BUFFER_HEIGHT;	//平行投影行列の高さ。
 	};
 }

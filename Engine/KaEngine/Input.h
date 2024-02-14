@@ -100,11 +100,11 @@ namespace nsKaEngine{
 		/// <summary>
 		/// インスタンスを生成。
 		/// </summary>
-		static void CreateInstance(GLFWwindow* window)
+		static void CreateInstance()
 		{
 			Ka_Assert(m_instance == nullptr, "codeError", "Inputクラスのインスタンスは一つしか作れません。");
 			m_instance = new Input;
-			m_instance->Init(window);
+			m_instance->Init();
 		}
 
 		/// <summary>
@@ -243,7 +243,7 @@ namespace nsKaEngine{
 		/// </summary>
 		void LockCursor()
 		{
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			glfwSetInputMode(GraphicsEngine::GetInstance()->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 			m_cursorLock = true;
 		}
 
@@ -252,7 +252,7 @@ namespace nsKaEngine{
 		/// </summary>
 		void UnLockCursor()
 		{
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(GraphicsEngine::GetInstance()->GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			m_cursorLock = false;
 		}
 
@@ -270,19 +270,18 @@ namespace nsKaEngine{
 		/// 初期化処理。
 		/// </summary>
 		/// <param name="window"></param>
-		void Init(GLFWwindow* window);
+		void Init();
 		/// <summary>
 		/// キーの入力処理。
 		/// </summary>
-		void InputKey();
+		void InputKey(GLFWwindow* window);
 		/// <summary>
 		/// マウスの入力処理。
 		/// </summary>
-		void InputMouse();
+		void InputMouse(GLFWwindow* window);
 
 	private:
 		static Input*	m_instance;							//インスタンス。
-		GLFWwindow*		m_window = nullptr;					//ウィンドウ。
 		Vector2			m_mousePosition;					//マウスの座標。
 		Vector2			m_mouseAxis;						//マウスの入力。
 		BitFlag			m_keyTriggerBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];	//キーのトリガー判定。

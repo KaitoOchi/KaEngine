@@ -41,6 +41,8 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 #include "graphics/Material.h"
 #include "graphics/Mesh.h"
+#include "graphics/Sprite.h"
+#include "graphics/GraphicsEngine.h"
 
 // Time
 #include "timer/FPSLimiter.h"

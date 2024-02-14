@@ -14,6 +14,14 @@ namespace nsKaEngine {
 	};
 
 	/// <summary>
+	/// スプライト用頂点情報。
+	/// </summary>
+	struct SpriteVertex {
+		Vector4 pos;
+		Vector2 uv;
+	};
+
+	/// <summary>
 	/// VertexBufferObject。
 	/// </summary>
 	class VBO : Noncopyable
@@ -27,6 +35,8 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="vertices">頂点情報</param>
 		void Init(std::vector<Vertex>& vertices);
+		void Init(std::vector<SpriteVertex>& vertices);
+
 		/// <summary>
 		/// 接続。
 		/// </summary>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Texture.h"
+#include "graphics/Texture.h"
 #include "Camera.h"
 
 #include "graphics/light/DirectionLight.h"
@@ -28,7 +28,7 @@ namespace nsKaEngine {
 		};
 
 		/// <summary>
-		/// 初期化用のモデルデータ
+		/// 初期化用のモデルデータ。
 		/// </summary>
 		struct ModelInitData
 		{
@@ -81,7 +81,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <param name="texture"></param>
-		void RegistTextureBank(const char* filePath, Texture* texture)
+		void RegistTextureBank(const char* filePath, GLuint* texture)
 		{
 			m_textureBank.Regist(filePath, texture);
 		}
@@ -91,7 +91,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <returns></returns>
-		Texture* GetTextureBank(const char* filePath)
+		GLuint* GetTextureBank(const char* filePath)
 		{
 			return m_textureBank.Get(filePath);
 		}
@@ -116,11 +116,21 @@ namespace nsKaEngine {
 			return m_shaderBank.Get(filePath);
 		}
 
+		/// <summary>
+		/// 定数バッファバンクに登録。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
 		void RegistUniformBufferBank(const char* uniformBufferName, GLuint* uniformBuffer)
 		{
 			m_uniformBufferBank.Regist(uniformBufferName, uniformBuffer);
 		}
 
+		/// <summary>
+		/// バンクから定数バッファを取得。
+		/// </summary>
+		/// <param name="uniformBufferName"></param>
+		/// <returns></returns>
 		GLuint* GetUniformBufferBank(const char* uniformBufferName)
 		{
 			return m_uniformBufferBank.Get(uniformBufferName);
@@ -151,15 +161,13 @@ namespace nsKaEngine {
 		void Delete();
 
 	private:
-		static KaEngine* m_instance;		//インスタンス。
+		static KaEngine* m_instance;				//インスタンス。
 
-		GLFWwindow* m_window = nullptr;		//ウィンドウ。
+		FPSLimiter m_fpsLimiter;					//FPSリミッター。
 
-		FPSLimiter m_fpsLimiter;			//FPSリミッター。
-
-		TResourceBank<Texture> m_textureBank;	//テクスチャバンク。
-		TResourceBank<GLuint> m_shaderBank;		//シェーダーバンク。
-		TResourceBank<GLuint> m_uniformBufferBank;
+		TResourceBank<GLuint> m_textureBank;		//テクスチャバンク。
+		TResourceBank<GLuint> m_shaderBank;			//シェーダーバンク。
+		TResourceBank<GLuint> m_uniformBufferBank;	//定数バッファバンク。
 
 		Texture m_textures[3];
 		LightUB m_lightUB;
@@ -175,6 +183,9 @@ namespace nsKaEngine {
 		Mesh m_pyramidMesh;
 		Vector3 m_pyramidPos;
 		Matrix m_pyramidModel;
+
+		Sprite m_sprite;
 	};
 	extern Camera* g_camera3D;
+	extern Camera* g_camera2D;
 }

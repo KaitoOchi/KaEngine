@@ -40,6 +40,17 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
+		/// ベクトルを設定。
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		void Set(const float x, const float y)
+		{
+			vec.x = x;
+			vec.y = y;
+		}
+
+		/// <summary>
 		/// ベクトル同士の加算。
 		/// </summary>
 		/// <param name="v"></param>

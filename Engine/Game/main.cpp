@@ -48,6 +48,8 @@ int main()
 
 		player->Update();
 
+		GraphicsEngine::GetInstance()->Execute();
+
 		KaEngine::GetInstance()->EndFrame();
 	}
 

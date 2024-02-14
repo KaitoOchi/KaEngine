@@ -16,7 +16,6 @@ Player::Player()
 
 	g_camera3D->SetPosition(m_position);
 	g_camera3D->SetTarget(Vector3::AxisZ * TARGET_FORWARD);
-	g_camera3D->Update();
 }
 
 Player::~Player()

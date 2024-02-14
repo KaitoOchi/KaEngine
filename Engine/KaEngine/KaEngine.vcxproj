@@ -160,6 +160,9 @@
     <ClCompile Include="graphics\light\PointLight.cpp" />
     <ClCompile Include="graphics\Material.cpp" />
     <ClCompile Include="graphics\Mesh.cpp" />
+    <ClCompile Include="graphics\ShaderClass.cpp" />
+    <ClCompile Include="graphics\Sprite.cpp" />
+    <ClCompile Include="graphics\Texture.cpp" />
     <ClCompile Include="graphics\UniformBuffer.cpp" />
     <ClCompile Include="graphics\VAO.cpp" />
     <ClCompile Include="graphics\VBO.cpp" />
@@ -173,12 +176,10 @@
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Transform.cpp" />
     <ClCompile Include="math\Vector.cpp" />
-    <ClCompile Include="ShaderClass.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -189,6 +190,9 @@
     <ClInclude Include="graphics\light\PointLight.h" />
     <ClInclude Include="graphics\Material.h" />
     <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\ShaderClass.h" />
+    <ClInclude Include="graphics\Sprite.h" />
+    <ClInclude Include="graphics\Texture.h" />
     <ClInclude Include="graphics\UniformBuffer.h" />
     <ClInclude Include="graphics\VAO.h" />
     <ClInclude Include="graphics\VBO.h" />
@@ -200,8 +204,6 @@
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Transform.h" />
     <ClInclude Include="math\Vector.h" />
-    <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="timer\FPSLimiter.h" />
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="util\Noncopyable.h" />

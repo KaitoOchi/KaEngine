@@ -14,9 +14,9 @@ namespace nsKaEngine {
 		auto albedoMap = KaEngine::GetInstance()->GetTextureBank(albedoFilePath);
 
 		if (albedoMap == nullptr) {
-			albedoMap = new Texture();
-			albedoMap->Init(albedoFilePath, GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-			KaEngine::GetInstance()->RegistTextureBank(albedoFilePath, albedoMap);
+			//albedoMap = new Texture();
+			//albedoMap->Init(albedoFilePath, GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+			//KaEngine::GetInstance()->RegistTextureBank(albedoFilePath, albedoMap);
 		}
 
 		//m_albedoMap = albedoMap;
