@@ -91,6 +91,7 @@ namespace nsKaEngine {
 
 	Input::Input()
 	{
+		//配列の初期化。
 		memset(m_mouseTrigger, 0, sizeof(m_mouseTrigger));
 		memset(m_mousePress, 0, sizeof(m_mousePress));
 		memset(m_mouseRelease, 0, sizeof(m_mouseRelease));
@@ -128,6 +129,7 @@ namespace nsKaEngine {
 			keyNum = keyPad.keyCode % INPUT_BIT_NUM_MAX;
 			bitArray = keyPad.keyCode / INPUT_BIT_NUM_MAX;
 
+			//キーが押されていたら。
 			if (glfwGetKey(window, keyPad.keyNumber) == GLFW_PRESS) {
 
 				if (m_keyPressBit[bitArray].IsSetFlag(keyNum)) {
@@ -139,6 +141,7 @@ namespace nsKaEngine {
 				m_keyPressBit[bitArray].SetFlag(keyNum);
 				m_keyReleaseBit[bitArray].FoldFlag(keyNum);
 			}
+			//押されていないなら。
 			else {
 
 				if (m_keyPressBit[bitArray].IsSetFlag(keyNum)) {
@@ -198,11 +201,12 @@ namespace nsKaEngine {
 
 		//マウスボタンの入力。
 		for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
-
+			//マウスボタンが押されていたら。
 			if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
 				m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
 				m_mousePress[mouseButton.mouseButton] = true;
 			}
+			//マウスボタンが押されていないなら。
 			else {
 				m_mouseRelease[mouseButton.mouseButton] = m_mousePress[mouseButton.mouseButton];
 				m_mousePress[mouseButton.mouseButton] = false;

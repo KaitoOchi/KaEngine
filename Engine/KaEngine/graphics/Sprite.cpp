@@ -16,15 +16,14 @@ namespace nsKaEngine {
 	void Sprite::Init(SpriteInitData& initData)
 	{
 		//画像のハーフサイズを設定。
-		m_size.Set(static_cast<int>(initData.width), static_cast<int>(initData.height));
+		m_size.Set(static_cast<float>(initData.width), static_cast<float>(initData.height));
+		m_size.Scale(0.5f);
 
 		InitTexture(initData);
 
 		InitVertexBufferAndElementsBuffer();
 
 		InitShader(initData);
-
-		InitUniformBuffer(initData);
 
 		InitUniformBuffer(initData);
 	}
@@ -40,8 +39,6 @@ namespace nsKaEngine {
 	{
 		Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
 		Vector2 halfSize = m_size;
-		halfSize.Scale(0.5f);
-		halfSize.Set(halfSize.x / windowSize.x, halfSize.y / windowSize.y);
 
 		std::vector<SpriteVertex> verts = {
 			{
@@ -107,38 +104,48 @@ namespace nsKaEngine {
 		const Vector3& scale,
 		const Vector2& pivot
 	) {
-		Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
 		Vector2 halfSize = m_size;
-		halfSize.Scale(0.5f);
-		halfSize.Set(halfSize.x / windowSize.x, halfSize.y / windowSize.y);
+
+		//ローカル座標を求める。
+		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
+		Vector3 localPosition = pos;
+		localPosition.x /= viewPort.x;
+		localPosition.y /= viewPort.y;
+
+		//ローカルピボットを求める。
+		Vector2 localPivot = pivot;
+		localPivot.Scale(0.001f);
 
 		Matrix mPivotTrans;
-		mPivotTrans.MakeTranslate( Vector3(
-			halfSize.x * pivot.x,
-			halfSize.y * pivot.y,
+		mPivotTrans.MakeTranslate(Vector3(
+			halfSize.x * localPivot.x,
+			halfSize.y * localPivot.y,
 			0.0f
 		));
 
 		Matrix mTrans, mRot, mScale;
-		mTrans.MakeTranslate(pos);
+		mTrans.MakeTranslate(localPosition);
 		mRot.MakeRotationFromQuaternion(rot);
 		mScale.MakeScaling(scale);
 
-		m_worldMatrix = mPivotTrans * mScale;
-		//m_worldMatrix = m_worldMatrix * mRot;
-		m_worldMatrix = m_worldMatrix * mTrans;
+		m_worldMatrix = mTrans;
+		m_worldMatrix = m_worldMatrix * mPivotTrans;
+		m_worldMatrix = m_worldMatrix * mScale;
+		m_worldMatrix = m_worldMatrix * mRot;
 	}
 
 	void Sprite::Draw()
 	{
 		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
 
-		Matrix viewMatrix = g_camera2D->GetViewMatrix();
+		//ビュープロジェクション行列を作成。
+		Matrix viewMatrix;
+		viewMatrix.MakeLookAt(Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3::AxisY);
 		Matrix projMatrix;
 		projMatrix.MakeOrthoProjectionMatrix(viewPort.x, viewPort.y, 0.1f, 1.0f);
 
 		//モデル用UniformBufferの更新。
-		m_spriteUB.mvp = m_worldMatrix;// *viewMatrix* projMatrix;
+		m_spriteUB.mvp = m_worldMatrix * viewMatrix * projMatrix;
 		m_spriteUB.mulColor = m_mulColor;
 
 		m_shaderProgram.Activate();

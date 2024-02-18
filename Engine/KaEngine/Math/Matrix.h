@@ -64,15 +64,6 @@ namespace nsKaEngine {
 
 	public:
 		/// <summary>
-		/// 平行移動行列を作成。
-		/// </summary>
-		/// <param name="v0"></param>
-		void MakeTranslate(const Vector3& v0)
-		{
-			mat = glm::translate(mat, v0.vec);
-		}
-
-		/// <summary>
 		/// カメラ行列を作成。
 		/// </summary>
 		/// <param name="position">座標</param>
@@ -100,7 +91,12 @@ namespace nsKaEngine {
 			const float nearV,
 			const float farV)
 		{
-			mat = glm::perspective(glm::radians(fov), aspect, nearV, farV);
+			mat = glm::perspective(
+				glm::radians(fov),
+				aspect,
+				nearV,
+				farV
+			);
 		}
 
 		/// <summary>
@@ -116,7 +112,23 @@ namespace nsKaEngine {
 			const float nearV,
 			const float farV
 		) {
-			mat = glm::orthoLH_ZO(-width, width, -height, height, nearV, farV);
+			mat = glm::ortho(
+				(width / -2.0f),
+				(width / 2.0f),
+				(height / -2.0f),
+				(height / 2.0f),
+				nearV,
+				farV
+			);
+		}
+
+		/// <summary>
+		/// 平行移動行列を作成。
+		/// </summary>
+		/// <param name="v0"></param>
+		void MakeTranslate(const Vector3& v0)
+		{
+			mat = glm::translate(mat, v0.vec);
 		}
 
 		/// <summary>
@@ -125,7 +137,12 @@ namespace nsKaEngine {
 		/// <param name="q"></param>
 		void MakeRotationFromQuaternion(const Quaternion& q)
 		{
-			mat = glm::toMat4(static_cast<glm::quat>(q.vec));
+			glm::quat qu;
+			qu.x = q.vec.x;
+			qu.y = q.vec.y;
+			qu.z = q.vec.z;
+			qu.w = q.vec.w;
+			mat = glm::toMat4(qu);
 		}
 
 		/// <summary>

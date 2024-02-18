@@ -185,7 +185,7 @@ namespace nsKaEngine {
 		Matrix m_pyramidModel;
 
 		Sprite m_sprite;
+		float m_timer = 0.0f;
 	};
 	extern Camera* g_camera3D;
-	extern Camera* g_camera2D;
 }

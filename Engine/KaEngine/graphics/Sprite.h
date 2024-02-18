@@ -92,7 +92,7 @@ namespace nsKaEngine {
 		SpriteUB			m_spriteUB;					//スプライト用UB。
 		Matrix				m_worldMatrix;				//ワールド行列。
 		Vector4				m_mulColor = Vector4::White;//乗算カラー。
-		Vector2				m_size;					//画像のハーフサイズ。
+		Vector2				m_size;						//画像のハーフサイズ。
 		void*				m_expandUB = nullptr;		//ユーザー拡張用構造体。
 		int					m_expandUBSize = 0;			//構造体のサイズ。
 	};

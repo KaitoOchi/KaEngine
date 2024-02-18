@@ -10,11 +10,10 @@ namespace nsKaEngine {
 
 	KaEngine* KaEngine::m_instance = nullptr;
 	Camera* g_camera3D = nullptr;				//3Dカメラ。
-	Camera* g_camera2D = nullptr;				//2Dカメラ。
 
 	//頂点座標。
 	Vertex vertices[] =
-	{ //               COORDINATES				/            COLORS          /           NORMALS         /   TEXTURE COORDINATES    //
+	{ //               COORDINATES				/            NORMALS          /           COLORS         /   TEXTURE COORDINATES    //
 		Vertex{Vector3(-1000.0f, 0.0f,  1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 0.0f)},
 		Vertex{Vector3(-1000.0f, 0.0f, -1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(0.0f, 1.0f)},
 		Vertex{Vector3(1000.0f, 0.0f, -1000.0f),	Vector3(0.0f, 1.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector2(1.0f, 1.0f)},
@@ -29,27 +28,27 @@ namespace nsKaEngine {
 	};
 
 	Vertex pyramidVertices[] =
-	{ //            COORDINATES				  /            COLORS			 /           NORMALS         /    TEXTURE COORDINATES	//
-		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.0f, 5.0f)},
-		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(5.0f, 5.0f)},
-		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, -1.0f, 0.0f), Vector2(5.0f, 0.0f)},
+	{ //            COORDINATES				  /            NORMALS			 /           COLORS         /    TEXTURE COORDINATES	//
+		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.0f, -1.0f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.0f, -1.0f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 5.0f)},
+		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.0f, -1.0f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 5.0f)},
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.0f, -1.0f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 0.0f)},
 
-		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(-0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(-0.8f, 0.5f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(-0.8f, 0.5f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(-0.8f, 0.5f, 0.0f), Vector3(0.92f, 0.86f, 0.76f), Vector2(2.5f, 5.0f)},
 
-		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, -0.8f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, -0.8f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, -0.8f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, -50.5f),	Vector3(0.0f, 0.5f, -0.8f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.0f, 0.5f, -0.8f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.0f, 0.5f, -0.8f), Vector3(0.92f, 0.86f, 0.76f), Vector2(2.5f, 5.0f)},
 
-		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.8f, 0.5f, 0.0f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.8f, 0.5f, 0.0f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.8f, 0.5f, 0.0f), Vector2(2.5f, 5.0f)},
+		Vertex{Vector3(50.5f, 0.0f, -50.5f),	Vector3(0.8f, 0.5f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.8f, 0.5f, 0.0f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.8f, 0.5f, 0.0f), Vector3(0.92f, 0.86f, 0.76f), Vector2(2.5f, 5.0f)},
 
-		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(5.0f, 0.0f)},
-		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.83f, 0.70f, 0.44f), Vector3(0.0f, 0.5f, 0.8f), Vector2(0.0f, 0.0f)},
-		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.92f, 0.86f, 0.76f), Vector3(0.0f, 0.5f, 0.8f), Vector2(2.5f, 5.0f)}
+		Vertex{Vector3(50.5f, 0.0f, 50.5f),		Vector3(0.0f, 0.5f, 0.8f), Vector3(0.83f, 0.70f, 0.44f), Vector2(5.0f, 0.0f)},
+		Vertex{Vector3(-50.5f, 0.0f, 50.5f),	Vector3(0.0f, 0.5f, 0.8f), Vector3(0.83f, 0.70f, 0.44f), Vector2(0.0f, 0.0f)},
+		Vertex{Vector3(0.0f, 80.8f, 0.0f),		Vector3(0.0f, 0.5f, 0.8f), Vector3(0.92f, 0.86f, 0.76f), Vector2(2.5f, 5.0f)}
 	};
 
 	// Indices for vertices order
@@ -105,10 +104,6 @@ namespace nsKaEngine {
 	{
 		g_camera3D = new Camera;
 		g_camera3D->Init();
-
-		g_camera2D = new Camera;
-		g_camera2D->Init();
-		g_camera2D->SetUpdateProjFunc(Camera::e_UpdateProjFunc_Ortho);
 
 		GraphicsEngine::CreateInstance(window);
 		Input::CreateInstance();
@@ -196,7 +191,7 @@ namespace nsKaEngine {
 
 		//スプライトの生成。
 		SpriteInitData spriteInitData;
-		spriteInitData.filePath = "Assets/sprite/circle.png";
+		spriteInitData.filePath = "Assets/sprite/test.png";
 		spriteInitData.vertexFilePath = "Assets/shader/sprite.vert";
 		spriteInitData.fragmentFilePath = "Assets/shader/sprite.frag";
 		spriteInitData.width = 256;
@@ -232,7 +227,6 @@ namespace nsKaEngine {
 
 	void KaEngine::EndFrame()
 	{
-		g_camera2D->Update();
 
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 	
@@ -243,16 +237,18 @@ namespace nsKaEngine {
 
 		m_pyramidMesh.Draw(m_pyramidModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
+		m_timer += 1.0f;
+
 		Quaternion rot;
-		rot.SetRotationDegX(45.0f);
+		rot.SetRotationDegZ(m_timer);
 
 		m_sprite.Update(
-			Vector3(0.5f, 0.0f, 0.0f),
+			Vector3(1000.0f, 0.0f, 0.0f),
 			rot,
-			Vector3(1.1f, 1.0f, 1.0f),
+			Vector3(1.0f, 1.0f, 0.0f),
 			Vector2(0.0f, 0.0f)
 		);
-		//m_sprite.Draw();
+		m_sprite.Draw();
 
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
