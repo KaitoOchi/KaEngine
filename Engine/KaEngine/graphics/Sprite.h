@@ -2,6 +2,9 @@
 
 namespace nsKaEngine {
 
+	/// <summary>
+	/// スプライト初期化用のデータ。
+	/// </summary>
 	struct SpriteInitData
 	{
 		std::string filePath;
@@ -81,20 +84,20 @@ namespace nsKaEngine {
 		};
 
 	private:
-		std::vector<GLuint>	m_indices;					//インデックス。
-		Shader				m_shaderProgram;			//シェーダープログラム。
-		VAO					m_vao;						//VertexArraysObject。
-		VBO					m_vbo;						//VertexBufferObject。
-		EBO					m_ebo;						//ElementsBufferObject。
-		Texture				m_texture;					//テクスチャ。
-		UniformBuffer		m_spriteUniformBuffer;		//スプライト用UniformBufferObject。
-		UniformBuffer		m_expandUniformBuffer;		//ユーザー拡張用UniformBufferObject。
-		SpriteUB			m_spriteUB;					//スプライト用UB。
-		Matrix				m_worldMatrix;				//ワールド行列。
-		Vector4				m_mulColor = Vector4::White;//乗算カラー。
-		Vector2				m_size;						//画像のハーフサイズ。
-		void*				m_expandUB = nullptr;		//ユーザー拡張用構造体。
-		int					m_expandUBSize = 0;			//構造体のサイズ。
+		std::vector<GLuint>	m_indices;						//インデックス。
+		Shader				m_shaderProgram;				//シェーダープログラム。
+		VAO					m_vao;							//VertexArraysObject。
+		VBO					m_vbo;							//VertexBufferObject。
+		EBO					m_ebo;							//ElementsBufferObject。
+		Texture				m_texture;						//テクスチャ。
+		UniformBuffer		m_spriteUniformBuffer;			//スプライト用UniformBufferObject。
+		UniformBuffer		m_expandUniformBuffer;			//ユーザー拡張用UniformBufferObject。
+		SpriteUB			m_spriteUB;						//スプライト用UB。
+		Matrix				m_worldMatrix;					//ワールド行列。
+		Vector4				m_mulColor = Vector4::White;	//乗算カラー。
+		Vector2				m_size;							//画像のハーフサイズ。
+		void*				m_expandUB = nullptr;			//ユーザー拡張用構造体。
+		int					m_expandUBSize = 0;				//構造体のサイズ。
 	};
 }
 

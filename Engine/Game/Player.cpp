@@ -23,6 +23,11 @@ Player::~Player()
 
 }
 
+bool Player::Start()
+{
+	return true;
+}
+
 void Player::Update()
 {
 	Move();
@@ -121,4 +126,9 @@ void Player::CursorLock()
 			Input::GetInstance()->LockCursor();
 		}
 	}
+}
+
+void Player::Render()
+{
+
 }

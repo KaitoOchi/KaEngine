@@ -3,12 +3,14 @@
 /// <summary>
 /// プレイヤー。
 /// </summary>
-class Player
+class Player : public GameObject
 {
 public:
 	Player();
 	~Player();
+	bool Start();
 	void Update();
+	void Render();
 
 private:
 	/// <summary>

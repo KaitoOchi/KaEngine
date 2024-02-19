@@ -81,7 +81,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <param name="texture"></param>
-		void RegistTextureBank(const char* filePath, GLuint* texture)
+		void RegistTextureBank(const char* filePath, Texture* texture)
 		{
 			m_textureBank.Regist(filePath, texture);
 		}
@@ -91,7 +91,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <returns></returns>
-		GLuint* GetTextureBank(const char* filePath)
+		Texture* GetTextureBank(const char* filePath)
 		{
 			return m_textureBank.Get(filePath);
 		}
@@ -165,11 +165,13 @@ namespace nsKaEngine {
 
 		FPSLimiter m_fpsLimiter;					//FPSリミッター。
 
-		TResourceBank<GLuint> m_textureBank;		//テクスチャバンク。
+		TResourceBank<Texture> m_textureBank;		//テクスチャバンク。
 		TResourceBank<GLuint> m_shaderBank;			//シェーダーバンク。
 		TResourceBank<GLuint> m_uniformBufferBank;	//定数バッファバンク。
 
-		Texture m_textures[3];
+		Texture* m_texture[3];
+		std::vector<Texture*> m_textures;
+		
 		LightUB m_lightUB;
 
 		Mesh m_floorMesh;

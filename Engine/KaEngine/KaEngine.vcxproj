@@ -150,6 +150,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="dbg\DebugCamera.cpp" />
+    <ClCompile Include="gameObject\GameObject.cpp" />
+    <ClCompile Include="gameObject\GameObjectManager.cpp" />
     <ClCompile Include="gl.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -183,7 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="dbg\DebugCamera.h" />
     <ClInclude Include="dbg\KaDebug.h" />
+    <ClInclude Include="gameObject\GameObject.h" />
+    <ClInclude Include="gameObject\GameObjectManager.h" />
     <ClInclude Include="graphics\EBO.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
     <ClInclude Include="graphics\light\DirectionLight.h" />

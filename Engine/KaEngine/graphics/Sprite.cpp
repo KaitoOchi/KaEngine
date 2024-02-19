@@ -32,7 +32,7 @@ namespace nsKaEngine {
 	{
 		//テクスチャを設定。
 		m_texture.Init(initData.filePath.c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-		m_texture.TexUnit(&m_shaderProgram, "texture");
+		m_texture.TexUnit(&m_shaderProgram, "texture", 0);
 	}
 
 	void Sprite::InitVertexBufferAndElementsBuffer()
@@ -149,15 +149,15 @@ namespace nsKaEngine {
 		m_spriteUB.mulColor = m_mulColor;
 
 		m_shaderProgram.Activate();
+		//定数バッファの設定。
 		m_spriteUniformBuffer.Update(&m_spriteUB, sizeof(SpriteUB));
-
 		if (m_expandUB != nullptr) {
 			m_expandUniformBuffer.Update(m_expandUB, m_expandUBSize);
 		}
 
 		m_vao.Bind();
 
-		m_texture.Bind();
+		m_texture.Bind(0);
 
 		// Draw the triangles using the GL_TRIANGLES primive
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, 0);

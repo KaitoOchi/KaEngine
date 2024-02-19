@@ -1,5 +1,7 @@
 #include "stdafx.h"
+
 #include "Player.h"
+#include "dbg/DebugCamera.h"
 
 GLFWwindow* CreateGLFWWindow(GLFWwindow* window)
 {
@@ -12,7 +14,13 @@ GLFWwindow* CreateGLFWWindow(GLFWwindow* window)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//ウィンドウを作成。
-	window = glfwCreateWindow(static_cast<int>(FRAME_BUFFER_WIDTH), static_cast<int>(FRAME_BUFFER_HEIGHT), "Game", NULL, NULL);
+	window = glfwCreateWindow(
+		static_cast<int>(FRAME_BUFFER_WIDTH),
+		static_cast<int>(FRAME_BUFFER_HEIGHT),
+		"Game",
+		NULL,
+		NULL
+	);
 
 	if (window == NULL) {
 		std::cout << "GLFWのウィンドウ作成に失敗しました。" << std::endl;
@@ -36,7 +44,10 @@ int main()
 	window = CreateGLFWWindow(window);
 
 	Player* player = nullptr;
-	player = new Player;
+	player = Instantiate<Player>(0, "player");
+
+	DebugCamera* debugCamera = nullptr;
+	debugCamera = Instantiate<DebugCamera>(0, "debugCamera");
 
 
 	//メインのループ処理。
@@ -46,7 +57,10 @@ int main()
 
 		KaEngine::GetInstance()->Execute();
 
-		player->Update();
+		if (Input::GetInstance()->GetMouseButtonDown(e_mouseButtonRight)) {
+			debugCamera->ToggleDebugCamera();
+			player->Deactivate();
+		}
 
 		GraphicsEngine::GetInstance()->Execute();
 

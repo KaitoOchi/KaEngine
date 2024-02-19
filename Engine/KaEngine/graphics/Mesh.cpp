@@ -13,7 +13,7 @@ namespace nsKaEngine {
 
 	Mesh::Mesh()
 	{
-
+		m_textures.reserve(3);
 	}
 
 	Mesh::~Mesh()
@@ -24,7 +24,7 @@ namespace nsKaEngine {
 	void Mesh::Init(
 		std::vector<Vertex>& vertices,
 		std::vector<GLuint>& indices,
-		std::vector<Texture>& textures,
+		std::vector<Texture*>& textures,
 		std::string fbxFilePath,
 		std::string vertexShaderFile,
 		std::string fragmentShaderFile,
@@ -35,11 +35,6 @@ namespace nsKaEngine {
 	) {
 		m_vertices = vertices;
 		m_indices = indices;
-		m_textures = textures;
-
-		for (int i = 0; i < m_textures.size(); ++i) {
-			m_textures[i].TexUnit(&m_shaderProgram, TEXTURE_NAME[i]);
-		}
 
 		// Generates Vertex Array Object and binds it
 		m_vao.Init();
@@ -61,11 +56,19 @@ namespace nsKaEngine {
 		m_vbo.UnBind();
 		m_ebo.UnBind();
 
+		//シェーダーの設定。
 		m_shaderProgram.Init(vertexShaderFile.c_str(), fragmentShaderFile.c_str(), addIncludeFile);
 		m_shaderProgram.Activate();
 
-		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.GetShaderID(), "ModelUB");
+		//テクスチャの設定。
+		for (int i = 0; i < textures.size(); ++i)
+		{
+			m_textures.emplace_back(textures[i]);
+			m_textures[i]->TexUnit(&m_shaderProgram, TEXTURE_NAME[i], i);
+		}
 
+		//定数バッファの設定。
+		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.GetShaderID(), "ModelUB");
 		if (expandUniformBuffer != nullptr) {
 			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram.GetShaderID(), expandUniformBufferName.c_str());
 			m_expandUB = expandUniformBuffer;
@@ -94,7 +97,7 @@ namespace nsKaEngine {
 
 		int textureSize = static_cast<int>(m_textures.size());
 		for (int i = 0; i < textureSize; ++i) {
-			m_textures[i].Bind();
+			m_textures[i]->Bind(i);
 		}
 
 		// Draw the triangles using the GL_TRIANGLES primive

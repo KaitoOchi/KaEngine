@@ -36,7 +36,7 @@ namespace nsKaEngine {
 		void Init(
 			std::vector<Vertex>& vertices,
 			std::vector<GLuint>& indices,
-			std::vector<Texture>& textures,
+			std::vector<Texture*>& textures,
 			std::string fbxFilePath,
 			std::string vertexShaderFile,
 			std::string fragmentShaderFile,
@@ -63,7 +63,7 @@ namespace nsKaEngine {
 	private:
 		std::vector<Vertex>		m_vertices;					//頂点情報。
 		std::vector<GLuint>		m_indices;					//インデックス。
-		std::vector<Texture>	m_textures;					//テクスチャ。
+		std::vector<Texture*>	m_textures;					//テクスチャ。
 		VAO						m_vao;						//VertexArraysObject。
 		VBO						m_vbo;						//VertexBufferObject。
 		EBO						m_ebo;						//ElementsBufferObject。

@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <array>
+#include <list>
 #include <Windows.h>
 
 // openGL
@@ -39,10 +40,10 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 // Transform
 #include "math/Transform.h"
 
-#include "graphics/Material.h"
 #include "graphics/Mesh.h"
 #include "graphics/Sprite.h"
 #include "graphics/GraphicsEngine.h"
+#include "graphics/Material.h"
 
 // Time
 #include "timer/FPSLimiter.h"
@@ -52,5 +53,9 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // Input
 #include "Input.h"
+
+// GameObject
+#include "gameObject/GameObject.h"
+#include "gameObject/GameObjectManager.h"
 
 #include "KaEngine.h"

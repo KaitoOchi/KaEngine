@@ -90,6 +90,13 @@ namespace nsKaEngine {
 		4, 6, 7
 	};
 
+	const char* TEXTURE_FILE_PATH[3] = 
+	{ 
+		"Assets/sprite/nullAlbedoMap.png",
+		"Assets/sprite/nullNormalMap.png",
+		"Assets/sprite/nullMetallicSmoothMap.png"
+	};
+
 	KaEngine::KaEngine()
 	{
 
@@ -107,6 +114,7 @@ namespace nsKaEngine {
 
 		GraphicsEngine::CreateInstance(window);
 		Input::CreateInstance();
+		GameObjectManager::CreateInstance();
 
 		//背面カリングを有効にする。
 		//glEnable(GL_CULL_FACE);
@@ -121,18 +129,25 @@ namespace nsKaEngine {
 		modelInitData.expandUniformBufferSize = sizeof(LightUB);
 		modelInitData.expandUniformBufferName = "LightUB";
 
-		m_textures[0].Init("Assets/sprite/nullAlbedoMap.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-		m_textures[1].Init("Assets/sprite/nullNormalMap.png", GL_TEXTURE_2D, 1, GL_RGBA, GL_UNSIGNED_BYTE);
-		m_textures[2].Init("Assets/sprite/nullMetallicSmoothMap.png", GL_TEXTURE_2D, 2, GL_RGBA, GL_UNSIGNED_BYTE);
+
+		for (int i = 0; i < 3; ++i) {
+			//テクスチャーの初期化。
+			m_texture[i] = KaEngine::GetInstance()->GetTextureBank(TEXTURE_FILE_PATH[i]);
+			if (m_texture[i] == nullptr) {
+				m_texture[i] = new Texture;
+				m_texture[i]->Init(TEXTURE_FILE_PATH[i], GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+				KaEngine::GetInstance()->RegistTextureBank(TEXTURE_FILE_PATH[i], m_texture[i]);
+			}
+			m_textures.emplace_back(m_texture[i]);
+		}
 
 		std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
 		std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
-		std::vector <Texture> tex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
 		// Create floor mesh
 		m_floorMesh.Init(
 			verts,
 			ind,
-			tex,
+			m_textures,
 			"",
 			modelInitData.vertexShaderFilePath,
 			modelInitData.fragmentShaderFilePath,
@@ -153,7 +168,7 @@ namespace nsKaEngine {
 		m_lightMesh.Init(
 			lightVerts,
 			lightInd,
-			tex,
+			m_textures,
 			"",
 			"Assets/shader/light.vert",
 			"Assets/shader/light.frag",
@@ -170,12 +185,11 @@ namespace nsKaEngine {
 		//ピラミッドモデルの生成。
 		std::vector <Vertex> pyramidVerts(pyramidVertices, pyramidVertices + sizeof(pyramidVertices) / sizeof(Vertex));
 		std::vector <GLuint> pyramidInd(pyramidIndices, pyramidIndices + sizeof(pyramidIndices) / sizeof(GLuint));
-		std::vector <Texture> pyramidTex(m_textures, m_textures + sizeof(m_textures) / sizeof(Texture));
 
 		m_pyramidMesh.Init(
 			pyramidVerts,
 			pyramidInd,
-			pyramidTex,
+			m_textures,
 			"",
 			modelInitData.vertexShaderFilePath,
 			modelInitData.fragmentShaderFilePath,
@@ -213,6 +227,8 @@ namespace nsKaEngine {
 	void KaEngine::Execute()
 	{
 		Input::GetInstance()->Update();
+
+		GameObjectManager::GetInstance()->ExecuteUpdate();
 	}
 
 	void KaEngine::BeginFrame()
@@ -227,7 +243,7 @@ namespace nsKaEngine {
 
 	void KaEngine::EndFrame()
 	{
-
+		//ライト用構造体の更新。
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 	
 
@@ -248,7 +264,7 @@ namespace nsKaEngine {
 			Vector3(1.0f, 1.0f, 0.0f),
 			Vector2(0.0f, 0.0f)
 		);
-		m_sprite.Draw();
+		//m_sprite.Draw();
 
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
@@ -265,9 +281,9 @@ namespace nsKaEngine {
 
 	void KaEngine::Delete()
 	{
-		m_textures[0].Delete();
-		m_textures[1].Delete();
-		m_textures[2].Delete();
+		m_texture[0]->Delete();
+		m_texture[1]->Delete();
+		m_texture[2]->Delete();
 
 		m_floorMesh.Delete();
 		m_lightMesh.Delete();

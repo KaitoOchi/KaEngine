@@ -55,6 +55,15 @@
     <ClCompile Include="graphics\Texture.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="gameObject\GameObject.cpp">
+      <Filter>gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\GameObjectManager.cpp">
+      <Filter>gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="dbg\DebugCamera.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -127,6 +136,15 @@
     <ClInclude Include="graphics\Texture.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="gameObject\GameObject.h">
+      <Filter>gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\GameObjectManager.h">
+      <Filter>gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="dbg\DebugCamera.h">
+      <Filter>debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="util">
@@ -146,6 +164,9 @@
     </Filter>
     <Filter Include="debug">
       <UniqueIdentifier>{bf81401d-0b89-4bcb-9af2-871bd58b0e3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject">
+      <UniqueIdentifier>{b2490aa4-96c5-461e-9215-eaed63ee6372}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -10,23 +10,43 @@ namespace nsKaEngine {
 	class Material : Noncopyable
 	{
 	public:
-		Material() {}
-		~Material(){}
+		Material();
+		~Material();
 
+		/// <summary>
+		/// èâä˙âªèàóùÅB
+		/// </summary>
+		/// <param name="albedoFilePath"></param>
+		/// <param name="normalFilePath"></param>
+		/// <param name="metallicSmoothFilePath"></param>
+		/// <param name="vsFilePath"></param>
+		/// <param name="fsFilePath"></param>
+		/// <param name="addIncludeFile"></param>
 		void Init(
-			const char* albedoFilePath,
-			const char* normalFilePath,
-			const char* metallicSmoothFilePath,
-			const char* vsFilePath,
-			const char* fsFilePath
+			std::string albedoFilePath,
+			std::string normalFilePath,
+			std::string metallicSmoothFilePath,
+			std::string vsFilePath,
+			std::string fsFilePath,
+			std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile
 		);
 
+		
+		const GLuint GetShaderID() const
+		{
+			return m_shaderProgram.GetShaderID();
+		}
+
+		void ShaderActivate()
+		{
+			m_shaderProgram.Activate();
+		}
+
 	private:
-		Texture* m_albedoMap = nullptr;
-		Texture* m_normalMap = nullptr;
-		Texture* m_metallicSmoothMap = nullptr;
-		Shader* m_vertexShader = nullptr;
-		Shader* m_fragmentShader = nullptr;
+		Texture*	m_albedoMap = nullptr;
+		Texture*	m_normalMap = nullptr;
+		Texture*	m_metallicSmoothMap = nullptr;
+		Shader		m_shaderProgram;
 	};
 }
 

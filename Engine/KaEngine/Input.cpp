@@ -161,55 +161,60 @@ namespace nsKaEngine {
 	/// </summary>
 	void Input::InputMouse(GLFWwindow* window)
 	{
-		//マウスの座標を取得。
-		double mouseX, mouseY;
-		glfwGetCursorPos(window, &mouseX, &mouseY);
-
-		m_mouseAxis = m_mousePosition;
-
-		//画面の範囲内にマウスがあるなら。
-		if (mouseX > 0.0f &&
-			mouseX < GraphicsEngine::GetInstance()->GetWindowSize().x &&
-			mouseY > 0.0f &&
-			mouseY < GraphicsEngine::GetInstance()->GetWindowSize().y
-		) {
-			//座標を保存する。
-			m_mousePosition.x = static_cast<float>(mouseX);
-			m_mousePosition.y = static_cast<float>(mouseY);
-			
-			//座標の入力量を計算。
-			m_mouseAxis -= m_mousePosition;
-			m_mouseAxis.Normalize();
-		}
-		else {
-			m_mouseAxis = Vector2::Zero;
-		}
-
-		if (isnan(m_mouseAxis.x)) {
-			m_mouseAxis = Vector2::Zero;
-		}
-
-		//カーソルが固定なら、座標を設定。
-		if (m_cursorLock) {
-			//カーソルの位置を固定。
-			glfwSetCursorPos(window, 1600.0f / 2.0f, 900.0f / 2.0f);
-			//座標を保存する。
+		//マウスカーソルの入力。
+		{
+			//マウスの座標を取得。
+			double mouseX, mouseY;
 			glfwGetCursorPos(window, &mouseX, &mouseY);
-			m_mousePosition.x = static_cast<float>(mouseX);
-			m_mousePosition.y = static_cast<float>(mouseY);
+
+			m_mouseAxis = m_mousePosition;
+
+			//画面の範囲内にマウスがあるなら。
+			if (mouseX > 0.0f &&
+				mouseX < GraphicsEngine::GetInstance()->GetWindowSize().x &&
+				mouseY > 0.0f &&
+				mouseY < GraphicsEngine::GetInstance()->GetWindowSize().y
+				) {
+				//座標を保存する。
+				m_mousePosition.x = static_cast<float>(mouseX);
+				m_mousePosition.y = static_cast<float>(mouseY);
+
+				//座標の入力量を計算。
+				m_mouseAxis -= m_mousePosition;
+				m_mouseAxis.Normalize();
+
+				//if (isnan(m_mouseAxis.x)) {
+				//	m_mouseAxis = Vector2::Zero;
+				//}
+			}
+			else {
+				m_mouseAxis = Vector2::Zero;
+			}
+
+			//カーソルが固定なら、座標を設定。
+			if (m_cursorLock) {
+				//ウィンドウサイズを取得。
+				Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
+				windowSize.Scale(0.5f);
+				//カーソルの位置を固定。
+				glfwSetCursorPos(window, windowSize.x, windowSize.y);
+				m_mousePosition = windowSize;
+			}
 		}
 
 		//マウスボタンの入力。
-		for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
-			//マウスボタンが押されていたら。
-			if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
-				m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
-				m_mousePress[mouseButton.mouseButton] = true;
-			}
-			//マウスボタンが押されていないなら。
-			else {
-				m_mouseRelease[mouseButton.mouseButton] = m_mousePress[mouseButton.mouseButton];
-				m_mousePress[mouseButton.mouseButton] = false;
+		{
+			for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
+				//マウスボタンが押されていたら。
+				if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
+					m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
+					m_mousePress[mouseButton.mouseButton] = true;
+				}
+				//マウスボタンが押されていないなら。
+				else {
+					m_mouseRelease[mouseButton.mouseButton] = m_mousePress[mouseButton.mouseButton];
+					m_mousePress[mouseButton.mouseButton] = false;
+				}
 			}
 		}
 	}

@@ -4,7 +4,10 @@
 
 namespace nsKaEngine {
 
-	class Texture
+	/// <summary>
+	/// テクスチャー。
+	/// </summary>
+	class Texture : Noncopyable
 	{
 	public:
 		Texture();
@@ -31,18 +34,19 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="shader">シェーダー</param>
 		/// <param name="uniform">変数名</param>
-		/// <param name="unit">スロット番号</param>
+		/// <param name="slot">スロット番号</param>
 		void TexUnit(
-			Shader* shader, 
-			const char* uniform
+			const Shader* shader, 
+			const char* uniform,
+			const GLuint slot
 		);
 
 		/// <summary>
 		/// 接続。
 		/// </summary>
-		void Bind()
+		void Bind(const GLuint slot)
 		{
-			glActiveTexture(GL_TEXTURE0 + m_slot);
+			glActiveTexture(GL_TEXTURE0 + slot);
 			glBindTexture(m_target, m_id);
 		}
 
@@ -65,6 +69,5 @@ namespace nsKaEngine {
 	private:
 		GLuint m_id = 0;		//テクスチャーID。
 		GLenum m_target = 0;	//テクスチャーの種類。
-		GLuint m_slot = 0;		//スロット番号。
 	};
 }
