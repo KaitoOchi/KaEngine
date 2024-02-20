@@ -230,7 +230,7 @@ namespace nsKaEngine {
 		EnUpdateProjFunc m_updateProjFunc = e_UpdateProjFunc_Prespective;	//カメラの更新方法。
 		bool			m_isNeedUpdate = true;			//更新が必要かどうか。
 		float			m_near = 0.1f;					//近平面。
-		float			m_far = 1000.0f;				//遠平面。
+		float			m_far = 5000.0f;				//遠平面。
 		float			m_fov = 60.0f;					//視野角。
 		float			m_width = FRAME_BUFFER_WIDTH;	//平行投影行列の幅。
 		float			m_height = FRAME_BUFFER_HEIGHT;	//平行投影行列の高さ。

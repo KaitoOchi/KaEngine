@@ -11,8 +11,16 @@ namespace nsKaEngine {
 
 		m_frameBufferSize.Set(FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT);
 
-		//Enable the Depth Buffer
+		//デプステストの有効化。
 		glEnable(GL_DEPTH_TEST);
+
+		//MSAAの有効化。
+		glEnable(GL_MULTISAMPLE);
+
+		//半透明描画を適用。
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
 		//backBufferとfrontBufferの切り替え。
 		glfwSwapBuffers(window);
@@ -22,6 +30,10 @@ namespace nsKaEngine {
 
 	void GraphicsEngine::Execute()
 	{
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+		// Clear the back buffer and depth buffer
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		//ウィンドウサイズを取得。
 		int width, height;
 		glfwGetFramebufferSize(m_window, &width, &height);

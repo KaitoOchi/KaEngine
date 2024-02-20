@@ -89,7 +89,7 @@ void Player::Rotation()
 	if (mouse.LengthSq() < FLT_MIN) {
 		return;
 	}
-
+	
 	//スティックの入力を加算。
 	m_rotSpeed.x += -mouse.x * m_sensitivity;
 	m_rotSpeed.y += -mouse.y * m_sensitivity;
@@ -101,6 +101,7 @@ void Player::Rotation()
 	m_target.x = cos(m_rotSpeed.x) * cos(m_rotSpeed.y);
 	m_target.y = sin(m_rotSpeed.y);
 	m_target.z = sin(m_rotSpeed.x) * cos(m_rotSpeed.y);
+	
 
 	//注視点を正規化する。
 	m_target.Normalize();

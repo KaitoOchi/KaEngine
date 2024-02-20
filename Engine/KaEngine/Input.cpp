@@ -89,6 +89,11 @@ namespace nsKaEngine {
 		};
 	}
 
+	static void InputMouseWheel(GLFWwindow* window, double x, double y)
+	{
+		Input::GetInstance()->SetCallBackMouseWheelEvent(y);
+	}
+
 	Input::Input()
 	{
 		//配列の初期化。
@@ -104,7 +109,9 @@ namespace nsKaEngine {
 
 	void Input::Init()
 	{
-
+		auto window = GraphicsEngine::GetInstance()->GetWindow();
+		//マウスホイールの入力をコールバック形式で取得。
+		glfwSetScrollCallback(window, InputMouseWheel);
 	}
 
 	void Input::Update()
@@ -167,14 +174,15 @@ namespace nsKaEngine {
 			double mouseX, mouseY;
 			glfwGetCursorPos(window, &mouseX, &mouseY);
 
-			m_mouseAxis = m_mousePosition;
-
 			//画面の範囲内にマウスがあるなら。
 			if (mouseX > 0.0f &&
 				mouseX < GraphicsEngine::GetInstance()->GetWindowSize().x &&
 				mouseY > 0.0f &&
 				mouseY < GraphicsEngine::GetInstance()->GetWindowSize().y
 				) {
+
+				m_mouseAxis = m_mousePosition;
+
 				//座標を保存する。
 				m_mousePosition.x = static_cast<float>(mouseX);
 				m_mousePosition.y = static_cast<float>(mouseY);
@@ -182,10 +190,6 @@ namespace nsKaEngine {
 				//座標の入力量を計算。
 				m_mouseAxis -= m_mousePosition;
 				m_mouseAxis.Normalize();
-
-				//if (isnan(m_mouseAxis.x)) {
-				//	m_mouseAxis = Vector2::Zero;
-				//}
 			}
 			else {
 				m_mouseAxis = Vector2::Zero;
@@ -201,6 +205,9 @@ namespace nsKaEngine {
 				m_mousePosition = windowSize;
 			}
 		}
+
+		std::cout << m_mouseWheel << "\n" << std::endl;
+		m_mouseWheel = 0.0f;
 
 		//マウスボタンの入力。
 		{

@@ -2,6 +2,9 @@
 
 namespace nsKaEngine {
 
+	/// <summary>
+	/// ゲームオブジェクト。
+	/// </summary>
 	class GameObject : Noncopyable
 	{
 	public:
@@ -56,6 +59,22 @@ namespace nsKaEngine {
 		void Deactivate()
 		{
 			m_isActive = false;
+		}
+
+		/// <summary>
+		/// 有効化状態の切り替え。
+		/// </summary>
+		void ToggleActivate()
+		{
+			m_isActive = !m_isActive;
+		}
+
+		/// <summary>
+		/// アクティブ状態かどうか。
+		/// </summary>
+		const bool IsActive() const
+		{
+			return m_isActive;
 		}
 
 	public:

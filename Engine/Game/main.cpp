@@ -13,6 +13,9 @@ GLFWwindow* CreateGLFWWindow(GLFWwindow* window)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	//マルチサンプリングを有効。
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
 	//ウィンドウを作成。
 	window = glfwCreateWindow(
 		static_cast<int>(FRAME_BUFFER_WIDTH),
@@ -59,7 +62,7 @@ int main()
 
 		if (Input::GetInstance()->GetMouseButtonDown(e_mouseButtonRight)) {
 			debugCamera->ToggleDebugCamera();
-			player->Deactivate();
+			player->ToggleActivate();
 		}
 
 		GraphicsEngine::GetInstance()->Execute();

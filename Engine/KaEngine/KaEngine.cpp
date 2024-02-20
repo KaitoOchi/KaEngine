@@ -200,12 +200,13 @@ namespace nsKaEngine {
 		);
 
 		m_pyramidPos = Vector3(-50.0f, 50.0f, 0.0f);
+		m_pyramidScale = Vector3::One;
 		m_pyramidModel.MakeTranslate(m_pyramidPos);
 
 
 		//スプライトの生成。
 		SpriteInitData spriteInitData;
-		spriteInitData.filePath = "Assets/sprite/test.png";
+		spriteInitData.filePath = "Assets/sprite/circle.png";
 		spriteInitData.vertexFilePath = "Assets/shader/sprite.vert";
 		spriteInitData.fragmentFilePath = "Assets/shader/sprite.frag";
 		spriteInitData.width = 256;
@@ -235,28 +236,36 @@ namespace nsKaEngine {
 	{
 		m_fpsLimiter.BeginFrame();
 
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-		// Clear the back buffer and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		//ポーリング方式を使いマウス操作などのイベントを取得する。
+		glfwPollEvents();
 	}
 
 	void KaEngine::EndFrame()
 	{
 		//ライト用構造体の更新。
 		m_lightUB.eyePos = g_camera3D->GetPosition();
-	
+
+
+		m_rotation.SetRotationDegY(m_timer);
+
+		//ピラミッドモデルのモデル。
+		Matrix mTrans, mRot, mScale;
+		mTrans.MakeTranslate(m_pyramidPos);
+		mRot.MakeRotationFromQuaternion(m_rotation);
+		mScale.MakeScaling(m_pyramidScale);
+		m_pyramidModel = mTrans * mScale * mRot;
+
 
 		m_floorMesh.Draw(m_floorModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
-		m_lightMesh.Draw(m_lightModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
-
 		m_pyramidMesh.Draw(m_pyramidModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
+
+		m_lightMesh.Draw(m_lightModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
 		m_timer += 1.0f;
 
 		Quaternion rot;
-		rot.SetRotationDegZ(m_timer);
+		//rot.SetRotationDegZ(m_timer);
 
 		m_sprite.Update(
 			Vector3(1000.0f, 0.0f, 0.0f),
@@ -264,11 +273,11 @@ namespace nsKaEngine {
 			Vector3(1.0f, 1.0f, 0.0f),
 			Vector2(0.0f, 0.0f)
 		);
-		//m_sprite.Draw();
+
+		m_sprite.Draw();
 
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
-		glfwPollEvents();
 
 
 		m_fpsLimiter.EndFrame();

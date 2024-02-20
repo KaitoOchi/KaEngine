@@ -12,6 +12,11 @@ public:
 	void Update();
 	void Render();
 
+	const Vector2& Get() const
+	{
+		return m_rotSpeed;
+	}
+
 private:
 	/// <summary>
 	/// ˆÚ“®ˆ—B

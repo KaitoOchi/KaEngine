@@ -18,7 +18,9 @@ namespace nsKaEngine {
 		{
 			m_isActive = !m_isActive;
 			m_position = g_camera3D->GetPosition();
-			m_target = g_camera3D->GetTarget();
+			m_target = Vector3::AxisZ;
+			g_camera3D->SetTarget(m_target);
+			g_camera3D->Update();
 		}
 
 	private:
@@ -37,8 +39,8 @@ namespace nsKaEngine {
 
 	private:
 		Vector3			m_position;					//座標。
-		Vector3			m_target;					//注視点。
-		Vector2			m_rotSpeed;					//回転角度。
+		Vector3			m_target = Vector3::AxisZ;	//注視点。
+		Vector3			m_rotSpeed;					//回転角度。
 		float			m_sensitivity = 0.05f;		//カメラ感度。
 	};
 

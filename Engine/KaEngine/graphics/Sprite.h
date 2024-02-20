@@ -34,6 +34,15 @@ namespace nsKaEngine {
 		void Init(SpriteInitData& initData);
 
 		/// <summary>
+		/// 乗算カラーを設定。
+		/// </summary>
+		/// <param name="color"></param>
+		void SetMulColor(const Vector4& color)
+		{
+			m_mulColor = color;
+		}
+
+		/// <summary>
 		/// 更新処理。
 		/// </summary>
 		/// <param name="pos">座標</param>

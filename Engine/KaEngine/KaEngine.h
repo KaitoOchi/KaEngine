@@ -184,6 +184,8 @@ namespace nsKaEngine {
 
 		Mesh m_pyramidMesh;
 		Vector3 m_pyramidPos;
+		Quaternion m_rotation;
+		Vector3 m_pyramidScale;
 		Matrix m_pyramidModel;
 
 		Sprite m_sprite;

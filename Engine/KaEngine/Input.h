@@ -265,6 +265,12 @@ namespace nsKaEngine{
 			return m_cursorLock;
 		}
 
+		
+		void SetCallBackMouseWheelEvent(const float wheel)
+		{
+			m_mouseWheel = wheel;
+		}
+
 	private:
 		/// <summary>
 		/// 初期化処理。
@@ -291,6 +297,7 @@ namespace nsKaEngine{
 		bool			m_mousePress[e_mouseButtonNum];		//マウスのプレス判定。
 		bool			m_mouseRelease[e_mouseButtonNum];	//マウスのリリース判定。
 		bool			m_cursorLock = false;				//カーソルが固定かどうか。
+		float			m_mouseWheel = 0.0f;				//マウスホイール。
 	};
 }
 
