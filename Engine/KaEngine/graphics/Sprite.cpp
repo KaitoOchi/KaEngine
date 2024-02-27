@@ -3,6 +3,16 @@
 
 namespace nsKaEngine {
 
+	namespace
+	{
+		const Matrix SPRITE_VIEW_MATRIX = Matrix(		//ビュー行列。
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 1.0f
+		);
+	}
+
 	Sprite::Sprite()
 	{
 
@@ -10,7 +20,11 @@ namespace nsKaEngine {
 
 	Sprite::~Sprite()
 	{
-
+		m_vao.Delete();
+		m_vbo.Delete();
+		m_ebo.Delete();
+		m_shaderProgram.Delete();
+		m_texture.Delete();
 	}
 
 	void Sprite::Init(SpriteInitData& initData)
@@ -37,24 +51,21 @@ namespace nsKaEngine {
 
 	void Sprite::InitVertexBufferAndElementsBuffer()
 	{
-		Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
-		Vector2 halfSize = m_size;
-
 		std::vector<SpriteVertex> verts = {
 			{
-				Vector4(-halfSize.x, -halfSize.y, 0.0f, 1.0f),
+				Vector4(-m_size.x, -m_size.y, 0.0f, 1.0f),
 				Vector2(0.0f, 0.0f),
 			},
 			{
-				Vector4(-halfSize.x, halfSize.y, 0.0f, 1.0f),
+				Vector4(-m_size.x, m_size.y, 0.0f, 1.0f),
 				Vector2(0.0f, 1.0f),
 			},
 			{
-				Vector4(halfSize.x, halfSize.y, 0.0f, 1.0f),
+				Vector4(m_size.x, m_size.y, 0.0f, 1.0f),
 				Vector2(1.0f, 1.0f)
 			},
 			{
-				Vector4(halfSize.x, -halfSize.y, 0.0f, 1.0f),
+				Vector4(m_size.x, -m_size.y, 0.0f, 1.0f),
 				Vector2(1.0f, 0.0f)
 		} };
 		std::vector <GLuint> ind = {
@@ -104,8 +115,6 @@ namespace nsKaEngine {
 		const Vector3& scale,
 		const Vector2& pivot
 	) {
-		Vector2 halfSize = m_size;
-
 		//ローカル座標を求める。
 		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
 		Vector3 localPosition = pos;
@@ -118,8 +127,8 @@ namespace nsKaEngine {
 
 		Matrix mPivotTrans;
 		mPivotTrans.MakeTranslate(Vector3(
-			halfSize.x * localPivot.x,
-			halfSize.y * localPivot.y,
+			m_size.x * localPivot.x,
+			m_size.y * localPivot.y,
 			0.0f
 		));
 
@@ -138,14 +147,12 @@ namespace nsKaEngine {
 	{
 		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
 
-		//ビュープロジェクション行列を作成。
-		Matrix viewMatrix;
-		viewMatrix.MakeLookAt(Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3::AxisY);
+		//プロジェクション行列を作成。
 		Matrix projMatrix;
 		projMatrix.MakeOrthoProjectionMatrix(viewPort.x, viewPort.y, 0.1f, 1.0f);
 
 		//モデル用UniformBufferの更新。
-		m_spriteUB.mvp = m_worldMatrix * viewMatrix * projMatrix;
+		m_spriteUB.mvp = m_worldMatrix * SPRITE_VIEW_MATRIX * projMatrix;
 		m_spriteUB.mulColor = m_mulColor;
 
 		m_shaderProgram.Activate();

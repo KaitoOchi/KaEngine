@@ -163,6 +163,7 @@
     <ClCompile Include="graphics\light\PointLight.cpp" />
     <ClCompile Include="graphics\Material.cpp" />
     <ClCompile Include="graphics\Mesh.cpp" />
+    <ClCompile Include="graphics\RenderTarget.cpp" />
     <ClCompile Include="graphics\ShaderClass.cpp" />
     <ClCompile Include="graphics\Sprite.cpp" />
     <ClCompile Include="graphics\Texture.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="graphics\light\PointLight.h" />
     <ClInclude Include="graphics\Material.h" />
     <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="graphics\ShaderClass.h" />
     <ClInclude Include="graphics\Sprite.h" />
     <ClInclude Include="graphics\Texture.h" />

@@ -109,4 +109,3 @@ namespace nsKaEngine {
 		int					m_expandUBSize = 0;				//構造体のサイズ。
 	};
 }
-

@@ -1,7 +1,5 @@
 #include "stdafx.h"
-
-#include "Player.h"
-#include "dbg/DebugCamera.h"
+#include "Game.h"
 
 GLFWwindow* CreateGLFWWindow(GLFWwindow* window)
 {
@@ -14,7 +12,7 @@ GLFWwindow* CreateGLFWWindow(GLFWwindow* window)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//マルチサンプリングを有効。
-	glfwWindowHint(GLFW_SAMPLES, 4);
+	//glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//ウィンドウを作成。
 	window = glfwCreateWindow(
@@ -46,12 +44,7 @@ int main()
 	GLFWwindow* window = nullptr;
 	window = CreateGLFWWindow(window);
 
-	Player* player = nullptr;
-	player = Instantiate<Player>(0, "player");
-
-	DebugCamera* debugCamera = nullptr;
-	debugCamera = Instantiate<DebugCamera>(0, "debugCamera");
-
+	Game* game = Instantiate<Game>(0, "game");
 
 	//メインのループ処理。
 	while (!glfwWindowShouldClose(window)) {
@@ -59,11 +52,6 @@ int main()
 		KaEngine::GetInstance()->BeginFrame();
 
 		KaEngine::GetInstance()->Execute();
-
-		if (Input::GetInstance()->GetMouseButtonDown(e_mouseButtonRight)) {
-			debugCamera->ToggleDebugCamera();
-			player->ToggleActivate();
-		}
 
 		GraphicsEngine::GetInstance()->Execute();
 

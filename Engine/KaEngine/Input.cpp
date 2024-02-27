@@ -91,7 +91,7 @@ namespace nsKaEngine {
 
 	static void InputMouseWheel(GLFWwindow* window, double x, double y)
 	{
-		Input::GetInstance()->SetCallBackMouseWheelEvent(y);
+		Input::GetInstance()->SetCallBackMouseWheelEvent(static_cast<float>(y));
 	}
 
 	Input::Input()
@@ -120,7 +120,11 @@ namespace nsKaEngine {
 
 		InputKey(window);
 
-		InputMouse(window);
+		InputMouseCursor(window);
+
+		InputMouseButton(window);
+
+		m_mouseWheel = 0.0f;
 	}
 
 	/// <summary>
@@ -166,62 +170,60 @@ namespace nsKaEngine {
 	/// <summary>
 	/// マウスの入力処理。
 	/// </summary>
-	void Input::InputMouse(GLFWwindow* window)
+	void Input::InputMouseCursor(GLFWwindow* window)
 	{
-		//マウスカーソルの入力。
-		{
-			//マウスの座標を取得。
-			double mouseX, mouseY;
-			glfwGetCursorPos(window, &mouseX, &mouseY);
+		//ウィンドウサイズを取得。
+		Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
 
-			//画面の範囲内にマウスがあるなら。
-			if (mouseX > 0.0f &&
-				mouseX < GraphicsEngine::GetInstance()->GetWindowSize().x &&
-				mouseY > 0.0f &&
-				mouseY < GraphicsEngine::GetInstance()->GetWindowSize().y
-				) {
+		//マウスの座標を取得。
+		double mouseX, mouseY;
+		glfwGetCursorPos(window, &mouseX, &mouseY);
 
-				m_mouseAxis = m_mousePosition;
+		//画面の範囲内にマウスがあるなら。
+		if (mouseX > 0.0f &&
+			mouseX < windowSize.x &&
+			mouseY > 0.0f &&
+			mouseY < windowSize.y
+			) {
 
-				//座標を保存する。
-				m_mousePosition.x = static_cast<float>(mouseX);
-				m_mousePosition.y = static_cast<float>(mouseY);
+			m_mouseAxis = m_mousePosition;
 
-				//座標の入力量を計算。
-				m_mouseAxis -= m_mousePosition;
-				m_mouseAxis.Normalize();
-			}
-			else {
-				m_mouseAxis = Vector2::Zero;
-			}
+			//座標を保存する。
+			m_mousePosition.x = static_cast<float>(mouseX);
+			m_mousePosition.y = static_cast<float>(mouseY);
 
-			//カーソルが固定なら、座標を設定。
-			if (m_cursorLock) {
-				//ウィンドウサイズを取得。
-				Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
-				windowSize.Scale(0.5f);
-				//カーソルの位置を固定。
-				glfwSetCursorPos(window, windowSize.x, windowSize.y);
-				m_mousePosition = windowSize;
-			}
+			//座標の入力量を計算。
+			m_mouseAxis -= m_mousePosition;
+			m_mouseAxis.Normalize();
+		}
+		else {
+			m_mouseAxis = Vector2::Zero;
 		}
 
-		std::cout << m_mouseWheel << "\n" << std::endl;
-		m_mouseWheel = 0.0f;
+		//カーソルが固定なら、座標を設定。
+		if (m_cursorLock) {
+			windowSize.Scale(0.5f);
+			//カーソルの位置を固定。
+			glfwSetCursorPos(window, windowSize.x, windowSize.y);
+			m_mousePosition = windowSize;
+		}
+	}
 
-		//マウスボタンの入力。
-		{
-			for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
-				//マウスボタンが押されていたら。
-				if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
-					m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
-					m_mousePress[mouseButton.mouseButton] = true;
-				}
-				//マウスボタンが押されていないなら。
-				else {
-					m_mouseRelease[mouseButton.mouseButton] = m_mousePress[mouseButton.mouseButton];
-					m_mousePress[mouseButton.mouseButton] = false;
-				}
+	/// <summary>
+	/// マウスボタンの入力。
+	/// </summary>
+	void Input::InputMouseButton(GLFWwindow* window)
+	{
+		for (const VirtualPadToMouseButton& mouseButton : mouseButtonTable) {
+			//マウスボタンが押されていたら。
+			if (glfwGetMouseButton(window, mouseButton.MouseNumber) == GLFW_PRESS) {
+				m_mouseTrigger[mouseButton.mouseButton] = 1 ^ m_mousePress[mouseButton.mouseButton];
+				m_mousePress[mouseButton.mouseButton] = true;
+			}
+			//マウスボタンが押されていないなら。
+			else {
+				m_mouseRelease[mouseButton.mouseButton] = m_mousePress[mouseButton.mouseButton];
+				m_mousePress[mouseButton.mouseButton] = false;
 			}
 		}
 	}

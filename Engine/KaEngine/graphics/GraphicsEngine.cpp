@@ -21,11 +21,9 @@ namespace nsKaEngine {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
-		//backBufferÇ∆frontBufferÇÃêÿÇËë÷Ç¶ÅB
-		glfwSwapBuffers(window);
-
 		//glfwMaximizeWindow(m_window);
+
+		ActiveFixedWindow();
 	}
 
 	void GraphicsEngine::Execute()

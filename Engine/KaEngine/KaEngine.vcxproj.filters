@@ -64,6 +64,9 @@
     <ClCompile Include="dbg\DebugCamera.cpp">
       <Filter>debug</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\RenderTarget.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -144,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="dbg\DebugCamera.h">
       <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RenderTarget.h">
+      <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

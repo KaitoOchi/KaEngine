@@ -282,9 +282,13 @@ namespace nsKaEngine{
 		/// </summary>
 		void InputKey(GLFWwindow* window);
 		/// <summary>
-		/// マウスの入力処理。
+		/// マウスカーソルの入力処理。
 		/// </summary>
-		void InputMouse(GLFWwindow* window);
+		void InputMouseCursor(GLFWwindow* window);
+		/// <summary>
+		/// マウスキーの入力処理。
+		/// </summary>
+		void InputMouseButton(GLFWwindow* window);
 
 	private:
 		static Input*	m_instance;							//インスタンス。

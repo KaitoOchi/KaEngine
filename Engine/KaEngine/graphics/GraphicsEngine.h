@@ -49,6 +49,24 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// ウィンドウの固定を有効化。
+		/// </summary>
+		void ActiveFixedWindow()
+		{
+			int w = static_cast<int>(m_frameBufferSize.x);
+			int h = static_cast<int>(m_frameBufferSize.y);
+			glfwSetWindowSizeLimits(m_window, w, h, w, h);
+		}
+
+		/// <summary>
+		/// ウィンドウの固定を無効化。
+		/// </summary>
+		void DeactiveFixedWindow()
+		{
+			glfwSetWindowSizeLimits(m_window, 0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
+		}
+
+		/// <summary>
 		/// ウィンドウサイズを取得。
 		/// </summary>
 		/// <returns></returns>
