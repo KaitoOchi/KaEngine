@@ -18,6 +18,9 @@ namespace nsKaEngine {
 		};
 	}
 
+	/// <summary>
+	/// ビットフラグ。
+	/// </summary>
 	class BitFlag
 	{
 	public:
@@ -138,6 +141,9 @@ namespace nsKaEngine {
 			return *this;
 		}
 
+		/// <summary>
+		/// ログ出力。
+		/// </summary>
 		void Log()
 		{
 			std::cout << std::bitset<8>(bit) << '\n';

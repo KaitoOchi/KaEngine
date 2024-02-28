@@ -14,11 +14,13 @@ namespace nsKaEngine {
 
 		void Create(
 			const int width,
-			const int height
+			const int height,
+			const int mipLevel,
+			const GLenum format
 		);
 
 	private:
-		GLuint m_frameBuffer = 0;
-		GLuint m_renderTexture = 0;
+		GLuint m_fbo = 0;				//フレームバッファー。
+		GLuint m_renderTexture = 0;		//テクスチャ。
 	};
 }

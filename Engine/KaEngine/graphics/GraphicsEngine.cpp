@@ -14,14 +14,24 @@ namespace nsKaEngine {
 		//デプステストの有効化。
 		glEnable(GL_DEPTH_TEST);
 
+		//背面カリングを有効にする。
+		//glEnable(GL_CULL_FACE);
+
 		//MSAAの有効化。
-		glEnable(GL_MULTISAMPLE);
+		//glEnable(GL_MULTISAMPLE);
 
 		//半透明描画を適用。
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//glfwMaximizeWindow(m_window);
+
+		//m_mainRenderTarget.Create(
+		//	m_frameBufferSize.x,
+		//	m_frameBufferSize.y,
+		//	0,
+		//	GL_RGB
+		//);
 
 		ActiveFixedWindow();
 	}

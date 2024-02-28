@@ -19,6 +19,11 @@ bool Game::Start()
 
 	m_debugCamera = Instantiate<nsKaEngine::DebugCamera>(0, "debugCamera");
 
+	for (int i = 0; i < 9; i++)
+	{
+		Instantiate<Player>(0, "player");
+	}
+
 	return true;
 }
 

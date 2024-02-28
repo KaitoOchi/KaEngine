@@ -90,6 +90,7 @@ namespace nsKaEngine {
 	private:
 		static GraphicsEngine*	m_instance;				//インスタンス。
 		GLFWwindow*				m_window = nullptr;		//ウィンドウ。
+		RenderTarget			m_mainRenderTarget;		//レンダーターゲット。
 		Vector2					m_frameBufferSize;		//ウィンドウサイズ。
 
 	};

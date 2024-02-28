@@ -46,6 +46,21 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// 名前が一致するかどうか。
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		const bool IsMatchName(const char* name) const
+		{
+			if (m_isActive) {
+				if (strcmp(m_objectName.c_str(), name) == 0) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
 		/// 有効化。
 		/// </summary>
 		void Activate()

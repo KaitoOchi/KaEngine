@@ -38,7 +38,7 @@ namespace nsKaEngine {
 		glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glTexImage2D(m_target, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes);
+		glTexImage2D(m_target, 0, format, widthImg, heightImg, 0, format, pixelType, bytes);
 		glGenerateMipmap(m_target);
 
 		stbi_image_free(bytes);

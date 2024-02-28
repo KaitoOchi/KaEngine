@@ -99,7 +99,7 @@ namespace nsKaEngine {
 
 	KaEngine::KaEngine()
 	{
-
+		memset(&m_texture, 0, sizeof(m_texture));
 	}
 
 	KaEngine::~KaEngine()
@@ -115,9 +115,6 @@ namespace nsKaEngine {
 		GraphicsEngine::CreateInstance(window);
 		Input::CreateInstance();
 		GameObjectManager::CreateInstance();
-
-		//背面カリングを有効にする。
-		//glEnable(GL_CULL_FACE);
 
 		//床モデルの生成。
 		ModelInitData modelInitData;
@@ -177,7 +174,6 @@ namespace nsKaEngine {
 			modelInitData.expandUniformBufferSize,
 			modelInitData.expandUniformBufferName
 		);
-
 		m_lightPos = Vector3(50.0f, 100.0f, 50.0f);
 		m_lightModel.MakeTranslate(m_lightPos);
 
@@ -245,7 +241,6 @@ namespace nsKaEngine {
 		//ライト用構造体の更新。
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 
-
 		m_rotation.SetRotationDegY(m_timer);
 
 		//ピラミッドモデルのモデル。
@@ -276,20 +271,22 @@ namespace nsKaEngine {
 
 		m_sprite.Draw();
 
-		//Swap the back buffer with the front buffer
-		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
-
-
-		m_fpsLimiter.EndFrame();
-		//std::cout << m_fpsLimiter.Get() << "\n" << std::endl;
-
 		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();
 		}
+
+		//Swap the back buffer with the front buffer
+		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
+
+		m_fpsLimiter.EndFrame();
 	}
 
 	void KaEngine::Delete()
 	{
+		GraphicsEngine::DeleteInstance();
+		Input::DeleteInstance();
+		GameObjectManager::DeleteInstance();
+
 		m_texture[0]->Delete();
 		m_texture[1]->Delete();
 		m_texture[2]->Delete();
