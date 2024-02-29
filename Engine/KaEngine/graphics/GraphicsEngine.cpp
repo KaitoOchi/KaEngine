@@ -26,12 +26,21 @@ namespace nsKaEngine {
 
 		//glfwMaximizeWindow(m_window);
 
-		//m_mainRenderTarget.Create(
-		//	m_frameBufferSize.x,
-		//	m_frameBufferSize.y,
-		//	0,
-		//	GL_RGB
-		//);
+		m_mainRenderTarget.Create(
+			static_cast<int>(m_frameBufferSize.x),
+			static_cast<int>(m_frameBufferSize.y),
+			0,
+			GL_RGB
+		);
+
+		SpriteInitData spriteInitData;
+		spriteInitData.textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();
+		spriteInitData.vertexFilePath = "Assets/shader/sprite.vert";
+		spriteInitData.fragmentFilePath = "Assets/shader/sprite.frag";
+		spriteInitData.width = static_cast<int>(m_frameBufferSize.x);
+		spriteInitData.height = static_cast<int>(m_frameBufferSize.y);
+		m_mainSprite.Init(spriteInitData);
+
 
 		ActiveFixedWindow();
 	}
@@ -47,5 +56,10 @@ namespace nsKaEngine {
 		glfwGetFramebufferSize(m_window, &width, &height);
 		m_frameBufferSize.Set(static_cast<float>(width), static_cast<float>(height));
 		glViewport(0, 0, width, height);
+	}
+
+	void GraphicsEngine::Test()
+	{
+		m_mainSprite.Draw();
 	}
 }

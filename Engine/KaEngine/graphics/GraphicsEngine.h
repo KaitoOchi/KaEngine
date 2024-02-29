@@ -80,6 +80,13 @@ namespace nsKaEngine {
 		/// </summary>
 		void Execute();
 
+		RenderTarget& GetRenderTarget()
+		{
+			return m_mainRenderTarget;
+		}
+
+		void Test();
+
 
 	private:
 		/// <summary>
@@ -91,6 +98,7 @@ namespace nsKaEngine {
 		static GraphicsEngine*	m_instance;				//インスタンス。
 		GLFWwindow*				m_window = nullptr;		//ウィンドウ。
 		RenderTarget			m_mainRenderTarget;		//レンダーターゲット。
+		Sprite					m_mainSprite;			//メイン画像。
 		Vector2					m_frameBufferSize;		//ウィンドウサイズ。
 
 	};

@@ -15,7 +15,7 @@ namespace nsKaEngine {
 
 	Sprite::Sprite()
 	{
-
+		memset(m_texture, 0, sizeof(m_texture));
 	}
 
 	Sprite::~Sprite()
@@ -24,7 +24,7 @@ namespace nsKaEngine {
 		m_vbo.Delete();
 		m_ebo.Delete();
 		m_shaderProgram.Delete();
-		m_texture.Delete();
+		m_texture[0]->Delete();
 	}
 
 	void Sprite::Init(SpriteInitData& initData)
@@ -44,9 +44,25 @@ namespace nsKaEngine {
 
 	void Sprite::InitTexture(SpriteInitData& initData)
 	{
-		//テクスチャを設定。
-		m_texture.Init(initData.filePath.c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-		m_texture.TexUnit(&m_shaderProgram, "texture", 0);
+		int texNum = 0;
+
+		if (initData.filePath.empty() == false) {
+			//テクスチャを設定。
+			m_texture[0] = new Texture;
+			m_texture[0]->Init(initData.filePath.c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+			m_texture[0]->TexUnit(&m_shaderProgram, "texture", 0);
+			++texNum;
+		}
+		else if (initData.textures[0] != nullptr) {
+
+			for (texNum = texNum; texNum < initData.textures.size(); ++texNum) {
+				m_texture[texNum] = initData.textures[texNum];
+				m_texture[texNum]->TexUnit(&m_shaderProgram, "texture", texNum);
+			}
+		}
+		else {
+			Ka_Assert(false, "codeError", "テクスチャの初期化に失敗しました。");
+		}
 	}
 
 	void Sprite::InitVertexBufferAndElementsBuffer()
@@ -164,7 +180,7 @@ namespace nsKaEngine {
 
 		m_vao.Bind();
 
-		m_texture.Bind(0);
+		m_texture[0]->Bind(0);
 
 		// Draw the triangles using the GL_TRIANGLES primive
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, 0);

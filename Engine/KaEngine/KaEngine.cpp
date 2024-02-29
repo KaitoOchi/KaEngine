@@ -251,6 +251,8 @@ namespace nsKaEngine {
 		m_pyramidModel = mTrans * mScale * mRot;
 
 
+		GraphicsEngine::GetInstance()->GetRenderTarget().Bind();
+
 		m_floorMesh.Draw(m_floorModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
 		m_pyramidMesh.Draw(m_pyramidModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
@@ -274,6 +276,10 @@ namespace nsKaEngine {
 		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();
 		}
+
+		GraphicsEngine::GetInstance()->GetRenderTarget().UnBind();
+
+		GraphicsEngine::GetInstance()->Test();
 
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());

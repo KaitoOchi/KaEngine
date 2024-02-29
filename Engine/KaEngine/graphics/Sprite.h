@@ -10,6 +10,7 @@ namespace nsKaEngine {
 		std::string filePath;
 		std::string vertexFilePath;
 		std::string fragmentFilePath;
+		std::array<Texture*, ADD_INCLUDE_FILE_MAX> textures = { nullptr };
 		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = { "" };
 		int width = 0;
 		int height = 0;
@@ -98,7 +99,7 @@ namespace nsKaEngine {
 		VAO					m_vao;							//VertexArraysObject。
 		VBO					m_vbo;							//VertexBufferObject。
 		EBO					m_ebo;							//ElementsBufferObject。
-		Texture				m_texture;						//テクスチャ。
+		Texture*			m_texture[8];					//テクスチャ。
 		UniformBuffer		m_spriteUniformBuffer;			//スプライト用UniformBufferObject。
 		UniformBuffer		m_expandUniformBuffer;			//ユーザー拡張用UniformBufferObject。
 		SpriteUB			m_spriteUB;						//スプライト用UB。

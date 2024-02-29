@@ -41,9 +41,15 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "math/Transform.h"
 
 // Graphics
-#include "graphics/RenderTarget.h"
+#include "graphics/VAO.h"
+#include "graphics/VBO.h"
+#include "graphics/EBO.h"
+#include "graphics/Texture.h"
+#include "graphics/ShaderClass.h"
+#include "graphics/UniformBuffer.h"
 #include "graphics/Mesh.h"
 #include "graphics/Sprite.h"
+#include "graphics/RenderTarget.h"
 #include "graphics/GraphicsEngine.h"
 #include "graphics/Material.h"
 

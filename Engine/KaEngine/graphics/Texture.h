@@ -30,6 +30,20 @@ namespace nsKaEngine {
 		);
 
 		/// <summary>
+		/// レンダーテクスチャを作成。
+		/// </summary>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <param name="mipLevel"></param>
+		/// <param name="format"></param>
+		void InitRenderTexture(
+			const int width,
+			const int height,
+			const GLuint mipLevel,
+			const GLenum format
+		);
+
+		/// <summary>
 		/// シェーダーに送信。
 		/// </summary>
 		/// <param name="shader">シェーダー</param>
@@ -40,6 +54,15 @@ namespace nsKaEngine {
 			const char* uniform,
 			const GLuint slot
 		);
+
+		/// <summary>
+		/// テクスチャーIDを取得。
+		/// </summary>
+		/// <returns></returns>
+		const GLuint GetTextureID() const
+		{
+			return m_id;
+		}
 
 		/// <summary>
 		/// 接続。
