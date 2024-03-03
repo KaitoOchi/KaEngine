@@ -212,7 +212,7 @@
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Transform.h" />
     <ClInclude Include="math\Vector.h" />
-    <ClInclude Include="timer\FPSLimiter.h" />
+    <ClInclude Include="timer\GameTime.h" />
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="util\Noncopyable.h" />
     <ClInclude Include="util\TResourceBank.h" />

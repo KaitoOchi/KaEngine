@@ -4,7 +4,7 @@
 
 namespace
 {
-	const float MOVE_SPEED = 1.0f;								//移動速度。
+	const float MOVE_SPEED = 500.0f;								//移動速度。
 	const float ANGLE_LIMIT = Mathf::PI / 2.0f - 0.001f;		//角度の限界値。
 	const float TARGET_FORWARD = 10000.0f;						//注視点の前方向。
 }
@@ -70,7 +70,7 @@ void Player::Move()
 	}
 
 	moveSpeed.Normalize();
-	moveSpeed *= MOVE_SPEED;
+	moveSpeed *= MOVE_SPEED * g_gameTime->GetFrameDeltaTime();
 
 	m_position += moveSpeed;
 

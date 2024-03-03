@@ -1,6 +1,5 @@
 #pragma once
 #include <stb/stb_image.h>
-#include "ShaderClass.h"
 
 namespace nsKaEngine {
 

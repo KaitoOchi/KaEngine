@@ -10,7 +10,9 @@ namespace nsKaEngine {
 
 	RenderTarget::~RenderTarget()
 	{
-
+		glDeleteFramebuffers(1, &m_fbo);
+		glDeleteRenderbuffers(1, &m_depthBuffer);
+		m_renderTexture.Delete();
 	}
 
 	void RenderTarget::Create(
@@ -35,11 +37,10 @@ namespace nsKaEngine {
 		);
 
 		//デプスバッファの作成。
-		GLuint depthrenderbuffer;
-		glGenRenderbuffers(1, &depthrenderbuffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
+		glGenRenderbuffers(1, &m_depthBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_depthBuffer);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 		
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {

@@ -10,6 +10,7 @@ namespace nsKaEngine {
 
 	KaEngine* KaEngine::m_instance = nullptr;
 	Camera* g_camera3D = nullptr;				//3Dカメラ。
+	GameTime* g_gameTime = nullptr;
 
 	//頂点座標。
 	Vertex vertices[] =
@@ -111,6 +112,9 @@ namespace nsKaEngine {
 	{
 		g_camera3D = new Camera;
 		g_camera3D->Init();
+
+		g_gameTime = new GameTime;
+		g_gameTime->SetFrameRateMode(GameTime::e_frameRateMode_Fixed);
 
 		GraphicsEngine::CreateInstance(window);
 		Input::CreateInstance();
@@ -230,7 +234,7 @@ namespace nsKaEngine {
 
 	void KaEngine::BeginFrame()
 	{
-		m_fpsLimiter.BeginFrame();
+		g_gameTime->BeginFrame();
 
 		//ポーリング方式を使いマウス操作などのイベントを取得する。
 		glfwPollEvents();
@@ -259,7 +263,8 @@ namespace nsKaEngine {
 
 		m_lightMesh.Draw(m_lightModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
-		m_timer += 1.0f;
+		float dt = g_gameTime->GetFrameDeltaTime();
+		m_timer += 100.0f * dt;
 
 		Quaternion rot;
 		//rot.SetRotationDegZ(m_timer);
@@ -284,7 +289,10 @@ namespace nsKaEngine {
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
 
-		m_fpsLimiter.EndFrame();
+		g_gameTime->EndFrame();
+
+		float deltaTime = g_gameTime->GetFrameDeltaTime();
+		std::cout << 1.0f / deltaTime << std::endl;
 	}
 
 	void KaEngine::Delete()

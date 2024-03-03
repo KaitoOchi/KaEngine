@@ -36,16 +36,14 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "math/Vector.h"
 #include "math/Matrix.h"
 #include "math/BitFlag.h"
-
-// Transform
 #include "math/Transform.h"
 
 // Graphics
-#include "graphics/VAO.h"
 #include "graphics/VBO.h"
+#include "graphics/VAO.h"
 #include "graphics/EBO.h"
-#include "graphics/Texture.h"
 #include "graphics/ShaderClass.h"
+#include "graphics/Texture.h"
 #include "graphics/UniformBuffer.h"
 #include "graphics/Mesh.h"
 #include "graphics/Sprite.h"
@@ -54,7 +52,7 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "graphics/Material.h"
 
 // Time
-#include "timer/FPSLimiter.h"
+#include "timer/GameTime.h"
 
 // Camera
 #include "Camera.h"

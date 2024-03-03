@@ -1,5 +1,4 @@
 #pragma once
-#include "VBO.h"
 
 namespace nsKaEngine {
 

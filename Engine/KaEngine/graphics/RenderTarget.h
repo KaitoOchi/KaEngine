@@ -63,9 +63,10 @@ namespace nsKaEngine {
 		void UnBind();
 
 	private:
-		Texture m_renderTexture;		//レンダーテクスチャ。
-		GLuint m_fbo = 0;				//フレームバッファー。
-		int m_width = 0;				//横幅。
-		int m_height = 0;				//高さ。
+		Texture		m_renderTexture;		//レンダーテクスチャ。
+		GLuint		m_fbo = 0;				//フレームバッファー。
+		GLuint		m_depthBuffer = 0;		//深度バッファ。
+		int			m_width = 0;			//横幅。
+		int			m_height = 0;			//高さ。
 	};
 }

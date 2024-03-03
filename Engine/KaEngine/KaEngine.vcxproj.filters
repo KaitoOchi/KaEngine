@@ -76,7 +76,7 @@
     <ClInclude Include="util\Noncopyable.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="timer\FPSLimiter.h">
+    <ClInclude Include="timer\GameTime.h">
       <Filter>time</Filter>
     </ClInclude>
     <ClInclude Include="timer\Timer.h">

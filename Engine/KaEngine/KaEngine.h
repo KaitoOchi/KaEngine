@@ -1,11 +1,7 @@
 #pragma once
 
-#include "graphics/Texture.h"
-#include "Camera.h"
-
 #include "graphics/light/DirectionLight.h"
 #include "graphics/light/PointLight.h"
-#include "timer/FPSLimiter.h"
 #include "graphics/Mesh.h"
 
 namespace nsKaEngine {
@@ -163,8 +159,6 @@ namespace nsKaEngine {
 	private:
 		static KaEngine* m_instance;				//インスタンス。
 
-		FPSLimiter m_fpsLimiter;					//FPSリミッター。
-
 		TResourceBank<Texture> m_textureBank;		//テクスチャバンク。
 		TResourceBank<GLuint> m_shaderBank;			//シェーダーバンク。
 		TResourceBank<GLuint> m_uniformBufferBank;	//定数バッファバンク。
@@ -192,4 +186,5 @@ namespace nsKaEngine {
 		float m_timer = 0.0f;
 	};
 	extern Camera* g_camera3D;
+	extern GameTime* g_gameTime;
 }

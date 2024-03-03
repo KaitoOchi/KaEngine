@@ -1,6 +1,4 @@
 #pragma once
-class Texture;
-class Shader;
 
 namespace nsKaEngine {
 
@@ -43,10 +41,10 @@ namespace nsKaEngine {
 		}
 
 	private:
-		Texture*	m_albedoMap = nullptr;
-		Texture*	m_normalMap = nullptr;
-		Texture*	m_metallicSmoothMap = nullptr;
-		Shader		m_shaderProgram;
+		Texture*	m_albedoMap = nullptr;				//アルベドマップ。
+		Texture*	m_normalMap = nullptr;				//法線マップ。
+		Texture*	m_metallicSmoothMap = nullptr;		//メタリックスムースマップ。
+		Shader		m_shaderProgram;					//シェーダー。
 	};
 }
 
