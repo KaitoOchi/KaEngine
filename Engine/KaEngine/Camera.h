@@ -1,5 +1,4 @@
 #pragma once
-#include "graphics/ShaderClass.h"
 
 namespace nsKaEngine {
 
@@ -214,25 +213,32 @@ namespace nsKaEngine {
 			return m_viewProjectionMatrix;
 		}
 
+		/// <summary>
+		/// ワールド座標からスクリーン座標へ変換。
+		/// </summary>
+		/// <param name="screenPosition">変換先のスクリーン座標。</param>
+		/// <param name="worldPosition">変換元のワールド座標。</param>
+		void CalcScreenPosFromWorldPos(Vector2& screenPosition, const Vector3& worldPosition) const;
+
 	private:
-		Vector3			m_position = Vector3::AxisZ;	//座標。
-		Vector3			m_target;						//注視点。
-		Vector3			m_forward = Vector3::Forward;	//前方向。
-		Vector3			m_up = Vector3::Up;				//上方向。
-		Vector3			m_right = Vector3::AxisX;		//右方向。
-		Quaternion		m_rotation;						//回転。
-		Matrix			m_viewMatrix;					//ビュー行列。
-		Matrix			m_viewMatrixInv;				//ビュー行列の逆行列。
-		Matrix			m_projectionMatrix;				//透視変換行列。
-		Matrix			m_projectionMatrixInv;			//透視変換行列の逆行列。
-		Matrix			m_viewProjectionMatrix;			//ビュープロジェクション行列。
-		Matrix			m_viewProjectionMatrixInv;		//ビュープロジェクション行列の逆行列。
-		EnUpdateProjFunc m_updateProjFunc = e_UpdateProjFunc_Prespective;	//カメラの更新方法。
-		bool			m_isNeedUpdate = true;			//更新が必要かどうか。
-		float			m_near = 0.1f;					//近平面。
-		float			m_far = 5000.0f;				//遠平面。
-		float			m_fov = 60.0f;					//視野角。
-		float			m_width = FRAME_BUFFER_WIDTH;	//平行投影行列の幅。
-		float			m_height = FRAME_BUFFER_HEIGHT;	//平行投影行列の高さ。
+		Vector3				m_position = Vector3::AxisZ;						//座標。
+		Vector3				m_target;											//注視点。
+		Vector3				m_forward = Vector3::Forward;						//前方向。
+		Vector3				m_up = Vector3::Up;									//上方向。
+		Vector3				m_right = Vector3::AxisX;							//右方向。
+		Quaternion			m_rotation;											//回転。
+		Matrix				m_viewMatrix;										//ビュー行列。
+		Matrix				m_viewMatrixInv;									//ビュー行列の逆行列。
+		Matrix				m_projectionMatrix;									//透視変換行列。
+		Matrix				m_projectionMatrixInv;								//透視変換行列の逆行列。
+		Matrix				m_viewProjectionMatrix;								//ビュープロジェクション行列。
+		Matrix				m_viewProjectionMatrixInv;							//ビュープロジェクション行列の逆行列。
+		EnUpdateProjFunc	m_updateProjFunc = e_UpdateProjFunc_Prespective;	//カメラの更新方法。
+		bool				m_isNeedUpdate = true;								//更新が必要かどうか。
+		float				m_near = 0.1f;										//近平面。
+		float				m_far = 5000.0f;									//遠平面。
+		float				m_fov = 60.0f;										//視野角。
+		float				m_width = FRAME_BUFFER_WIDTH;						//平行投影行列の幅。
+		float				m_height = FRAME_BUFFER_HEIGHT;						//平行投影行列の高さ。
 	};
 }

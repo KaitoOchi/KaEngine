@@ -164,6 +164,26 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// ベクトルに行列を乗算。
+		/// </summary>
+		/// <param name="v"></param>
+		void Apply(Vector3& v) const
+		{
+			glm::vec4 result;
+			result = mat * glm::vec4(v.vec, 1.0f);
+			v.Set(result.x, result.y, result.z);
+		}
+
+		/// <summary>
+		/// ベクトルに行列を乗算。
+		/// </summary>
+		/// <param name="v"></param>
+		void Apply(Vector4& v) const
+		{
+			v.vec = mat * v.vec;
+		}
+
+		/// <summary>
 		/// 行列同士の乗算。
 		/// </summary>
 		/// <param name="m0"></param>

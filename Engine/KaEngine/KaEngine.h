@@ -157,11 +157,11 @@ namespace nsKaEngine {
 		void Delete();
 
 	private:
-		static KaEngine* m_instance;				//インスタンス。
+		static KaEngine*		m_instance;				//インスタンス。
 
-		TResourceBank<Texture> m_textureBank;		//テクスチャバンク。
-		TResourceBank<GLuint> m_shaderBank;			//シェーダーバンク。
-		TResourceBank<GLuint> m_uniformBufferBank;	//定数バッファバンク。
+		TResourceBank<Texture>	m_textureBank;			//テクスチャバンク。
+		TResourceBank<GLuint>	m_shaderBank;			//シェーダーバンク。
+		TResourceBank<GLuint>	m_uniformBufferBank;	//定数バッファバンク。
 
 		Texture* m_texture[3];
 		std::vector<Texture*> m_textures;
@@ -185,6 +185,6 @@ namespace nsKaEngine {
 		Sprite m_sprite;
 		float m_timer = 0.0f;
 	};
-	extern Camera* g_camera3D;
-	extern GameTime* g_gameTime;
+	extern Camera* g_camera3D;		//カメラクラス。
+	extern GameTime* g_gameTime;	//時間制御クラス。
 }
