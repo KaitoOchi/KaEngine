@@ -91,8 +91,8 @@ void Player::Rotation()
 	}
 	
 	//スティックの入力を加算。
-	m_rotSpeed.x += -mouse.x * m_sensitivity;
-	m_rotSpeed.y += -mouse.y * m_sensitivity;
+	m_rotSpeed.x += -mouse.x * m_sensitivity * g_gameTime->GetFrameDeltaTime();
+	m_rotSpeed.y += -mouse.y * m_sensitivity * g_gameTime->GetFrameDeltaTime();
 
 	//上下回転の限界値を範囲内に収める。
 	m_rotSpeed.y = Mathf::Clamp(m_rotSpeed.y, -ANGLE_LIMIT, ANGLE_LIMIT);

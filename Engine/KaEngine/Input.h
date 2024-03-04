@@ -4,7 +4,7 @@ namespace nsKaEngine{
 
 	namespace
 	{
-		const int		INPUT_BIT_NUM_MAX = 8;				//BitFlagの最大ビット数。
+		const int		BIT_NUM_MAX = 8;				//BitFlagの最大ビット数。
 	}
 
 	/// <summary>
@@ -129,6 +129,24 @@ namespace nsKaEngine{
 		/// </summary>
 		void Update();
 
+		/// <summary>
+		/// 開始処理。
+		/// </summary>
+		void BeginFrame();
+
+		/// <summary>
+		/// 終了処理。
+		/// </summary>
+		void EndFrame();
+
+		/// <summary>
+		/// マウスホイールの入力を設定。
+		/// </summary>
+		void SetCallBackMouseWheelEvent(const float wheel)
+		{
+			m_mouseWheel = wheel;
+		}
+
 	public:
 		/// <summary>
 		/// ボタンが押された瞬間を取得。
@@ -137,7 +155,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKeyDown(const KeyCode code) const
 		{
-			return m_keyTriggerBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
+			return m_keyTriggerBit[static_cast<int>(code) / BIT_NUM_MAX].IsSetFlag(static_cast<int>(code) % BIT_NUM_MAX);
 		}
 
 		/// <summary>
@@ -147,7 +165,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKey(const KeyCode code) const
 		{
-			return m_keyPressBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
+			return m_keyPressBit[static_cast<int>(code) / BIT_NUM_MAX].IsSetFlag(static_cast<int>(code) % BIT_NUM_MAX);
 		}
 
 		/// <summary>
@@ -157,7 +175,7 @@ namespace nsKaEngine{
 		/// <returns></returns>
 		const bool GetKeyUp(const KeyCode code) const
 		{
-			return m_keyReleaseBit[static_cast<int>(code) / 8].IsSetFlag(static_cast<int>(code) % 8);
+			return m_keyReleaseBit[static_cast<int>(code) / BIT_NUM_MAX].IsSetFlag(static_cast<int>(code) % BIT_NUM_MAX);
 		}
 
 		/// <summary>
@@ -239,6 +257,14 @@ namespace nsKaEngine{
 		}
 
 		/// <summary>
+		/// マウスホイールの入力を取得。
+		/// </summary>
+		const float GetMouseWheel() const
+		{
+			return m_mouseWheel;
+		}
+
+		/// <summary>
 		/// カーソルを固定にする。
 		/// </summary>
 		void LockCursor()
@@ -265,12 +291,6 @@ namespace nsKaEngine{
 			return m_cursorLock;
 		}
 
-		
-		void SetCallBackMouseWheelEvent(const float wheel)
-		{
-			m_mouseWheel = wheel;
-		}
-
 	private:
 		/// <summary>
 		/// 初期化処理。
@@ -294,9 +314,9 @@ namespace nsKaEngine{
 		static Input*	m_instance;							//インスタンス。
 		Vector2			m_mousePosition;					//マウスの座標。
 		Vector2			m_mouseAxis;						//マウスの入力。
-		BitFlag			m_keyTriggerBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];	//キーのトリガー判定。
-		BitFlag			m_keyPressBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];		//キーのプレス判定。
-		BitFlag			m_keyReleaseBit[(static_cast<int>(e_buttonNum) / INPUT_BIT_NUM_MAX) + 1];	//キーのリリース判定。
+		BitFlag			m_keyTriggerBit[(static_cast<int>(e_buttonNum) / BIT_NUM_MAX) + 1];	//キーのトリガー判定。
+		BitFlag			m_keyPressBit[(static_cast<int>(e_buttonNum) / BIT_NUM_MAX) + 1];	//キーのプレス判定。
+		BitFlag			m_keyReleaseBit[(static_cast<int>(e_buttonNum) / BIT_NUM_MAX) + 1];	//キーのリリース判定。
 		bool			m_mouseTrigger[e_mouseButtonNum];	//マウスのトリガー判定。
 		bool			m_mousePress[e_mouseButtonNum];		//マウスのプレス判定。
 		bool			m_mouseRelease[e_mouseButtonNum];	//マウスのリリース判定。

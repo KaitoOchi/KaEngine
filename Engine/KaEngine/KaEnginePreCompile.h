@@ -52,6 +52,7 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "graphics/Material.h"
 
 // Time
+#include "timer/Timer.h"
 #include "timer/GameTime.h"
 
 // Camera

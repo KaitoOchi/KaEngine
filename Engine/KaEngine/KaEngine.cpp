@@ -1,16 +1,11 @@
 #include "KaEnginePreCompile.h"
 #include "KaEngine.h"
 
-#include <stb/stb_image.h>
-
-#include "graphics/Mesh.h"
-#include "graphics/Texture.h"
-
 namespace nsKaEngine {
 
-	KaEngine* KaEngine::m_instance = nullptr;
-	Camera* g_camera3D = nullptr;				//3Dカメラ。
-	GameTime* g_gameTime = nullptr;
+	KaEngine*	KaEngine::m_instance = nullptr;		//エンジンクラス。
+	Camera*		g_camera3D = nullptr;				//カメラクラス。
+	GameTime*	g_gameTime = nullptr;				//時間制御クラス。
 
 	//頂点座標。
 	Vertex vertices[] =
@@ -110,9 +105,11 @@ namespace nsKaEngine {
 
 	void KaEngine::Init(GLFWwindow* window)
 	{
+		//カメラの初期化。
 		g_camera3D = new Camera;
 		g_camera3D->Init();
 
+		//時間制御クラスの初期化。
 		g_gameTime = new GameTime;
 		g_gameTime->SetFrameRateMode(GameTime::e_frameRateMode_Fixed);
 
@@ -236,8 +233,7 @@ namespace nsKaEngine {
 	{
 		g_gameTime->BeginFrame();
 
-		//ポーリング方式を使いマウス操作などのイベントを取得する。
-		glfwPollEvents();
+		Input::GetInstance()->BeginFrame();
 	}
 
 	void KaEngine::EndFrame()
@@ -289,10 +285,10 @@ namespace nsKaEngine {
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
 
-		g_gameTime->EndFrame();
 
-		float deltaTime = g_gameTime->GetFrameDeltaTime();
-		std::cout << 1.0f / deltaTime << std::endl;
+		Input::GetInstance()->EndFrame();
+
+		g_gameTime->EndFrame();
 	}
 
 	void KaEngine::Delete()

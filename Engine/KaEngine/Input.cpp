@@ -114,6 +114,12 @@ namespace nsKaEngine {
 		glfwSetScrollCallback(window, InputMouseWheel);
 	}
 
+	void Input::BeginFrame()
+	{
+		//ポーリング方式を使いマウス操作などのイベントを取得する。
+		glfwPollEvents();
+	}
+
 	void Input::Update()
 	{
 		auto window = GraphicsEngine::GetInstance()->GetWindow();
@@ -123,7 +129,10 @@ namespace nsKaEngine {
 		InputMouseCursor(window);
 
 		InputMouseButton(window);
+	}
 
+	void Input::EndFrame()
+	{
 		m_mouseWheel = 0.0f;
 	}
 
@@ -137,8 +146,8 @@ namespace nsKaEngine {
 
 		for (const VirtualPadToKeyPad& keyPad : keyPadTable) {
 
-			keyNum = keyPad.keyCode % INPUT_BIT_NUM_MAX;
-			bitArray = keyPad.keyCode / INPUT_BIT_NUM_MAX;
+			keyNum = keyPad.keyCode % BIT_NUM_MAX;
+			bitArray = keyPad.keyCode / BIT_NUM_MAX;
 
 			//キーが押されていたら。
 			if (glfwGetKey(window, keyPad.keyNumber) == GLFW_PRESS) {

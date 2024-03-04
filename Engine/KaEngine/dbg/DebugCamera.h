@@ -29,9 +29,26 @@ namespace nsKaEngine {
 		/// </summary>
 		void Move();
 		/// <summary>
+		/// 移動入力処理。
+		/// </summary>
+		const bool IsInputWASD(Vector3& moveSpeed);
+		/// <summary>
+		/// マウスホイール入力処理。
+		/// </summary>
+		void InputMouseWheel();
+		/// <summary>
 		/// 回転処理。
 		/// </summary>
 		void Rotation();
+		/// <summary>
+		/// マウスカーソル入力処理。
+		/// </summary>
+		/// <returns></returns>
+		const bool IsInputMouse(Vector2& mouse);
+		/// <summary>
+		/// 注視点の回転。
+		/// </summary>
+		void RotateTarget();
 		/// <summary>
 		/// カーソルのロック処理。
 		/// </summary>
@@ -41,7 +58,7 @@ namespace nsKaEngine {
 		Vector3			m_position;					//座標。
 		Vector3			m_target = Vector3::AxisZ;	//注視点。
 		Vector3			m_rotSpeed;					//回転角度。
-		float			m_sensitivity = 0.05f;		//カメラ感度。
+		float			m_sensitivity = 5.0f;		//カメラ感度。
+		float			m_wheelSpeed = 1.0f;		//ホイール速度。
 	};
-
 }
