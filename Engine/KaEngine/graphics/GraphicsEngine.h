@@ -14,11 +14,13 @@ namespace nsKaEngine {
 		/// <summary>
 		/// インスタンスの作成。
 		/// </summary>
-		static void CreateInstance(GLFWwindow* window)
-		{
+		static void CreateInstance(
+			GLFWwindow* window,
+			DeviceInfo* deviceInfo
+		) {
 			Ka_Assert(m_instance == nullptr, "codeError", "GaphicsEngineクラスのインスタンスは一つしか作れません。");
 			m_instance = new GraphicsEngine;
-			m_instance->Init(window);
+			m_instance->Init(window, deviceInfo);
 		}
 
 		/// <summary>
@@ -49,30 +51,31 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
-		/// ウィンドウの固定を有効化。
-		/// </summary>
-		void ActiveFixedWindow()
-		{
-			int w = static_cast<int>(m_frameBufferSize.x);
-			int h = static_cast<int>(m_frameBufferSize.y);
-			glfwSetWindowSizeLimits(m_window, w, h, w, h);
-		}
-
-		/// <summary>
-		/// ウィンドウの固定を無効化。
-		/// </summary>
-		void DeactiveFixedWindow()
-		{
-			glfwSetWindowSizeLimits(m_window, 0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
-		}
-
-		/// <summary>
 		/// ウィンドウサイズを取得。
 		/// </summary>
 		/// <returns></returns>
 		const Vector2& GetWindowSize() const
 		{
 			return m_frameBufferSize;
+		}
+
+		/// <summary>
+		/// フルスクリーン状態の切り替え。
+		/// </summary>
+		void ToggleFullScreen()
+		{
+			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+			if (!m_isFullScreen) {
+				m_frameBufferSize.Scale(1.2f);
+				glfwSetWindowMonitor(m_window, monitor, 0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y), GLFW_DONT_CARE);
+				glViewport(0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
+			}
+			else {
+				m_frameBufferSize.Scale(0.8f);
+				glfwSetWindowMonitor(m_window, NULL, 0, 35, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y), GLFW_DONT_CARE);
+				glViewport(0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
+			}
+			m_isFullScreen = !m_isFullScreen;
 		}
 
 		/// <summary>
@@ -92,7 +95,10 @@ namespace nsKaEngine {
 		/// <summary>
 		/// 初期化処理。
 		/// </summary>
-		void Init(GLFWwindow* window);
+		void Init(
+			GLFWwindow* window,
+			DeviceInfo* deviceInfo
+		);
 
 	private:
 		static GraphicsEngine*	m_instance;				//インスタンス。
@@ -100,6 +106,6 @@ namespace nsKaEngine {
 		RenderTarget			m_mainRenderTarget;		//レンダーターゲット。
 		Sprite					m_mainSprite;			//メイン画像。
 		Vector2					m_frameBufferSize;		//ウィンドウサイズ。
-
+		bool					m_isFullScreen = false;	//フルスクリーンかどうか。
 	};
 }

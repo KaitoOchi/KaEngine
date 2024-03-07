@@ -6,7 +6,12 @@
 #include <vector>
 #include <array>
 #include <list>
+
+#ifdef _WIN32
+
 #include <Windows.h>
+
+#endif
 
 // openGL
 #include <glad/gl.h>
@@ -23,6 +28,9 @@
 
 const float FRAME_BUFFER_WIDTH = 1600.0f;
 const float FRAME_BUFFER_HEIGHT = 900.0f;
+
+// system
+#include "../Game/system.h"
 
 // util
 #include "util/Noncopyable.h"

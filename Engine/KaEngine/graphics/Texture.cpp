@@ -53,12 +53,16 @@ namespace nsKaEngine {
 	) {
 		m_target = GL_TEXTURE_2D;
 
-		glGenTextures(1, &m_id);
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		if (m_id == 0) {
+			glGenTextures(1, &m_id);
+		}
+		Bind(0);
 		glTexImage2D(GL_TEXTURE_2D, mipLevel, format, width, height, 0, format, GL_UNSIGNED_BYTE, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_id, 0);
+
+		UnBind();
 	}
 
 	void Texture::TexUnit(

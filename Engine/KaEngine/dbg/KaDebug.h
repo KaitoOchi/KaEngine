@@ -32,7 +32,7 @@ namespace nsKaEngine {
 
 #ifdef _DEBUG
 	#define Ka_Assert(flag, errorCaption, errorMessage) nsKaEngine::KaAssert(flag, errorCaption, errorMessage)
-	#define Ka_Log(format) nsKaEngine::Ka_Log(format)
+	#define Ka_Log(format) nsKaEngine::KaLog(format)
 #else
 	#define Ka_Assert(flag, errorCaption, errorMessage)
 	#define Ka_Log(format)

@@ -76,15 +76,16 @@ namespace nsKaEngine {
 		/// </summary>
 		void EndFrame()
 		{
-			//フレームレートが可変なら。
-			if (m_enFrameRateMode == e_frameRateMode_Variable) {
-				PushFrameDeltaTime();
-			}
 			//フレームレートが固定なら。
-			else {
+			if (m_enFrameRateMode == e_frameRateMode_Fixed) {
 				SpinLock();
 			}
+
+			PushFrameDeltaTime();
+
 			m_frameCount++;
+
+			//std::cout << 1.0f / m_frameDeltaTime << std::endl;
 		}
 
 	private:

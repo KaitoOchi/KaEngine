@@ -5,11 +5,17 @@ namespace nsKaEngine {
 
 	GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
-	void GraphicsEngine::Init(GLFWwindow* window)
-	{
+	void GraphicsEngine::Init(
+		GLFWwindow* window,
+		DeviceInfo* deviceInfo
+	) {
 		m_window = window;
 
-		m_frameBufferSize.Set(FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT);
+		m_frameBufferSize.Set(deviceInfo->windowWidth, deviceInfo->windowHeight);
+
+		if (deviceInfo->fullscreen == true) {
+			ToggleFullScreen();
+		}
 
 		//デプステストの有効化。
 		glEnable(GL_DEPTH_TEST);
@@ -18,13 +24,11 @@ namespace nsKaEngine {
 		//glEnable(GL_CULL_FACE);
 
 		//MSAAの有効化。
-		//glEnable(GL_MULTISAMPLE);
+		glEnable(GL_MULTISAMPLE);
 
 		//半透明描画を適用。
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		//glfwMaximizeWindow(m_window);
 
 		m_mainRenderTarget.Create(
 			static_cast<int>(m_frameBufferSize.x),
@@ -37,12 +41,9 @@ namespace nsKaEngine {
 		spriteInitData.textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();
 		spriteInitData.vertexFilePath = "Assets/shader/sprite.vert";
 		spriteInitData.fragmentFilePath = "Assets/shader/sprite.frag";
-		spriteInitData.width = static_cast<int>(m_frameBufferSize.x);
-		spriteInitData.height = static_cast<int>(m_frameBufferSize.y);
+		spriteInitData.width = 1920;
+		spriteInitData.height = 1080;
 		m_mainSprite.Init(spriteInitData);
-
-
-		ActiveFixedWindow();
 	}
 
 	void GraphicsEngine::Execute()
@@ -56,6 +57,10 @@ namespace nsKaEngine {
 		glfwGetFramebufferSize(m_window, &width, &height);
 		m_frameBufferSize.Set(static_cast<float>(width), static_cast<float>(height));
 		glViewport(0, 0, width, height);
+
+		if (Input::GetInstance()->GetKeyDown(e_buttonF)) {
+			ToggleFullScreen();
+		}
 	}
 
 	void GraphicsEngine::Test()

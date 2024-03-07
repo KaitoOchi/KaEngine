@@ -204,6 +204,7 @@ namespace nsKaEngine {
 			//À•W‚Ì“ü—Í—Ê‚ğŒvZB
 			m_mouseAxis -= m_mousePosition;
 			m_mouseAxis.Normalize();
+			m_mouseAxis.Scale(-1.0f);
 		}
 		else {
 			m_mouseAxis = Vector2::Zero;

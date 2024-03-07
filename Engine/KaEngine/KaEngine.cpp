@@ -103,8 +103,12 @@ namespace nsKaEngine {
 
 	}
 
-	void KaEngine::Init(GLFWwindow* window)
-	{
+	void KaEngine::Init(
+		GLFWwindow* window,
+		DeviceInfo* deviceInfo
+	) {
+		m_deviceInfo = deviceInfo;
+
 		//カメラの初期化。
 		g_camera3D = new Camera;
 		g_camera3D->Init();
@@ -112,8 +116,9 @@ namespace nsKaEngine {
 		//時間制御クラスの初期化。
 		g_gameTime = new GameTime;
 		g_gameTime->SetFrameRateMode(GameTime::e_frameRateMode_Fixed);
+		g_gameTime->SetMaxFPS(deviceInfo->frameRate);
 
-		GraphicsEngine::CreateInstance(window);
+		GraphicsEngine::CreateInstance(window, deviceInfo);
 		Input::CreateInstance();
 		GameObjectManager::CreateInstance();
 

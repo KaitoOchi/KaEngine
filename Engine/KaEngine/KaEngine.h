@@ -1,8 +1,6 @@
 #pragma once
-
 #include "graphics/light/DirectionLight.h"
 #include "graphics/light/PointLight.h"
-#include "graphics/Mesh.h"
 
 namespace nsKaEngine {
 
@@ -12,6 +10,7 @@ namespace nsKaEngine {
 	class KaEngine : Noncopyable
 	{
 	public:
+
 		/// <summary>
 		/// ライト用UB。
 		/// </summary>
@@ -45,12 +44,14 @@ namespace nsKaEngine {
 		/// インスタンスの作成。
 		/// </summary>
 		/// <param name="window"></param>
-		static void CreateInstance(GLFWwindow* window)
-		{
+		static void CreateInstance(
+			GLFWwindow* window,
+			DeviceInfo* deviceInfo
+		) {
 			Ka_Assert(m_instance == nullptr, "codeError", "KaEngineクラスのインスタンスは一つしか作れません。");
 			m_instance = new KaEngine;
 
-			m_instance->Init(window);
+			m_instance->Init(window, deviceInfo);
 		}
 
 		/// <summary>
@@ -72,6 +73,15 @@ namespace nsKaEngine {
 		}
 
 	public:
+		/// <summary>
+		/// デバイス情報を取得。
+		/// </summary>
+		/// <returns></returns>
+		DeviceInfo* GetDeviceInfo()
+		{
+			return m_deviceInfo;
+		}
+
 		/// <summary>
 		/// テクスチャバンクに登録。
 		/// </summary>
@@ -150,7 +160,10 @@ namespace nsKaEngine {
 		/// 初期化処理。
 		/// </summary>
 		/// <param name="window"></param>
-		void Init(GLFWwindow* window);
+		void Init(
+			GLFWwindow* window,
+			DeviceInfo* deviceInfo
+		);
 		/// <summary>
 		/// 削除処理。
 		/// </summary>
@@ -158,6 +171,7 @@ namespace nsKaEngine {
 
 	private:
 		static KaEngine*		m_instance;				//インスタンス。
+		DeviceInfo*				m_deviceInfo = nullptr;	//デバイス情報。
 
 		TResourceBank<Texture>	m_textureBank;			//テクスチャバンク。
 		TResourceBank<GLuint>	m_shaderBank;			//シェーダーバンク。
