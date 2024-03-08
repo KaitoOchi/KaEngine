@@ -24,11 +24,6 @@ bool Game::Start()
 
 void Game::Update()
 {
-	if (Input::GetInstance()->GetMouseButtonDown(e_mouseButtonRight)) {
-		m_debugCamera->ToggleDebugCamera();
-		m_player->ToggleActivate();
-	}
-
 	if (Input::GetInstance()->GetKeyDown(e_buttonEqual)) {
 		std::string command;
 		std::cin >> command;

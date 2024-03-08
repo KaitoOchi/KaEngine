@@ -10,7 +10,7 @@ namespace nsKaEngine {
 
 	Texture::~Texture()
 	{
-
+		glDeleteTextures(1, &m_id);
 	}
 
 	void Texture::Init(

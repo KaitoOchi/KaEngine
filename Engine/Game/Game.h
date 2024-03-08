@@ -16,4 +16,3 @@ private:
 	Player* m_player = nullptr;				//プレイヤー。
 	DebugCamera* m_debugCamera = nullptr;		//デバッグカメラ。
 };
-

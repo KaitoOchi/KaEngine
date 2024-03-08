@@ -6,15 +6,21 @@
 int main()
 {
 	//デバイス情報を取得。
-	DeviceInfo* deviceInfo = new DeviceInfo();
-	GetDeviceInfo(deviceInfo);
+	Config* config = new Config();
+	GetConfigFile(config);
 
 	//ウィンドウを作成。
 	GLFWwindow* window = nullptr;
 	window = InitGLFW(
 		window,
 		"Game",
-		deviceInfo
+		config
+	);
+
+	//エンジンを初期化。
+	KaEngine::CreateInstance(
+		window,
+		config
 	);
 
 	//ユーザー定義のクラス生成。
@@ -38,7 +44,7 @@ int main()
 	glfwDestroyWindow(window);
 	glfwTerminate();
 
-	delete deviceInfo;
+	delete config;
 
 	return 0;
 }

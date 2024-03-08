@@ -46,45 +46,45 @@ const int LoadFile(
 /// <summary>
 /// デバイスの情報を取得。
 /// </summary>
-void GetDeviceInfo(DeviceInfo* deviceInfo)
+void GetConfigFile(Config* config)
 {
 	//設定ファイルが無いなら、デバイス情報から作成。
-	if (LoadFile("KaEngine.config", deviceInfo, sizeof(DeviceInfo)) == -1) {
+	if (LoadFile("KaEngine.config", config, sizeof(Config)) == -1) {
 
 #ifdef _WIN32
 		//Windowのデバイス情報を取得。
 		DEVMODE* devMode = new DEVMODE();
 		EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, devMode);
 
-		deviceInfo->frameRate = devMode->dmDisplayFrequency;
-		deviceInfo->windowWidth = devMode->dmPelsWidth;
-		deviceInfo->windowHeight = devMode->dmPelsHeight;
-		deviceInfo->samplingNum = 1;
-		deviceInfo->bgmVolume = 1.0f;
-		deviceInfo->sfxVolume = 1.0f;
-		deviceInfo->fullscreen = false;
-		deviceInfo->vsync = false;
-		deviceInfo->bloom = true;
-		deviceInfo->mouseSensitivity = 1.0f;
+		config->frameRate = devMode->dmDisplayFrequency;
+		config->windowWidth = devMode->dmPelsWidth;
+		config->windowHeight = devMode->dmPelsHeight;
+		config->samplingNum = 1;
+		config->bgmVolume = 1.0f;
+		config->sfxVolume = 1.0f;
+		config->fullscreen = false;
+		config->vsync = false;
+		config->bloom = true;
+		config->mouseSensitivity = 1.0f;
 
 		delete devMode;
 
 #else
 
-		deviceInfo->frameRate = 60;
-		deviceInfo->windowWidth = 1280;
-		deviceInfo->windowHeight = 920;
-		deviceInfo->samplingNum = 1;
-		deviceInfo->bgmVolume = 1.0f;
-		deviceInfo->sfxVolume = 1.0f;
-		deviceInfo->fullscreen = false;
-		deviceInfo->vsync = false;
-		deviceInfo->bloom = true;
-		deviceInfo->mouseSensitivity = 1.0f;
+		config->frameRate = 60;
+		config->windowWidth = 1280;
+		config->windowHeight = 920;
+		config->samplingNum = 1;
+		config->bgmVolume = 1.0f;
+		config->sfxVolume = 1.0f;
+		config->fullscreen = false;
+		config->vsync = false;
+		config->bloom = true;
+		config->mouseSensitivity = 1.0f;
 
 #endif
 		//セーブする。
-		if (SaveFile("KaEngine.config", deviceInfo, sizeof(DeviceInfo)) == -1) {
+		if (SaveFile("KaEngine.config", config, sizeof(Config)) == -1) {
 			Ka_Assert(false, "SaveData_Error", "セーブデータの書き込みに失敗しました。");
 		}
 	}
@@ -95,7 +95,7 @@ void GetDeviceInfo(DeviceInfo* deviceInfo)
 /// </summary>
 /// <param name="window"></param>
 /// <returns></returns>
-GLFWwindow* CreateGLFWWindow(GLFWwindow* window, DeviceInfo* deviceInfo)
+GLFWwindow* CreateGLFWWindow(GLFWwindow* window, Config* deviceInfo)
 {
 	//GLFWのバージョンとプロファイルを指定。
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -146,36 +146,18 @@ GLFWwindow* CreateGLFWWindow(GLFWwindow* window, DeviceInfo* deviceInfo)
 GLFWwindow* InitGLFW(
 	GLFWwindow* window,
 	const char* windowName,
-	DeviceInfo* deviceInfo
+	Config* config
 ) {
 	//GLFWの初期化。
 	glfwInit();
 
 	//ウィンドウの作成。
-	window = CreateGLFWWindow(window, deviceInfo);
+	window = CreateGLFWWindow(window, config);
 
 	//ウィンドウの名前。
 	glfwSetWindowTitle(window, windowName);
 
 	gladLoadGL(glfwGetProcAddress);
-	glViewport(0, 0, static_cast<int>(deviceInfo->windowWidth), static_cast<int>(deviceInfo->windowHeight));
-
-	//エンジンの初期化。
-	InitKaEngine(window, deviceInfo);
 
 	return window;
-}
-
-/// <summary>
-/// エンジンの初期化。
-/// </summary>
-/// <param name="window"></param>
-void InitKaEngine(GLFWwindow* window, DeviceInfo* deviceInfo)
-{
-
-	//取得した情報を元にエンジンを初期化。
-	KaEngine::CreateInstance(
-		window,
-		deviceInfo
-	);
 }

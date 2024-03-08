@@ -3,7 +3,7 @@
 /// <summary>
 /// デバイスの情報。
 /// </summary>
-struct DeviceInfo
+struct Config
 {
 	int		frameRate;				//フレームレート。
 	int		windowWidth;			//ウィンドウの横幅。
@@ -20,46 +20,55 @@ struct DeviceInfo
 /// <summary>
 /// ファイルのセーブ。
 /// </summary>
-/// <param name="filePath"></param>
-/// <param name="saveData"></param>
-const int SaveFile(const char* filePath, void* saveData, const size_t size);
+/// <param name="filePath">セーブするファイル名</param>
+/// <param name="saveData">格納先の構造体</param>
+/// <param name="size">構造体のサイズ</param>
+/// <returns>失敗した場合-1を返す</returns>
+const int SaveFile(
+	const char* filePath,
+	void* saveData, 
+	const size_t size
+);
 
 /// <summary>
 /// ファイルのロード。
 /// </summary>
-/// <param name="filePath"></param>
-/// <param name="saveData"></param>
-const int LoadFile(const char* filePath, void* saveData, const size_t size);
+/// <param name="filePath">ロードするファイル名</param>
+/// <param name="saveData">格納先の構造体</param>
+/// <param name="size">構造体のサイズ</param>
+/// <returns>失敗した場合-1を返す</returns>
+const int LoadFile(
+	const char* filePath,
+	void* saveData, 
+	const size_t size
+);
 
 /// <summary>
 /// デバイス情報を取得。
 /// </summary>
 /// <param name="deviceInfo"></param>
-void GetDeviceInfo(DeviceInfo* deviceInfo);
+void GetConfigFile(Config* config);
 
 /// <summary>
 /// GLFWウィンドウの作成。
 /// </summary>
 /// <param name="window"></param>
+/// <param name="deviceInfo"></param>
 /// <returns></returns>
-GLFWwindow* CreateGLFWWindow(GLFWwindow* window, DeviceInfo* deviceInfo);
+GLFWwindow* CreateGLFWWindow(
+	GLFWwindow* window,
+	Config* deviceInfo
+);
 
 /// <summary>
 /// GLFWの初期化。
 /// </summary>
 /// <param name="window"></param>
+/// <param name="windowName"></param>
+/// <param name="deviceInfo"></param>
 /// <returns></returns>
 GLFWwindow* InitGLFW(
 	GLFWwindow* window,
 	const char* windowName,
-	DeviceInfo* deviceInfo
-);
-
-/// <summary>
-/// エンジンの初期化。
-/// </summary>
-/// <param name="window"></param>
-void InitKaEngine(
-	GLFWwindow* window,
-	DeviceInfo* deviceInfo
+	Config* deviceInfo
 );

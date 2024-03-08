@@ -105,9 +105,9 @@ namespace nsKaEngine {
 
 	void KaEngine::Init(
 		GLFWwindow* window,
-		DeviceInfo* deviceInfo
+		Config* config
 	) {
-		m_deviceInfo = deviceInfo;
+		m_config = config;
 
 		//カメラの初期化。
 		g_camera3D = new Camera;
@@ -116,9 +116,9 @@ namespace nsKaEngine {
 		//時間制御クラスの初期化。
 		g_gameTime = new GameTime;
 		g_gameTime->SetFrameRateMode(GameTime::e_frameRateMode_Fixed);
-		g_gameTime->SetMaxFPS(deviceInfo->frameRate);
+		g_gameTime->SetMaxFPS(config->frameRate);
 
-		GraphicsEngine::CreateInstance(window, deviceInfo);
+		GraphicsEngine::CreateInstance(window, config);
 		Input::CreateInstance();
 		GameObjectManager::CreateInstance();
 
@@ -255,8 +255,11 @@ namespace nsKaEngine {
 		mScale.MakeScaling(m_pyramidScale);
 		m_pyramidModel = mTrans * mScale * mRot;
 
+		RenderTarget& rt = GraphicsEngine::GetInstance()->GetRenderTarget();
 
-		GraphicsEngine::GetInstance()->GetRenderTarget().Bind();
+		GraphicsEngine::GetInstance()->GetRenderContext().BindRenderTarget(rt);
+
+		GraphicsEngine::GetInstance()->GetRenderContext().ClearRenderTarget();
 
 		m_floorMesh.Draw(m_floorModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
@@ -283,7 +286,7 @@ namespace nsKaEngine {
 			m_pyramidMesh.Delete();
 		}
 
-		GraphicsEngine::GetInstance()->GetRenderTarget().UnBind();
+		GraphicsEngine::GetInstance()->GetRenderContext().UnBindRenderTarget();
 
 		GraphicsEngine::GetInstance()->Test();
 
@@ -301,10 +304,6 @@ namespace nsKaEngine {
 		GraphicsEngine::DeleteInstance();
 		Input::DeleteInstance();
 		GameObjectManager::DeleteInstance();
-
-		m_texture[0]->Delete();
-		m_texture[1]->Delete();
-		m_texture[2]->Delete();
 
 		m_floorMesh.Delete();
 		m_lightMesh.Delete();

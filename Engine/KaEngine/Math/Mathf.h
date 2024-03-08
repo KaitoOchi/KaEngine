@@ -28,6 +28,21 @@ namespace nsKaEngine {
 			return glm::degrees(rad);
 		}
 
+		const static float Round(const float round)
+		{
+			return glm::round(round);
+		}
+
+		const static float Ceil(const float ceil)
+		{
+			return glm::ceil(ceil);
+		}
+
+		const static float Floor(const float floor)
+		{
+			return glm::floor(floor);
+		}
+
 		/// <summary>
 		/// Å¬‚©‚çÅ‘å‚ÌŠÔ‚Å’l‚ğû‚ß‚éB
 		/// </summary>

@@ -46,12 +46,12 @@ namespace nsKaEngine {
 		/// <param name="window"></param>
 		static void CreateInstance(
 			GLFWwindow* window,
-			DeviceInfo* deviceInfo
+			Config* config
 		) {
 			Ka_Assert(m_instance == nullptr, "codeError", "KaEngineクラスのインスタンスは一つしか作れません。");
 			m_instance = new KaEngine;
 
-			m_instance->Init(window, deviceInfo);
+			m_instance->Init(window, config);
 		}
 
 		/// <summary>
@@ -77,9 +77,9 @@ namespace nsKaEngine {
 		/// デバイス情報を取得。
 		/// </summary>
 		/// <returns></returns>
-		DeviceInfo* GetDeviceInfo()
+		Config* GetDeviceInfo()
 		{
-			return m_deviceInfo;
+			return m_config;
 		}
 
 		/// <summary>
@@ -162,7 +162,7 @@ namespace nsKaEngine {
 		/// <param name="window"></param>
 		void Init(
 			GLFWwindow* window,
-			DeviceInfo* deviceInfo
+			Config* config
 		);
 		/// <summary>
 		/// 削除処理。
@@ -171,7 +171,7 @@ namespace nsKaEngine {
 
 	private:
 		static KaEngine*		m_instance;				//インスタンス。
-		DeviceInfo*				m_deviceInfo = nullptr;	//デバイス情報。
+		Config*					m_config = nullptr;		//デバイス情報。
 
 		TResourceBank<Texture>	m_textureBank;			//テクスチャバンク。
 		TResourceBank<GLuint>	m_shaderBank;			//シェーダーバンク。

@@ -12,9 +12,6 @@ namespace nsKaEngine {
 	Material::~Material()
 	{
 		m_shaderProgram.Delete();
-		m_albedoMap->Delete();
-		m_normalMap->Delete();
-		m_metallicSmoothMap->Delete();
 	}
 
 	void Material::Init(

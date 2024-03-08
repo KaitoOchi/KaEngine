@@ -151,6 +151,9 @@
     <ClInclude Include="graphics\RenderTarget.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\RenderContext.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="util">

@@ -16,7 +16,7 @@ namespace nsKaEngine {
 		/// </summary>
 		static void CreateInstance(
 			GLFWwindow* window,
-			DeviceInfo* deviceInfo
+			Config* deviceInfo
 		) {
 			Ka_Assert(m_instance == nullptr, "codeError", "GaphicsEngineクラスのインスタンスは一つしか作れません。");
 			m_instance = new GraphicsEngine;
@@ -83,6 +83,19 @@ namespace nsKaEngine {
 		/// </summary>
 		void Execute();
 
+		/// <summary>
+		/// レンダリングコンテキストを取得。
+		/// </summary>
+		/// <returns></returns>
+		RenderContext& GetRenderContext()
+		{
+			return m_renderContext;
+		}
+
+		/// <summary>
+		/// メインレンダーターゲットを取得。
+		/// </summary>
+		/// <returns></returns>
 		RenderTarget& GetRenderTarget()
 		{
 			return m_mainRenderTarget;
@@ -97,12 +110,14 @@ namespace nsKaEngine {
 		/// </summary>
 		void Init(
 			GLFWwindow* window,
-			DeviceInfo* deviceInfo
+			Config* deviceInfo
 		);
 
 	private:
 		static GraphicsEngine*	m_instance;				//インスタンス。
 		GLFWwindow*				m_window = nullptr;		//ウィンドウ。
+		RenderContext			m_renderContext;		//レンダリングコンテキスト。
+
 		RenderTarget			m_mainRenderTarget;		//レンダーターゲット。
 		Sprite					m_mainSprite;			//メイン画像。
 		Vector2					m_frameBufferSize;		//ウィンドウサイズ。

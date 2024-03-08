@@ -7,11 +7,12 @@ namespace nsKaEngine {
 
 	void GraphicsEngine::Init(
 		GLFWwindow* window,
-		DeviceInfo* deviceInfo
+		Config* deviceInfo
 	) {
 		m_window = window;
 
 		m_frameBufferSize.Set(deviceInfo->windowWidth, deviceInfo->windowHeight);
+		glViewport(0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
 
 		if (deviceInfo->fullscreen == true) {
 			ToggleFullScreen();
@@ -19,6 +20,9 @@ namespace nsKaEngine {
 
 		//デプステストの有効化。
 		glEnable(GL_DEPTH_TEST);
+
+		//シザリングテストの有効化。
+		glEnable(GL_SCISSOR_TEST);
 
 		//背面カリングを有効にする。
 		//glEnable(GL_CULL_FACE);
@@ -30,6 +34,7 @@ namespace nsKaEngine {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		//メインレンダーターゲットの作成。
 		m_mainRenderTarget.Create(
 			static_cast<int>(m_frameBufferSize.x),
 			static_cast<int>(m_frameBufferSize.y),
@@ -60,6 +65,12 @@ namespace nsKaEngine {
 
 		if (Input::GetInstance()->GetKeyDown(e_buttonF)) {
 			ToggleFullScreen();
+			m_mainRenderTarget.Create(
+				static_cast<int>(m_frameBufferSize.x),
+				static_cast<int>(m_frameBufferSize.y),
+				0,
+				GL_RGB
+			);
 		}
 	}
 

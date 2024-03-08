@@ -52,15 +52,14 @@ namespace nsKaEngine {
 			return m_height;
 		}
 
-	public:
 		/// <summary>
-		/// 接続。
+		/// IDを取得。
 		/// </summary>
-		void Bind();
-		/// <summary>
-		/// 解除。
-		/// </summary>
-		void UnBind();
+		/// <returns></returns>
+		const GLuint GetID() const
+		{
+			return m_fbo;
+		}
 
 	private:
 		Texture		m_renderTexture;		//レンダーテクスチャ。

@@ -24,7 +24,6 @@ namespace nsKaEngine {
 		m_vbo.Delete();
 		m_ebo.Delete();
 		m_shaderProgram.Delete();
-		m_texture[0]->Delete();
 	}
 
 	void Sprite::Init(SpriteInitData& initData)
@@ -46,13 +45,20 @@ namespace nsKaEngine {
 	{
 		int texNum = 0;
 
+		//ファイルからテクスチャを取得。
 		if (initData.filePath.empty() == false) {
-			//テクスチャを設定。
-			m_texture[0] = new Texture;
-			m_texture[0]->Init(initData.filePath.c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+			auto texture = KaEngine::GetInstance()->GetTextureBank(initData.filePath.c_str());
+			if (texture == nullptr) {
+				texture = new Texture;
+				texture->Init(initData.filePath.c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+				KaEngine::GetInstance()->RegistTextureBank(initData.filePath.c_str(), texture);
+				m_texture[0] = texture;
+			}
 			m_texture[0]->TexUnit(&m_shaderProgram, "texture", 0);
+
 			++texNum;
 		}
+		//指定されたテクスチャから取得。
 		else if (initData.textures[0] != nullptr) {
 
 			for (texNum = texNum; texNum < initData.textures.size(); ++texNum) {

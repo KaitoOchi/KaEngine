@@ -80,14 +80,6 @@ namespace nsKaEngine {
 			glBindTexture(m_target, 0);
 		}
 
-		/// <summary>
-		/// 削除。
-		/// </summary>
-		void Delete()
-		{
-			glDeleteTextures(1, &m_id);
-		}
-
 	private:
 		GLuint m_id = 0;		//テクスチャーID。
 		GLenum m_target = 0;	//テクスチャーの種類。

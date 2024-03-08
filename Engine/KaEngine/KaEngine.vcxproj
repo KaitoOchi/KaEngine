@@ -197,6 +197,7 @@
     <ClInclude Include="graphics\light\PointLight.h" />
     <ClInclude Include="graphics\Material.h" />
     <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\RenderContext.h" />
     <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="graphics\ShaderClass.h" />
     <ClInclude Include="graphics\Sprite.h" />
