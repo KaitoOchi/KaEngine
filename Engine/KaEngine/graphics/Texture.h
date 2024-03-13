@@ -55,15 +55,6 @@ namespace nsKaEngine {
 		);
 
 		/// <summary>
-		/// テクスチャーIDを取得。
-		/// </summary>
-		/// <returns></returns>
-		const GLuint GetTextureID() const
-		{
-			return m_id;
-		}
-
-		/// <summary>
 		/// 接続。
 		/// </summary>
 		void Bind(const GLuint slot)

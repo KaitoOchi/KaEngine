@@ -182,7 +182,8 @@ namespace nsKaEngine {
 	void Input::InputMouseCursor(GLFWwindow* window)
 	{
 		//ウィンドウサイズを取得。
-		Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
+		Vector2 windowSize;
+		windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
 
 		//マウスの座標を取得。
 		double mouseX, mouseY;
@@ -212,10 +213,10 @@ namespace nsKaEngine {
 
 		//カーソルが固定なら、座標を設定。
 		if (m_cursorLock) {
-			windowSize.Scale(0.5f);
+			windowSize.Div(2.0f);
 			//カーソルの位置を固定。
 			glfwSetCursorPos(window, windowSize.x, windowSize.y);
-			m_mousePosition = windowSize;
+			m_mousePosition.Set(static_cast<float>(windowSize.x), static_cast<float>(windowSize.y));
 		}
 	}
 

@@ -129,7 +129,7 @@ void Player::CursorLock()
 	}
 }
 
-void Player::Render()
+void Player::Render(RenderContext& rc)
 {
 
 }

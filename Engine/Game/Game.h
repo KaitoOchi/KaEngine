@@ -11,6 +11,7 @@ public:
 	~Game();
 	bool Start();
 	void Update();
+	void Render(RenderContext& rc);
 
 private:
 	Player* m_player = nullptr;				//プレイヤー。

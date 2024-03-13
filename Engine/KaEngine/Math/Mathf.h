@@ -28,19 +28,34 @@ namespace nsKaEngine {
 			return glm::degrees(rad);
 		}
 
+		/// <summary>
+		/// 少数を四捨五入。
+		/// </summary>
+		/// <param name="round"></param>
+		/// <returns></returns>
 		const static float Round(const float round)
 		{
 			return glm::round(round);
 		}
 
-		const static float Ceil(const float ceil)
-		{
-			return glm::ceil(ceil);
-		}
-
+		/// <summary>
+		/// 少数を整数に切り捨て。
+		/// </summary>
+		/// <param name="floor"></param>
+		/// <returns></returns>
 		const static float Floor(const float floor)
 		{
 			return glm::floor(floor);
+		}
+
+		/// <summary>
+		/// 少数を整数を切り上げ。
+		/// </summary>
+		/// <param name="ceil"></param>
+		/// <returns></returns>
+		const static float Ceil(const float ceil)
+		{
+			return glm::ceil(ceil);
 		}
 
 		/// <summary>
@@ -61,6 +76,28 @@ namespace nsKaEngine {
 		const static float Sign(const float sign)
 		{
 			return glm::sign(sign);
+		}
+
+		/// <summary>
+		/// 仮数を取得。
+		/// </summary>
+		/// <param name="fract"></param>
+		/// <returns></returns>
+		const static float Fract(const float fract)
+		{
+			return glm::fract(fract);
+		}
+
+		/// <summary>
+		/// 線形補間。
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		const static float Lerp(const float a, const float b, const float time)
+		{
+			return glm::mix(a, b, time);
 		}
 	};
 }

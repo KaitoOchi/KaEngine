@@ -114,8 +114,14 @@ namespace nsKaEngine {
 
 	void Sprite::InitShader(SpriteInitData& initData)
 	{
-		m_shaderProgram.Init(initData.vertexFilePath.c_str(), initData.fragmentFilePath.c_str(), initData.addIncludeFile);
-		m_shaderProgram.Activate();
+		auto shader = KaEngine::GetInstance()->GetShaderBank(initData.vertexFilePath.c_str());
+		if (shader == nullptr) {
+			shader = new Shader();
+			shader->Init(initData.vertexFilePath.c_str(), initData.fragmentFilePath.c_str(), initData.addIncludeFile);
+			
+		}
+		m_shaderProgram = shader;
+		m_shaderProgram->Activate();
 	}
 
 	void Sprite::InitUniformBuffer(SpriteInitData& initData)
@@ -138,13 +144,16 @@ namespace nsKaEngine {
 		const Vector2& pivot
 	) {
 		//ローカル座標を求める。
-		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
+		Vector2Int viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
 		Vector3 localPosition = pos;
 		localPosition.x /= viewPort.x;
 		localPosition.y /= viewPort.y;
 
 		//ローカルピボットを求める。
 		Vector2 localPivot = pivot;
+		localPivot.x -= 1.0f;
+		localPivot.y -= 1.0f;
+		localPivot.Clamp(-2.0f, 0.0f);
 		localPivot.Scale(0.001f);
 
 		Matrix mPivotTrans;
@@ -167,11 +176,16 @@ namespace nsKaEngine {
 
 	void Sprite::Draw()
 	{
-		Vector2 viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
+		Vector2Int viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
 
 		//プロジェクション行列を作成。
 		Matrix projMatrix;
-		projMatrix.MakeOrthoProjectionMatrix(viewPort.x, viewPort.y, 0.1f, 1.0f);
+		projMatrix.MakeOrthoProjectionMatrix(
+			static_cast<float>(viewPort.x),
+			static_cast<float>(viewPort.y),
+			0.1f,
+			1.0f
+		);
 
 		//モデル用UniformBufferの更新。
 		m_spriteUB.mvp = m_worldMatrix * SPRITE_VIEW_MATRIX * projMatrix;

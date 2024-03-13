@@ -48,7 +48,7 @@ namespace nsKaEngine {
 		/// <summary>
 		/// 描画処理を実行。
 		/// </summary>
-		void ExecuteRender();
+		void ExecuteRender(RenderContext& rc);
 
 		/// <summary>
 		/// ゲームオブジェクトの生成。
@@ -218,4 +218,3 @@ namespace nsKaEngine {
 		GameObjectManager::GetInstance()->DestroyGameObject(gameObject);
 	}
 }
-

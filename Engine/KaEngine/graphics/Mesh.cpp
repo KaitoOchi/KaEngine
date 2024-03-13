@@ -57,20 +57,27 @@ namespace nsKaEngine {
 		m_ebo.UnBind();
 
 		//シェーダーの設定。
-		m_shaderProgram.Init(vertexShaderFile.c_str(), fragmentShaderFile.c_str(), addIncludeFile);
-		m_shaderProgram.Activate();
+		auto shader = KaEngine::GetInstance()->GetShaderBank(vertexShaderFile.c_str());
+		if (shader == nullptr) {
+			shader = new Shader;
+			shader->Init(vertexShaderFile.c_str(), fragmentShaderFile.c_str(), addIncludeFile);
+			KaEngine::GetInstance()->RegistShaderBank(vertexShaderFile.c_str(), shader);
+		}
+		m_shaderProgram = shader;
+		m_shaderProgram->Activate();
+
 
 		//テクスチャの設定。
 		for (int i = 0; i < textures.size(); ++i)
 		{
 			m_textures.emplace_back(textures[i]);
-			m_textures[i]->TexUnit(&m_shaderProgram, TEXTURE_NAME[i], i);
+			m_textures[i]->TexUnit(m_shaderProgram, TEXTURE_NAME[i], i);
 		}
 
 		//定数バッファの設定。
-		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram.GetShaderID(), "ModelUB");
+		m_modelUniformBuffer.Init(sizeof(ModelUB), m_shaderProgram->GetShaderID(), "ModelUB");
 		if (expandUniformBuffer != nullptr) {
-			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram.GetShaderID(), expandUniformBufferName.c_str());
+			m_expandUniformBuffer.Init(expandUniformBufferSize, m_shaderProgram->GetShaderID(), expandUniformBufferName.c_str());
 			m_expandUB = expandUniformBuffer;
 			m_expandUBSize = expandUniformBufferSize;
 		}
@@ -86,7 +93,7 @@ namespace nsKaEngine {
 		m_modelUB.mView = viewMatrix;
 		m_modelUB.mProj = projectionMatrix;
 
-		m_shaderProgram.Activate();
+		m_shaderProgram->Activate();
 		m_modelUniformBuffer.Update(&m_modelUB, sizeof(ModelUB));
 
 		if (m_expandUB != nullptr) {
@@ -109,6 +116,6 @@ namespace nsKaEngine {
 		m_vao.Delete();
 		m_vbo.Delete();
 		m_ebo.Delete();
-		m_shaderProgram.Delete();
+		m_shaderProgram->Delete();
 	}
 }

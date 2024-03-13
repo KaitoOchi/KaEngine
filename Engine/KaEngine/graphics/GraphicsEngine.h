@@ -54,7 +54,7 @@ namespace nsKaEngine {
 		/// ウィンドウサイズを取得。
 		/// </summary>
 		/// <returns></returns>
-		const Vector2& GetWindowSize() const
+		const Vector2Int& GetWindowSize() const
 		{
 			return m_frameBufferSize;
 		}
@@ -64,17 +64,19 @@ namespace nsKaEngine {
 		/// </summary>
 		void ToggleFullScreen()
 		{
+			Vector2 framebufferSize;
+			framebufferSize = m_frameBufferSize;
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			if (!m_isFullScreen) {
-				m_frameBufferSize.Scale(1.2f);
-				glfwSetWindowMonitor(m_window, monitor, 0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y), GLFW_DONT_CARE);
-				glViewport(0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
+				framebufferSize.Scale(1.2f);
+				glfwSetWindowMonitor(m_window, monitor, 0, 0, framebufferSize.x, framebufferSize.y, GLFW_DONT_CARE);
 			}
 			else {
-				m_frameBufferSize.Scale(0.8f);
-				glfwSetWindowMonitor(m_window, NULL, 0, 35, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y), GLFW_DONT_CARE);
-				glViewport(0, 0, static_cast<int>(m_frameBufferSize.x), static_cast<int>(m_frameBufferSize.y));
+				framebufferSize.Div(1.2f);
+				glfwSetWindowMonitor(m_window, NULL, 0, 35, framebufferSize.x, framebufferSize.y, GLFW_DONT_CARE);
 			}
+			m_frameBufferSize = framebufferSize;
+			m_renderContext.SetViewportAndScissor(m_frameBufferSize.x, m_frameBufferSize.y);
 			m_isFullScreen = !m_isFullScreen;
 		}
 
@@ -120,7 +122,7 @@ namespace nsKaEngine {
 
 		RenderTarget			m_mainRenderTarget;		//レンダーターゲット。
 		Sprite					m_mainSprite;			//メイン画像。
-		Vector2					m_frameBufferSize;		//ウィンドウサイズ。
+		Vector2Int				m_frameBufferSize;		//ウィンドウサイズ。
 		bool					m_isFullScreen = false;	//フルスクリーンかどうか。
 	};
 }

@@ -10,7 +10,7 @@ public:
 	~Player();
 	bool Start();
 	void Update();
-	void Render();
+	void Render(RenderContext& rc);
 
 private:
 	/// <summary>

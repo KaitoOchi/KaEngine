@@ -229,9 +229,13 @@ namespace nsKaEngine {
 
 	void KaEngine::Execute()
 	{
+		auto& renderContext = GraphicsEngine::GetInstance()->GetRenderContext();
+
 		Input::GetInstance()->Update();
 
 		GameObjectManager::GetInstance()->ExecuteUpdate();
+
+		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
 	}
 
 	void KaEngine::BeginFrame()
@@ -276,7 +280,7 @@ namespace nsKaEngine {
 		m_sprite.Update(
 			Vector3(1000.0f, 0.0f, 0.0f),
 			rot,
-			Vector3(1.0f, 1.0f, 0.0f),
+			Vector3(0.5f, 0.5f, 0.0f),
 			Vector2(0.0f, 0.0f)
 		);
 

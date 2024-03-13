@@ -35,4 +35,3 @@ namespace nsKaEngine {
 		GLuint m_blockIndex = 0;		//ブロックインデックス。
 	};
 }
-

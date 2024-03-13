@@ -48,14 +48,14 @@ namespace nsKaEngine {
 		}
 	}
 
-	void GameObjectManager::ExecuteRender()
+	void GameObjectManager::ExecuteRender(RenderContext& rc)
 	{
 		//RenderŠÖ”‚ÌŒÄ‚Ño‚µB
 		for (auto& gameObjectList : m_gameObjectListArray)
 		{
 			for (auto& gameObject : gameObjectList)
 			{
-				gameObject->RenderWrapper();
+				gameObject->RenderWrapper(rc);
 			}
 		}
 	}

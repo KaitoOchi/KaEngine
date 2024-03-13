@@ -30,7 +30,7 @@ namespace nsKaEngine {
 		/// <summary>
 		/// Renderä÷êîÅB
 		/// </summary>
-		virtual void Render()
+		virtual void Render(RenderContext& rc)
 		{
 
 		}
@@ -126,10 +126,10 @@ namespace nsKaEngine {
 			}
 		}
 
-		void RenderWrapper()
+		void RenderWrapper(RenderContext& rc)
 		{
 			if (m_isStart && m_isDestroy && m_isActive) {
-				Render();
+				Render(rc);
 			}
 		}
 

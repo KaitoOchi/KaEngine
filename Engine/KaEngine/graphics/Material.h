@@ -29,22 +29,28 @@ namespace nsKaEngine {
 			std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile
 		);
 
+		/// <summary>
+		/// 更新処理。
+		/// </summary>
+		void Update();
+
 		
+		/// <summary>
+		/// シェーダーIDを取得。
+		/// </summary>
+		/// <returns></returns>
 		const GLuint GetShaderID() const
 		{
-			return m_shaderProgram.GetShaderID();
+			return m_shaderProgram->GetShaderID();
 		}
 
 		void ShaderActivate()
 		{
-			m_shaderProgram.Activate();
+			m_shaderProgram->Activate();
 		}
 
 	private:
-		Texture*	m_albedoMap = nullptr;				//アルベドマップ。
-		Texture*	m_normalMap = nullptr;				//法線マップ。
-		Texture*	m_metallicSmoothMap = nullptr;		//メタリックスムースマップ。
-		Shader		m_shaderProgram;					//シェーダー。
+		std::vector<Texture*>	m_textures;						//テクスチャ。
+		Shader*					m_shaderProgram = nullptr;		//シェーダー。
 	};
 }
-

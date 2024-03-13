@@ -107,7 +107,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <param name="shader"></param>
-		void RegistShaderBank(const char* filePath, GLuint* shader)
+		void RegistShaderBank(const char* filePath, Shader* shader)
 		{
 			m_shaderBank.Regist(filePath, shader);
 		}
@@ -117,7 +117,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="filePath"></param>
 		/// <returns></returns>
-		GLuint* GetShaderBank(const char* filePath)
+		Shader* GetShaderBank(const char* filePath)
 		{
 			return m_shaderBank.Get(filePath);
 		}
@@ -174,7 +174,7 @@ namespace nsKaEngine {
 		Config*					m_config = nullptr;		//デバイス情報。
 
 		TResourceBank<Texture>	m_textureBank;			//テクスチャバンク。
-		TResourceBank<GLuint>	m_shaderBank;			//シェーダーバンク。
+		TResourceBank<Shader>	m_shaderBank;			//シェーダーバンク。
 		TResourceBank<GLuint>	m_uniformBufferBank;	//定数バッファバンク。
 
 		Texture* m_texture[3];

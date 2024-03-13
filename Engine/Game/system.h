@@ -9,12 +9,12 @@ struct Config
 	int		windowWidth;			//ウィンドウの横幅。
 	int		windowHeight;			//ウィンドウの高さ。
 	int		samplingNum;			//マルチサンプリング数。
-	int		bgmVolume;				//BGM音量。
-	int		sfxVolume;				//SFX音量。
 	bool	fullscreen;				//フルスクリーン。
 	bool	vsync;					//垂直同期。
 	bool	bloom;					//ブルーム。
 	float	mouseSensitivity;		//マウス感度。
+	float	bgmVolume;				//BGM音量。
+	float	sfxVolume;				//SFX音量。
 };
 
 /// <summary>

@@ -19,9 +19,7 @@ namespace nsKaEngine {
 		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile
 	) {
 		//VertexShader‚ðì¬B
-		GLuint* vertexShaderPtr = KaEngine::GetInstance()->GetShaderBank(vertexFile);
-		if (vertexShaderPtr == nullptr) {
-			// Read vertexFile and fragmentFile and store the strings
+		{
 			std::string vertexCode = GetFileContents(vertexFile);
 
 			for (auto& include : addIncludeFile)
@@ -40,21 +38,11 @@ namespace nsKaEngine {
 
 			// Compile the Vertex Shader into machine code
 			glCompileShader(m_vertexShader);
-
 			ShaderCompileErrors(m_vertexShader, "VERTEX", vertexFile);
-
-			vertexShaderPtr = new GLuint;
-			*vertexShaderPtr = m_vertexShader;
-			KaEngine::GetInstance()->RegistShaderBank(vertexFile, vertexShaderPtr);
-		}
-		else {
-			m_vertexShader = *vertexShaderPtr;
 		}
 
 		//FragmentShader‚ðì¬B
-		GLuint* fragmentShaderPtr = KaEngine::GetInstance()->GetShaderBank(fragmentFile);
-		if (fragmentShaderPtr == nullptr) {
-			// Read vertexFile and fragmentFile and store the strings
+		{
 			std::string fragmentCode = GetFileContents(fragmentFile);
 
 			for (auto& include : addIncludeFile)
@@ -73,15 +61,7 @@ namespace nsKaEngine {
 
 			// Compile the Vertex Shader into machine code
 			glCompileShader(m_fragmentShader);
-
 			ShaderCompileErrors(m_fragmentShader, "FRAGMENT", fragmentFile);
-
-			fragmentShaderPtr = new GLuint;
-			*fragmentShaderPtr = m_fragmentShader;
-			KaEngine::GetInstance()->RegistShaderBank(fragmentFile, fragmentShaderPtr);
-		}
-		else {
-			m_fragmentShader = *fragmentShaderPtr;
 		}
 
 		// Creae Shader Program Object and get its reference

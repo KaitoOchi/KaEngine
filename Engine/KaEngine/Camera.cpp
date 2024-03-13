@@ -29,8 +29,8 @@ namespace nsKaEngine {
 			//プロジェクション行列を作成。
 			if (m_updateProjFunc == e_UpdateProjFunc_Prespective) {
 				//アスペクト比を計算。
-				Vector2 windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
-				float aspect = (float)(windowSize.x / windowSize.y);
+				Vector2Int windowSize = GraphicsEngine::GetInstance()->GetWindowSize();
+				float aspect = static_cast<float>(windowSize.x) / static_cast<float>(windowSize.y);
 				//透視変換行列を作成。
 				m_projectionMatrix.MakeProjecionMatrix(m_fov, aspect, m_near, m_far);
 			}
@@ -56,8 +56,8 @@ namespace nsKaEngine {
 
 	void Camera::CalcScreenPosFromWorldPos(Vector2& screenPosition, const Vector3& worldPosition) const
 	{
-		Vector2 halfFrameBufferSize = GraphicsEngine::GetInstance()->GetWindowSize();
-		halfFrameBufferSize.Scale(0.5f);
+		Vector2Int halfFrameBufferSize = GraphicsEngine::GetInstance()->GetWindowSize();
+		halfFrameBufferSize.Div(2);
 
 		Vector4 screenPos;
 		screenPos.Set(worldPosition.x, worldPosition.y, worldPosition.z, 1.0f);

@@ -61,7 +61,7 @@ namespace nsKaEngine {
 		VAO						m_vao;						//VertexArraysObject。
 		VBO						m_vbo;						//VertexBufferObject。
 		EBO						m_ebo;						//ElementsBufferObject。
-		Shader					m_shaderProgram;			//シェーダー。
+		Shader*					m_shaderProgram = nullptr;	//シェーダー。
 		UniformBuffer			m_modelUniformBuffer;		//モデル用UniformBufferObject。
 		UniformBuffer			m_expandUniformBuffer;		//ユーザー拡張用UniformBufferObject。
 		ModelUB					m_modelUB;					//モデル用構造体。

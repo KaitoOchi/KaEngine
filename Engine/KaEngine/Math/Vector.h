@@ -5,23 +5,19 @@ namespace nsKaEngine {
 	/// <summary>
 	/// 二次元ベクトルクラス。
 	/// </summary>
-	class Vector2
+	template<typename T>
+	class Vector2Common
 	{
-	public:
-		static const Vector2 Zero;
-		static const Vector2 One;
-		static const Vector2 DEFAULT_PIVOT;
-
 	public:
 		/// <summary>
 		/// コンストラクタ。
 		/// </summary>
-		explicit Vector2()
+		explicit Vector2Common()
 		{
-			x = 0.0f;
-			y = 0.0f;
+			x = T{};
+			y = T{};
 		}
-		Vector2(const float x, const float y)
+		Vector2Common(const T x, const T y)
 		{
 			this->x = x;
 			this->y = y;
@@ -30,12 +26,12 @@ namespace nsKaEngine {
 		/// <summary>
 		/// デストラクタ。
 		/// </summary>
-		~Vector2() {}
+		~Vector2Common() {}
 
 		union {
-			glm::vec2 vec;
-			struct { float x, y; };
-			float v[2];
+			glm::vec<2, T, glm::defaultp> vec;
+			struct { T x, y; };
+			T v[2];
 		};
 
 	public:
@@ -44,7 +40,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		void Set(const float x, const float y)
+		void Set(const T x, const T y)
 		{
 			vec.x = x;
 			vec.y = y;
@@ -54,7 +50,7 @@ namespace nsKaEngine {
 		/// ベクトル同士の加算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Add(const Vector2& v)
+		void Add(const Vector2Common& v)
 		{
 			vec.x += v.x;
 			vec.y += v.y;
@@ -64,10 +60,10 @@ namespace nsKaEngine {
 		/// ベクトル同士の減算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Subtract(const Vector2& v)
+		void Subtract(const Vector2Common& v)
 		{
-			vec.x -= v.x;
-			vec.y -= v.y;
+			vec.x += v.x;
+			vec.y += v.y;
 		}
 
 		/// <summary>
@@ -76,8 +72,8 @@ namespace nsKaEngine {
 		/// <param name="s"></param>
 		void Scale(const float s)
 		{
-			vec.x *= s;
-			vec.y *= s;
+			vec.x *= static_cast<T>(s);
+			vec.y *= static_cast<T>(s);
 		}
 
 		/// <summary>
@@ -127,19 +123,45 @@ namespace nsKaEngine {
 		/// <param name="v1">補完終了のベクトル</param>
 		/// <param name="t">補完率</param>
 		/// <returns></returns>
-		void Lerp(const Vector2& v0, const Vector2& v1, const float t)
+		void Lerp(const Vector2Common& v0, const Vector2Common& v1, const float t)
 		{
 			vec = glm::mix(v0.vec, v1.vec, t);
 		}
 
 		/// <summary>
+		/// 最小から最大の間で値を収める。
+		/// </summary>
+		/// <param name="v0"></param>
+		/// <param name="v1"></param>
+		void Clamp(const float min, const float max)
+		{
+			vec =  glm::clamp(vec, min, max);
+		}
+	};
+
+	/// <summary>
+	/// テンプレートの部分特殊化を使ってVector2を定義。
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	template<typename T>
+	class Vector2Tmp : public Vector2Common<T> {
+	public:
+		/// <summary>
+		/// コンストラクタの継承
+		/// </summary>
+		using Vector2Common<T>::Vector2Common;
+
+		/// <summary>
 		/// 代入演算子。
 		/// </summary>
-		/// <param name="v"></param>
+		/// <typeparam name="U"></typeparam>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		Vector2& operator=(const Vector2& v)
+		template<typename U>
+		Vector2Tmp<T>& operator=(const Vector2Tmp<U>& other)
 		{
-			vec = v.vec;
+			this->x = static_cast<T>(other.x);
+			this->y = static_cast<T>(other.y);
 			return *this;
 		}
 
@@ -148,9 +170,11 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector2& operator+=(const Vector2& v)
+		template<typename U>
+		Vector2Tmp<T>& operator+=(const Vector2Tmp<U>& v)
 		{
-			Add(v);
+			this->x += static_cast<T>(v.x);
+			this->y += static_cast<T>(v.y);
 			return *this;
 		}
 
@@ -159,63 +183,63 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector2& operator-=(const Vector2& v)
+		template<typename U>
+		Vector2Tmp<T>& operator-=(const Vector2Tmp<U>& v)
 		{
-			Subtract(v);
+			this->x -= static_cast<T>(v.x);
+			this->y -= static_cast<T>(v.y);
 			return *this;
 		}
 
 		/// <summary>
 		/// 乗算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector2& operator*=(const float s)
+		Vector2Tmp<T>& operator*=(const T s)
 		{
-			Scale(s);
+			this->x *= static_cast<T>(s);
+			this->y *= static_cast<T>(s);
 			return *this;
 		}
 
 		/// <summary>
 		/// 除算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector2& operator/=(const float s)
+		Vector2Tmp<T>& operator/=(const T d)
 		{
-			Div(s);
+			this->x /= static_cast<T>(d);
+			this->y /= static_cast<T>(d);
 			return *this;
 		}
 
+		static const Vector2Tmp<T> Zero;
+		static const Vector2Tmp<T> One;
 	};
 
+	using Vector2 = Vector2Tmp<float>;
+	using Vector2Int = Vector2Tmp<int>;
+	using Vector2Double = Vector2Tmp<double>;
 
 	/// <summary>
 	/// 三次元ベクトルクラス。
 	/// </summary>
-	class Vector3
+	template<typename T>
+	class Vector3Common
 	{
-	public:
-		static const Vector3 Zero;
-		static const Vector3 One;
-		static const Vector3 Up;
-		static const Vector3 Forward;
-		static const Vector3 Backward;
-		static const Vector3 AxisX;
-		static const Vector3 AxisY;
-		static const Vector3 AxisZ;
-
 	public:
 		/// <summary>
 		/// コンストラクタ。
 		/// </summary>	
-		explicit Vector3()
+		explicit Vector3Common()
 		{
-			x = 0.0f;
-			y = 0.0f;
-			z = 0.0f;
+			x = T{};
+			y = T{};
+			z = T{};
 		}
-		Vector3(const float x, const float y, const float z)
+		Vector3Common(const T x, const T y, const T z)
 		{
 			this->x = x;
 			this->y = y;
@@ -225,12 +249,12 @@ namespace nsKaEngine {
 		/// <summary>
 		/// デストラクタ。
 		/// </summary>
-		~Vector3() {}
+		~Vector3Common() {}
 
 		union {
-			glm::vec3 vec;
-			struct { float x, y, z; };
-			float v[3];
+			glm::vec<3, T, glm::defaultp> vec;
+			struct { T x, y, z; };
+			T v[3];
 		};
 
 	public:
@@ -240,7 +264,7 @@ namespace nsKaEngine {
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="z"></param>
-		void Set(const float x, const float y, const float z)
+		void Set(const T x, const T y, const T z)
 		{
 			vec.x = x;
 			vec.y = y;
@@ -251,7 +275,7 @@ namespace nsKaEngine {
 		/// ベクトル同士の加算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Add(const Vector3& v)
+		void Add(const Vector3Common& v)
 		{
 			vec.x += v.x;
 			vec.y += v.y;
@@ -262,7 +286,7 @@ namespace nsKaEngine {
 		/// ベクトル同士の減算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Subtract(const Vector3& v)
+		void Subtract(const Vector3Common& v)
 		{
 			vec.x -= v.x;
 			vec.y -= v.y;
@@ -273,20 +297,20 @@ namespace nsKaEngine {
 		/// ベクトルをスカラーで拡大。
 		/// </summary>
 		/// <param name="s"></param>
-		void Scale(const float s)
+		void Scale(const T s)
 		{
-			vec.x *= s;
-			vec.y *= s;
-			vec.z *= s;
+			vec.x *= static_cast<T>(s);
+			vec.y *= static_cast<T>(s);
+			vec.z *= static_cast<T>(s);
 		}
 
 		/// <summary>
 		/// ベクトルをスカラーで除算。
 		/// </summary>
 		/// <param name="s"></param>
-		void Div(const float s)
+		void Div(const T s)
 		{
-			float scale = 1.0f / s;
+			T scale = 1.0f / s;
 			Scale(scale);
 		}
 
@@ -307,7 +331,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		const float Dot(const Vector3& v) const
+		const float Dot(const Vector3Common& v) const
 		{
 			return glm::dot(vec, v.vec);
 		}
@@ -316,7 +340,7 @@ namespace nsKaEngine {
 		/// 外積を計算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Cross(const Vector3& v)
+		void Cross(const Vector3Common& v)
 		{
 			vec = glm::cross(vec, v.vec);
 		}
@@ -326,7 +350,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v0"></param>
 		/// <param name="v1"></param>
-		void Cross(const Vector3& v0, const Vector3& v1)
+		void Cross(const Vector3Common& v0, const Vector3Common& v1)
 		{
 			vec = glm::cross(v0.vec, v1.vec);
 		}
@@ -356,19 +380,36 @@ namespace nsKaEngine {
 		/// <param name="v1">補完終了のベクトル</param>
 		/// <param name="t">補完率</param>
 		/// <returns></returns>
-		void Lerp(const Vector3& v0, const Vector3& v1, const float t)
+		void Lerp(const Vector3Common& v0, const Vector3Common& v1, const float t)
 		{
 			vec = glm::mix(v0.vec, v1.vec, t);
 		}
+	};
+
+	/// <summary>
+	/// テンプレートの部分特殊化を使ってVector3を定義。
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	template<typename T>
+	class Vector3Tmp : public Vector3Common<T> {
+	public:
+		/// <summary>
+		/// コンストラクタの継承
+		/// </summary>
+		using Vector3Common<T>::Vector3Common;
 
 		/// <summary>
 		/// 代入演算子。
 		/// </summary>
-		/// <param name="v"></param>
+		/// <typeparam name="U"></typeparam>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		Vector3& operator=(const Vector3& v)
+		template<typename U>
+		Vector3Tmp<T>& operator=(const Vector3Tmp<U>& other)
 		{
-			vec = v.vec;
+			this->x = static_cast<T>(other.x);
+			this->y = static_cast<T>(other.y);
+			this->z = static_cast<T>(other.z);
 			return *this;
 		}
 
@@ -377,9 +418,12 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector3& operator+=(const Vector3& v)
+		template<typename U>
+		Vector3Tmp<T>& operator+=(const Vector3Tmp<U>& v)
 		{
-			Add(v);
+			this->x += static_cast<T>(v.x);
+			this->y += static_cast<T>(v.y);
+			this->z += static_cast<T>(v.z);
 			return *this;
 		}
 
@@ -388,61 +432,74 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector3& operator-=(const Vector3& v)
+		template<typename U>
+		Vector3Tmp<T>& operator-=(const Vector3Tmp<U>& v)
 		{
-			Subtract(v);
+			this->x -= static_cast<T>(v.x);
+			this->y -= static_cast<T>(v.y);
+			this->z -= static_cast<T>(v.z);
 			return *this;
 		}
 
 		/// <summary>
 		/// 乗算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector3& operator*=(const float s)
+		Vector3Tmp<T>& operator*=(const T s)
 		{
-			Scale(s);
+			this->x *= static_cast<T>(s);
+			this->y *= static_cast<T>(s);
+			this->z *= static_cast<T>(s);
 			return *this;
 		}
 
 		/// <summary>
 		/// 除算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector3& operator/=(const float s)
+		Vector3Tmp<T>& operator/=(const T d)
 		{
-			Div(s);
+			this->x /= static_cast<T>(d);
+			this->y /= static_cast<T>(d);
+			this->z /= static_cast<T>(d);
 			return *this;
 		}
+
+		static const Vector3Tmp<T> Zero;
+		static const Vector3Tmp<T> One;
+		static const Vector3Tmp<T> Up;
+		static const Vector3Tmp<T> Forward;
+		static const Vector3Tmp<T> Backward;
+		static const Vector3Tmp<T> AxisX;
+		static const Vector3Tmp<T> AxisY;
+		static const Vector3Tmp<T> AxisZ;
 	};
+
+	using Vector3 = Vector3Tmp<float>;
+	using Vector3Int = Vector3Tmp<int>;
+	using Vector3Double = Vector3Tmp<double>;
 
 
 	/// <summary>
 	/// 四次元ベクトルクラス。
 	/// </summary>
-	class Vector4
+	template<typename T>
+	class Vector4Common
 	{
-	public:
-		static const Vector4 White;
-		static const Vector4 Black;
-		static const Vector4 Red;
-		static const Vector4 Green;
-		static const Vector4 Blue;
-		static const Vector4 Gray;
-
 	public:
 		/// <summary>
 		/// コンストラクタ。
 		/// </summary>	
-		explicit Vector4()
+		explicit Vector4Common()
 		{
-			x = 0.0f;
-			y = 0.0f;
-			z = 0.0f;
-			w = 0.0f;
+			x = T{};
+			y = T{};
+			z = T{};
+			w = T{};
 		}
-		Vector4(const float x, const float y, const float z, const float w)
+		Vector4Common(const T x, const T y, const T z, const T w)
 		{
 			this->x = x;
 			this->y = y;
@@ -453,13 +510,13 @@ namespace nsKaEngine {
 		/// <summary>
 		/// デストラクタ。
 		/// </summary>
-		~Vector4() {}
+		~Vector4Common() {}
 
 		union {
-			glm::vec4 vec;
-			struct { float x, y, z, w; };
-			struct { float r, g, b, a; };
-			float v[4];
+			glm::vec<4, T, glm::defaultp> vec;
+			struct { T x, y, z, w; };
+			struct { T r, g, b, a; };
+			T v[4];
 		};
 
 	public:
@@ -470,7 +527,7 @@ namespace nsKaEngine {
 		/// <param name="y"></param>
 		/// <param name="z"></param>
 		/// <param name="w"></param>
-		void Set(const float x, const float y, const float z, const float w)
+		void Set(const T x, const T y, const T z, const T w)
 		{
 			vec.x = x;
 			vec.y = y;
@@ -483,7 +540,7 @@ namespace nsKaEngine {
 		/// ベクトル同士の加算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Add(const Vector4& v)
+		void Add(const Vector4Common& v)
 		{
 			vec.x += v.x;
 			vec.y += v.y;
@@ -495,7 +552,7 @@ namespace nsKaEngine {
 		/// ベクトル同士の減算。
 		/// </summary>
 		/// <param name="v"></param>
-		void Subtract(const Vector4& v)
+		void Subtract(const Vector4Common& v)
 		{
 			vec.x -= v.x;
 			vec.y -= v.y;
@@ -507,21 +564,21 @@ namespace nsKaEngine {
 		/// ベクトルをスカラーで拡大。
 		/// </summary>
 		/// <param name="s"></param>
-		void Scale(const float s)
+		void Scale(const T s)
 		{
-			vec.x *= s;
-			vec.y *= s;
-			vec.z *= s;
-			vec.w *= s;
+			vec.x *= static_cast<T>(s);
+			vec.y *= static_cast<T>(s);
+			vec.z *= static_cast<T>(s);
+			vec.w *= static_cast<T>(s);
 		}
 
 		/// <summary>
 		/// ベクトルをスカラーで除算。
 		/// </summary>
 		/// <param name="s"></param>
-		void Div(const float s)
+		void Div(const T s)
 		{
-			float scale = 1.0f / s;
+			T scale = 1.0f / s;
 			Scale(scale);
 		}
 
@@ -538,7 +595,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		const float Dot(const Vector4& v) const
+		const float Dot(const Vector4Common& v) const
 		{
 			return glm::dot(vec, v.vec);
 		}
@@ -569,19 +626,37 @@ namespace nsKaEngine {
 		/// <param name="v1">補完終了のベクトル</param>
 		/// <param name="t">補完率</param>
 		/// <returns></returns>
-		void Lerp(const Vector4& v0, const Vector4& v1, const float t)
+		void Lerp(const Vector4Common& v0, const Vector4Common& v1, const float t)
 		{
 			vec = glm::mix(v0.vec, v1.vec, t);
 		}
+	};
+
+	/// <summary>
+	/// テンプレートの部分特殊化を使ってVector4を定義。
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	template<typename T>
+	class Vector4Tmp : public Vector4Common<T> {
+	public:
+		/// <summary>
+		/// コンストラクタの継承
+		/// </summary>
+		using Vector4Common<T>::Vector4Common;
 
 		/// <summary>
 		/// 代入演算子。
 		/// </summary>
-		/// <param name="v"></param>
+		/// <typeparam name="U"></typeparam>
+		/// <param name="other"></param>
 		/// <returns></returns>
-		Vector4& operator=(const Vector4& v)
+		template<typename U>
+		Vector4Tmp<T>& operator=(const Vector3Tmp<U>& other)
 		{
-			vec = v.vec;
+			this->x = static_cast<T>(other.x);
+			this->y = static_cast<T>(other.y);
+			this->z = static_cast<T>(other.z);
+			this->w = static_cast<T>(other.w);
 			return *this;
 		}
 
@@ -590,9 +665,13 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector4& operator+=(const Vector4& v)
+		template<typename U>
+		Vector4Tmp<T>& operator+=(const Vector4Tmp<U>& v)
 		{
-			Add(v);
+			this->x += static_cast<T>(v.x);
+			this->y += static_cast<T>(v.y);
+			this->z += static_cast<T>(v.z);
+			this->w += static_cast<T>(v.w);
 			return *this;
 		}
 
@@ -601,35 +680,55 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector4& operator-=(const Vector4& v)
+		template<typename U>
+		Vector4Tmp<T>& operator-=(const Vector4Tmp<U>& v)
 		{
-			Subtract(v);
+			this->x -= static_cast<T>(v.x);
+			this->y -= static_cast<T>(v.y);
+			this->z -= static_cast<T>(v.z);
+			this->w -= static_cast<T>(v.w);
 			return *this;
 		}
 
 		/// <summary>
 		/// 乗算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector4& operator*=(const float s)
+		Vector4Tmp<T>& operator*=(const T s)
 		{
-			Scale(s);
+			this->x *= static_cast<T>(s);
+			this->y *= static_cast<T>(s);
+			this->z *= static_cast<T>(s);
+			this->w *= static_cast<T>(s);
 			return *this;
 		}
 
 		/// <summary>
 		/// 除算代入演算子。
 		/// </summary>
-		/// <param name="s"></param>
+		/// <param name="v"></param>
 		/// <returns></returns>
-		Vector4& operator/=(const float s)
+		Vector4Tmp<T>& operator/=(const T d)
 		{
-			Div(s);
+			this->x /= static_cast<T>(d);
+			this->y /= static_cast<T>(d);
+			this->z /= static_cast<T>(d);
+			this->w /= static_cast<T>(d);
 			return *this;
 		}
+
+		static const Vector4Tmp<T> White;
+		static const Vector4Tmp<T> Black;
+		static const Vector4Tmp<T> Red;
+		static const Vector4Tmp<T> Green;
+		static const Vector4Tmp<T> Blue;
+		static const Vector4Tmp<T> Gray;
 	};
 
+	using Vector4 = Vector4Tmp<float>;
+	using Vector4Int = Vector4Tmp<int>;
+	using Vector4Double = Vector4Tmp<double>;
 
 	/// <summary>
 	/// クォータニオンクラス。
@@ -649,7 +748,7 @@ namespace nsKaEngine {
 		}
 		Quaternion(const float x, const float y, const float z, const float w)
 		{
-			Vector4(x, y, z, w);
+			Vector4Common<float>(x, y, z, w);
 		}
 
 	public:
@@ -797,7 +896,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="axis">回転軸</param>
 		/// <param name="angle">回転角度。単位ラジアン</param>
-		void SetRotation(const Vector3& axis, float angle)
+		void SetRotation(const Vector3Common<float>& axis, float angle)
 		{
 			float halfAngle = angle * 0.5f;
 			float s = sinf(halfAngle);
@@ -812,7 +911,7 @@ namespace nsKaEngine {
 		/// </summary>
 		/// <param name="from"></param>
 		/// <param name="to"></param>
-		void SetRotationFromVector(const Vector3& from, const Vector3& to)
+		void SetRotationFromVector(const Vector3Common<float>& from, const Vector3Common<float>& to)
 		{
 			glm::quat quat;
 			quat.x = vec.x;
@@ -827,7 +926,7 @@ namespace nsKaEngine {
 		/// ベクトルにクォータニオンを適用。
 		/// </summary>
 		/// <param name="v"></param>
-		void Apply(Vector3& v)
+		void Apply(Vector3Common<float>& v)
 		{
 			glm::quat quat;
 			quat.x = vec.x;
@@ -847,16 +946,13 @@ namespace nsKaEngine {
 		}
 	};
 
-
 	/// <summary>
 	/// ベクトル同士の加算。
 	/// </summary>
 	static Vector3 operator+(const Vector3& v0, const Vector3& v1)
 	{
-		Vector3 result;
-		result.x = v0.x + v1.x;
-		result.y = v0.y + v1.y;
-		result.z = v0.z + v1.z;
+		Vector3 result = v0;
+		result.Add(v1);
 		return result;
 	}
 
@@ -865,10 +961,8 @@ namespace nsKaEngine {
 	/// </summary>
 	static Vector3 operator-(const Vector3& v0, const Vector3& v1)
 	{
-		Vector3 result;
-		result.x = v0.x - v1.x;
-		result.y = v0.y - v1.y;
-		result.z = v0.z - v1.z;
+		Vector3 result = v1;
+		result.Subtract(v1);
 		return result;
 	}
 

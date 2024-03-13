@@ -7,16 +7,16 @@ namespace nsKaEngine {
 	/// </summary>
 	struct SpriteInitData
 	{
-		std::string filePath;
-		std::string vertexFilePath;
-		std::string fragmentFilePath;
-		std::array<Texture*, ADD_INCLUDE_FILE_MAX> textures = { nullptr };
-		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = { "" };
-		int width = 0;
-		int height = 0;
-		void* expandUniformBuffer = nullptr;
-		int expandUniformBufferSize = 0;
-		std::string expandUniformBufferName;
+		std::string filePath;															//
+		std::string vertexFilePath;														//
+		std::string fragmentFilePath;													//
+		std::array<Texture*, ADD_INCLUDE_FILE_MAX> textures = { nullptr };				//
+		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = { "" };			//
+		int width = 0;																	//
+		int height = 0;																	//
+		void* expandUniformBuffer = nullptr;											//
+		int expandUniformBufferSize = 0;												//
+		std::string expandUniformBufferName;											//
 	};
 
 	/// <summary>
@@ -95,7 +95,7 @@ namespace nsKaEngine {
 
 	private:
 		std::vector<GLuint>	m_indices;						//インデックス。
-		Shader				m_shaderProgram;				//シェーダープログラム。
+		Shader*				m_shaderProgram = nullptr;		//シェーダープログラム。
 		VAO					m_vao;							//VertexArraysObject。
 		VBO					m_vbo;							//VertexBufferObject。
 		EBO					m_ebo;							//ElementsBufferObject。
