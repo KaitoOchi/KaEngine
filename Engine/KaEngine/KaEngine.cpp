@@ -284,7 +284,8 @@ namespace nsKaEngine {
 			Vector2(0.0f, 0.0f)
 		);
 
-		m_sprite.Draw();
+		auto& rc = GraphicsEngine::GetInstance()->GetRenderContext();
+		m_sprite.Draw(rc);
 
 		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();
@@ -296,9 +297,6 @@ namespace nsKaEngine {
 
 		//Swap the back buffer with the front buffer
 		glfwSwapBuffers(GraphicsEngine::GetInstance()->GetWindow());
-
-
-		Input::GetInstance()->EndFrame();
 
 		g_gameTime->EndFrame();
 	}

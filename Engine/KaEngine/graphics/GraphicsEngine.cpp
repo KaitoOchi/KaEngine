@@ -13,7 +13,7 @@ namespace nsKaEngine {
 
 		//ウィンドウサイズの設定。
 		m_frameBufferSize.Set(deviceInfo->windowWidth, deviceInfo->windowHeight);
-		m_renderContext.SetViewportAndScissor(m_frameBufferSize.x, m_frameBufferSize.y);
+		m_renderContext.SetViewportAndScissor(deviceInfo->windowWidth, deviceInfo->windowHeight);
 
 		if (deviceInfo->fullscreen == true) {
 			ToggleFullScreen();
@@ -37,8 +37,8 @@ namespace nsKaEngine {
 
 		//メインレンダーターゲットの作成。
 		m_mainRenderTarget.Create(
-			m_frameBufferSize.x,
-			m_frameBufferSize.y,
+			deviceInfo->windowWidth,
+			deviceInfo->windowHeight,
 			0,
 			GL_RGB
 		);
@@ -59,12 +59,14 @@ namespace nsKaEngine {
 		m_renderContext.UnBindRenderTarget();
 		m_renderContext.ClearRenderTarget();
 
+		VIEWPORT viewport = m_renderContext.GetViewport();
+
 		//Fキーでフルスクリーンモード。
 		if (Input::GetInstance()->GetKeyDown(e_buttonF)) {
 			ToggleFullScreen();
 			m_mainRenderTarget.Create(
-				m_frameBufferSize.x,
-				m_frameBufferSize.y,
+				viewport.width,
+				viewport.height,
 				0,
 				GL_RGB
 			);
@@ -73,6 +75,6 @@ namespace nsKaEngine {
 
 	void GraphicsEngine::Test()
 	{
-		m_mainSprite.Draw();
+		m_mainSprite.Draw(m_renderContext);
 	}
 }

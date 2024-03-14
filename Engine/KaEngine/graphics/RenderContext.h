@@ -3,6 +3,17 @@
 namespace nsKaEngine {
 
 	/// <summary>
+	/// ビューポート。
+	/// </summary>
+	struct VIEWPORT
+	{
+		int x = 0;
+		int y = 0;
+		int width = 0;
+		int height = 0;
+	};
+
+	/// <summary>
 	/// レンダリングコンテキスト。
 	/// </summary>
 	class RenderContext : Noncopyable
@@ -70,6 +81,19 @@ namespace nsKaEngine {
 			const int height
 		) {
 			glViewport(x, y, width, height);
+			m_viewport.x = x;
+			m_viewport.y = y;
+			m_viewport.width = width;
+			m_viewport.height = height;
+		}
+
+		/// <summary>
+		/// ビューポートを取得。
+		/// </summary>
+		/// <returns></returns>
+		const VIEWPORT& GetViewport() const
+		{
+			return m_viewport;
 		}
 
 		/// <summary>
@@ -89,5 +113,6 @@ namespace nsKaEngine {
 		}
 
 	private:
+		VIEWPORT m_viewport;		//ビューポート。
 	};
 }

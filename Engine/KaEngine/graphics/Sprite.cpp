@@ -23,7 +23,7 @@ namespace nsKaEngine {
 		m_vao.Delete();
 		m_vbo.Delete();
 		m_ebo.Delete();
-		m_shaderProgram.Delete();
+		m_shaderProgram->Delete();
 	}
 
 	void Sprite::Init(SpriteInitData& initData)
@@ -32,11 +32,11 @@ namespace nsKaEngine {
 		m_size.Set(static_cast<float>(initData.width), static_cast<float>(initData.height));
 		m_size.Scale(0.5f);
 
+		InitShader(initData);
+
 		InitTexture(initData);
 
 		InitVertexBufferAndElementsBuffer();
-
-		InitShader(initData);
 
 		InitUniformBuffer(initData);
 	}
@@ -54,16 +54,15 @@ namespace nsKaEngine {
 				KaEngine::GetInstance()->RegistTextureBank(initData.filePath.c_str(), texture);
 				m_texture[0] = texture;
 			}
-			m_texture[0]->TexUnit(&m_shaderProgram, "texture", 0);
+			m_texture[0]->TexUnit(m_shaderProgram, "texture", 0);
 
 			++texNum;
 		}
 		//指定されたテクスチャから取得。
 		else if (initData.textures[0] != nullptr) {
-
 			for (texNum = texNum; texNum < initData.textures.size(); ++texNum) {
 				m_texture[texNum] = initData.textures[texNum];
-				m_texture[texNum]->TexUnit(&m_shaderProgram, "texture", texNum);
+				m_texture[texNum]->TexUnit(m_shaderProgram, "texture", texNum);
 			}
 		}
 		else {
@@ -118,7 +117,7 @@ namespace nsKaEngine {
 		if (shader == nullptr) {
 			shader = new Shader();
 			shader->Init(initData.vertexFilePath.c_str(), initData.fragmentFilePath.c_str(), initData.addIncludeFile);
-			
+			KaEngine::GetInstance()->RegistShaderBank(initData.vertexFilePath.c_str(), shader);
 		}
 		m_shaderProgram = shader;
 		m_shaderProgram->Activate();
@@ -127,11 +126,11 @@ namespace nsKaEngine {
 	void Sprite::InitUniformBuffer(SpriteInitData& initData)
 	{
 		//スプライト用UBの作成。
-		m_spriteUniformBuffer.Init(sizeof(SpriteUB), m_shaderProgram.GetShaderID(), "SpriteUB");
+		m_spriteUniformBuffer.Init(sizeof(SpriteUB), m_shaderProgram->GetShaderID(), "SpriteUB");
 
 		//ユーザー拡張用UBの作成。
 		if (initData.expandUniformBuffer != nullptr) {
-			m_expandUniformBuffer.Init(initData.expandUniformBufferSize, m_shaderProgram.GetShaderID(), initData.expandUniformBufferName.c_str());
+			m_expandUniformBuffer.Init(initData.expandUniformBufferSize, m_shaderProgram->GetShaderID(), initData.expandUniformBufferName.c_str());
 			m_expandUB = initData.expandUniformBuffer;
 			m_expandUBSize = initData.expandUniformBufferSize;
 		}
@@ -174,15 +173,16 @@ namespace nsKaEngine {
 		m_worldMatrix = m_worldMatrix * mRot;
 	}
 
-	void Sprite::Draw()
+	void Sprite::Draw(RenderContext& rc)
 	{
-		Vector2Int viewPort = GraphicsEngine::GetInstance()->GetWindowSize();
+		//現在のビューポートを取得。
+		VIEWPORT viewport = rc.GetViewport();
 
 		//プロジェクション行列を作成。
 		Matrix projMatrix;
 		projMatrix.MakeOrthoProjectionMatrix(
-			static_cast<float>(viewPort.x),
-			static_cast<float>(viewPort.y),
+			static_cast<float>(viewport.width),
+			static_cast<float>(viewport.height),
 			0.1f,
 			1.0f
 		);
@@ -191,17 +191,17 @@ namespace nsKaEngine {
 		m_spriteUB.mvp = m_worldMatrix * SPRITE_VIEW_MATRIX * projMatrix;
 		m_spriteUB.mulColor = m_mulColor;
 
-		m_shaderProgram.Activate();
+		m_shaderProgram->Activate();
+
 		//定数バッファの設定。
 		m_spriteUniformBuffer.Update(&m_spriteUB, sizeof(SpriteUB));
 		if (m_expandUB != nullptr) {
 			m_expandUniformBuffer.Update(m_expandUB, m_expandUBSize);
 		}
 
+		//シェーダーに送信。
 		m_vao.Bind();
-
 		m_texture[0]->Bind(0);
-
 		// Draw the triangles using the GL_TRIANGLES primive
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, 0);
 	}

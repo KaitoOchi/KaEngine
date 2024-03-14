@@ -116,6 +116,8 @@ namespace nsKaEngine {
 
 	void Input::BeginFrame()
 	{
+		m_mouseWheel = 0.0f;
+
 		//ポーリング方式を使いマウス操作などのイベントを取得する。
 		glfwPollEvents();
 	}
@@ -129,11 +131,6 @@ namespace nsKaEngine {
 		InputMouseCursor(window);
 
 		InputMouseButton(window);
-	}
-
-	void Input::EndFrame()
-	{
-		m_mouseWheel = 0.0f;
 	}
 
 	/// <summary>

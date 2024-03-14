@@ -7,16 +7,16 @@ namespace nsKaEngine {
 	/// </summary>
 	struct SpriteInitData
 	{
-		std::string filePath;															//
-		std::string vertexFilePath;														//
-		std::string fragmentFilePath;													//
-		std::array<Texture*, ADD_INCLUDE_FILE_MAX> textures = { nullptr };				//
-		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = { "" };			//
-		int width = 0;																	//
-		int height = 0;																	//
-		void* expandUniformBuffer = nullptr;											//
-		int expandUniformBufferSize = 0;												//
-		std::string expandUniformBufferName;											//
+		std::string filePath;															//ファイルパス。
+		std::string vertexFilePath;														//頂点シェーダーのファイルパス。
+		std::string fragmentFilePath;													//フラグメントシェーダーのファイルパス。
+		std::array<Texture*, ADD_INCLUDE_FILE_MAX> textures = { nullptr };				//テクスチャ。
+		std::array<std::string, ADD_INCLUDE_FILE_MAX> addIncludeFile = { "" };			//追加のインクルードファイル。
+		int width = 0;																	//横幅。
+		int height = 0;																	//高さ。
+		void* expandUniformBuffer = nullptr;											//ユーザー拡張の定数バッファ。
+		int expandUniformBufferSize = 0;												//定数バッファのサイズ。
+		std::string expandUniformBufferName;											//定数バッファの名前。
 	};
 
 	/// <summary>
@@ -60,7 +60,7 @@ namespace nsKaEngine {
 		/// <summary>
 		/// 描画処理。
 		/// </summary>
-		void Draw();
+		void Draw(RenderContext& rc);
 
 	private:
 		/// <summary>
@@ -89,8 +89,8 @@ namespace nsKaEngine {
 		/// </summary>
 		struct SpriteUB
 		{
-			Matrix mvp;
-			Vector4 mulColor;
+			Matrix mvp;			//ワールド行列。
+			Vector4 mulColor;	//乗算カラー。
 		};
 
 	private:

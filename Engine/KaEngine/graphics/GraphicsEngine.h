@@ -69,11 +69,11 @@ namespace nsKaEngine {
 			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 			if (!m_isFullScreen) {
 				framebufferSize.Scale(1.2f);
-				glfwSetWindowMonitor(m_window, monitor, 0, 0, framebufferSize.x, framebufferSize.y, GLFW_DONT_CARE);
+				glfwSetWindowMonitor(m_window, monitor, 0, 0, static_cast<int>(framebufferSize.x), static_cast<int>(framebufferSize.y), GLFW_DONT_CARE);
 			}
 			else {
 				framebufferSize.Div(1.2f);
-				glfwSetWindowMonitor(m_window, NULL, 0, 35, framebufferSize.x, framebufferSize.y, GLFW_DONT_CARE);
+				glfwSetWindowMonitor(m_window, NULL, 0, 35, static_cast<int>(framebufferSize.x), static_cast<int>(framebufferSize.y), GLFW_DONT_CARE);
 			}
 			m_frameBufferSize = framebufferSize;
 			m_renderContext.SetViewportAndScissor(m_frameBufferSize.x, m_frameBufferSize.y);

@@ -2,6 +2,7 @@
 
 namespace nsKaEngine {
 
+	//デバッグ用カメラ。
 	class DebugCamera : public GameObject
 	{
 	public:

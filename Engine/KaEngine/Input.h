@@ -135,11 +135,6 @@ namespace nsKaEngine{
 		void BeginFrame();
 
 		/// <summary>
-		/// 終了処理。
-		/// </summary>
-		void EndFrame();
-
-		/// <summary>
 		/// マウスホイールの入力を設定。
 		/// </summary>
 		void SetCallBackMouseWheelEvent(const float wheel)
@@ -324,4 +319,3 @@ namespace nsKaEngine{
 		float			m_mouseWheel = 0.0f;				//マウスホイール。
 	};
 }
-

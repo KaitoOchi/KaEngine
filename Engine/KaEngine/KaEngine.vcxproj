@@ -73,14 +73,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.lib</TargetExt>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
-    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDir)/ExEngine/bulletPhysics/src/;$(ProjectDir)/ExEngine;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.lib</TargetExt>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
-    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDir)/ExEngine/bulletPhysics/src/;$(ProjectDir)/ExEngine;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -122,11 +122,15 @@
       <PrecompiledHeaderFile>KaEnginePreCompile.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -147,6 +151,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>BulletCollision_$(Configuration).lib;BulletDynamics_$(Configuration).lib;LinearMath_$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
