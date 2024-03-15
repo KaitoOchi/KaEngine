@@ -193,6 +193,7 @@
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Transform.cpp" />
     <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="physics\PhysicsEngine.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -226,6 +227,7 @@
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Transform.h" />
     <ClInclude Include="math\Vector.h" />
+    <ClInclude Include="physics\PhysicsEngine.h" />
     <ClInclude Include="timer\GameTime.h" />
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="util\Noncopyable.h" />

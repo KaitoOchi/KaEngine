@@ -6,6 +6,7 @@
 #include <vector>
 #include <array>
 #include <list>
+#include <memory>
 
 #ifdef _WIN32
 
@@ -48,6 +49,9 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "math/Matrix.h"
 #include "math/BitFlag.h"
 #include "math/Transform.h"
+
+// physics
+#include "physics/PhysicsEngine.h"
 
 // Graphics
 #include "graphics/VBO.h"

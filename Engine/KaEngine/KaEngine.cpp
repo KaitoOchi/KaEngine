@@ -107,21 +107,6 @@ namespace nsKaEngine {
 		GLFWwindow* window,
 		Config* config
 	) {
-		btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-		btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-		btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-		btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
-
-		btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
-		delete broadphase;
-		delete collisionConfiguration;
-		delete dispatcher;
-		delete solver;
-		delete world;
-
 		m_config = config;
 
 		//カメラの初期化。
@@ -136,6 +121,7 @@ namespace nsKaEngine {
 		GraphicsEngine::CreateInstance(window, config);
 		Input::CreateInstance();
 		GameObjectManager::CreateInstance();
+		PhysicsEngine::CreateInstance();
 
 		//床モデルの生成。
 		ModelInitData modelInitData;
@@ -321,6 +307,7 @@ namespace nsKaEngine {
 		GraphicsEngine::DeleteInstance();
 		Input::DeleteInstance();
 		GameObjectManager::DeleteInstance();
+		PhysicsEngine::DeleteInstance();
 
 		m_floorMesh.Delete();
 		m_lightMesh.Delete();

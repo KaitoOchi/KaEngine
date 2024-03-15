@@ -67,6 +67,9 @@
     <ClCompile Include="graphics\RenderTarget.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="physics\PhysicsEngine.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -154,6 +157,9 @@
     <ClInclude Include="graphics\RenderContext.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="physics\PhysicsEngine.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="util">
@@ -176,6 +182,9 @@
     </Filter>
     <Filter Include="gameObject">
       <UniqueIdentifier>{b2490aa4-96c5-461e-9215-eaed63ee6372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics">
+      <UniqueIdentifier>{4dbbcc0c-155e-4080-9135-9e945c55eedc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
