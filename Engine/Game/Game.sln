@@ -9,19 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game.vcxproj", "{5D
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KaEngine", "..\KaEngine\KaEngine.vcxproj", "{72E274CF-DBFD-49E7-B3B4-49BAFA882B60}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA} = {1A676C4C-101E-48B6-810E-2912C3CFE6DA}
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1} = {20484924-D192-41CB-8C9C-1A139DD0ABF1}
-		{8DB87586-3644-42DA-94CF-2F5A052F4648} = {8DB87586-3644-42DA-94CF-2F5A052F4648}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExEngine", "ExEngine", "{2E569B3C-86FF-4098-B998-CEF1792B8DB8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletCollision", "..\KaEngine\ExEngine\bulletphysics\src\BulletCollision\BulletCollision.vcxproj", "{20484924-D192-41CB-8C9C-1A139DD0ABF1}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "..\KaEngine\ExEngine\bulletPhysics\src\BulletDynamics\BulletDynamics.vcxproj", "{1A676C4C-101E-48B6-810E-2912C3CFE6DA}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "..\KaEngine\ExEngine\bulletPhysics\src\LinearMath\LinearMath.vcxproj", "{8DB87586-3644-42DA-94CF-2F5A052F4648}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,38 +34,9 @@ Global
 		{72E274CF-DBFD-49E7-B3B4-49BAFA882B60}.Release|x64.Build.0 = Release|x64
 		{72E274CF-DBFD-49E7-B3B4-49BAFA882B60}.Release|x86.ActiveCfg = Release|Win32
 		{72E274CF-DBFD-49E7-B3B4-49BAFA882B60}.Release|x86.Build.0 = Release|Win32
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Debug|x64.ActiveCfg = Debug|x64
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Debug|x64.Build.0 = Debug|x64
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Debug|x86.ActiveCfg = Debug|Win32
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Debug|x86.Build.0 = Debug|Win32
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Release|x64.ActiveCfg = Release|x64
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Release|x64.Build.0 = Release|x64
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Release|x86.ActiveCfg = Release|Win32
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1}.Release|x86.Build.0 = Release|Win32
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Debug|x64.ActiveCfg = Debug|x64
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Debug|x64.Build.0 = Debug|x64
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Debug|x86.ActiveCfg = Debug|Win32
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Debug|x86.Build.0 = Debug|Win32
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Release|x64.ActiveCfg = Release|x64
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Release|x64.Build.0 = Release|x64
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Release|x86.ActiveCfg = Release|Win32
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA}.Release|x86.Build.0 = Release|Win32
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Debug|x64.ActiveCfg = Debug|x64
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Debug|x64.Build.0 = Debug|x64
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Debug|x86.ActiveCfg = Debug|Win32
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Debug|x86.Build.0 = Debug|Win32
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Release|x64.ActiveCfg = Release|x64
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Release|x64.Build.0 = Release|x64
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Release|x86.ActiveCfg = Release|Win32
-		{8DB87586-3644-42DA-94CF-2F5A052F4648}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{20484924-D192-41CB-8C9C-1A139DD0ABF1} = {2E569B3C-86FF-4098-B998-CEF1792B8DB8}
-		{1A676C4C-101E-48B6-810E-2912C3CFE6DA} = {2E569B3C-86FF-4098-B998-CEF1792B8DB8}
-		{8DB87586-3644-42DA-94CF-2F5A052F4648} = {2E569B3C-86FF-4098-B998-CEF1792B8DB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D0E6A05-2565-4845-B738-8519149EDFE9}

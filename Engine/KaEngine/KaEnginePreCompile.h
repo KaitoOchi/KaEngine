@@ -26,7 +26,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // bulletphysics
-//#include "ExEngine/bulletPhysics/src/btBulletDynamicsCommon.h"
+#include "ExEngine/bulletPhysics/src/btBulletDynamicsCommon.h"
 
 
 const float FRAME_BUFFER_WIDTH = 1600.0f;
