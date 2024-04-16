@@ -22,6 +22,15 @@ namespace nsKaEngine {
 	};
 
 	/// <summary>
+	/// ワイヤフレーム用頂点。
+	/// </summary>
+	struct WireFrameVertex
+	{
+		Vector3 position;
+		Vector3 color;
+	};
+
+	/// <summary>
 	/// VertexBufferObject。
 	/// </summary>
 	class VBO : Noncopyable
@@ -36,6 +45,7 @@ namespace nsKaEngine {
 		/// <param name="vertices">頂点情報</param>
 		void Init(std::vector<Vertex>& vertices);
 		void Init(std::vector<SpriteVertex>& vertices);
+		void Init(std::vector<WireFrameVertex>& vertices);
 
 		/// <summary>
 		/// 接続。

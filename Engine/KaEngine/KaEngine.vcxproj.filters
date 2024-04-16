@@ -70,6 +70,12 @@
     <ClCompile Include="physics\PhysicsEngine.cpp">
       <Filter>physics</Filter>
     </ClCompile>
+    <ClCompile Include="dbg\DebugWireFrame.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\PhysicsGhostObject.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KaEnginePreCompile.h" />
@@ -158,6 +164,12 @@
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="physics\PhysicsEngine.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="dbg\DebugWireFrame.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\PhysicsGhostObject.h">
       <Filter>physics</Filter>
     </ClInclude>
   </ItemGroup>

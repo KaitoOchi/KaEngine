@@ -27,7 +27,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // bulletphysics
-#include "ExEngine/bulletPhysics/src/btBulletDynamicsCommon.h"
+#include "btBulletDynamicsCommon.h"
+#include "BulletCollision/CollisionDispatch/btGhostObject.h"
 
 
 const float FRAME_BUFFER_WIDTH = 1600.0f;
@@ -50,9 +51,6 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "math/BitFlag.h"
 #include "math/Transform.h"
 
-// physics
-#include "physics/PhysicsEngine.h"
-
 // Graphics
 #include "graphics/VBO.h"
 #include "graphics/VAO.h"
@@ -66,6 +64,11 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 #include "graphics/Sprite.h"
 #include "graphics/Material.h"
 #include "graphics/GraphicsEngine.h"
+
+// physics
+#include "dbg/DebugWireFrame.h"
+#include "physics/PhysicsEngine.h"
+#include "physics/PhysicsGhostObject.h"
 
 // Time
 #include "timer/Timer.h"

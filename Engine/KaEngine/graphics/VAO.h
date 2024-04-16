@@ -55,6 +55,11 @@ namespace nsKaEngine {
 			glDeleteVertexArrays(1, &m_id);
 		}
 
+		const GLuint GetID() const
+		{
+			return m_id;
+		}
+
 	private:
 		GLuint m_id = 0;		//IDÅB
 	};

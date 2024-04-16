@@ -651,7 +651,7 @@ namespace nsKaEngine {
 		/// <param name="other"></param>
 		/// <returns></returns>
 		template<typename U>
-		Vector4Tmp<T>& operator=(const Vector3Tmp<U>& other)
+		Vector4Tmp<T>& operator=(const Vector4Tmp<U>& other)
 		{
 			this->x = static_cast<T>(other.x);
 			this->y = static_cast<T>(other.y);
@@ -733,7 +733,7 @@ namespace nsKaEngine {
 	/// <summary>
 	/// クォータニオンクラス。
 	/// </summary>
-	class Quaternion : public Vector4
+	class Quaternion : public Vector4Common<float>
 	{
 	public:
 		static const Quaternion Identity;
@@ -741,14 +741,17 @@ namespace nsKaEngine {
 		/// <summary>
 		/// コンストラクタ。
 		/// </summary>
-		Quaternion()
+		explicit Quaternion()
 		{
 			x = y = z = 0.0f;
 			w = 1.0f;
 		}
 		Quaternion(const float x, const float y, const float z, const float w)
 		{
-			Vector4Common<float>(x, y, z, w);
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			this->w = w;
 		}
 
 	public:

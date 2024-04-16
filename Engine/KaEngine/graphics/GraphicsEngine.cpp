@@ -43,6 +43,8 @@ namespace nsKaEngine {
 			GL_RGB
 		);
 
+		std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
 		//メインレンダーターゲット用スプライトの設定。
 		SpriteInitData spriteInitData;
 		spriteInitData.textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();

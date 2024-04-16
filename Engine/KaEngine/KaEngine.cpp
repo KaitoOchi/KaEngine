@@ -226,6 +226,14 @@ namespace nsKaEngine {
 		m_lightUB.ptLig.ptColor = Vector3(3.0f, 0.0f, 0.0f);
 		m_lightUB.ptLig.ptRange = 300.0f;
 
+
+
+		m_sphereGhostObject.CreateSphere(
+			Vector3(-150.0f, 50.0f, 0.0f),
+			Quaternion::Identity,
+			10.0f
+		);
+
 	}
 
 	void KaEngine::Execute()
@@ -236,6 +244,8 @@ namespace nsKaEngine {
 
 		GameObjectManager::GetInstance()->ExecuteUpdate();
 
+		PhysicsEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+
 		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
 	}
 
@@ -244,6 +254,8 @@ namespace nsKaEngine {
 		g_gameTime->BeginFrame();
 
 		Input::GetInstance()->BeginFrame();
+
+		PhysicsEngine::GetInstance()->BeginFrame();
 	}
 
 	void KaEngine::EndFrame()
@@ -287,6 +299,8 @@ namespace nsKaEngine {
 
 		auto& rc = GraphicsEngine::GetInstance()->GetRenderContext();
 		m_sprite.Draw(rc);
+
+		PhysicsEngine::GetInstance()->EndFrame();
 
 		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();

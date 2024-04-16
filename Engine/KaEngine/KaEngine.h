@@ -198,6 +198,8 @@ namespace nsKaEngine {
 
 		Sprite m_sprite;
 		float m_timer = 0.0f;
+
+		PhysicsGhostObject m_sphereGhostObject;
 	};
 	extern Camera* g_camera3D;		//カメラクラス。
 	extern GameTime* g_gameTime;	//時間制御クラス。

@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.lib</TargetExt>
     <AllProjectBMIsArePublic>true</AllProjectBMIsArePublic>
-    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDir)/ExEngine/bulletPhysics/src/;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDir)ExEngine/bulletPhysics/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <OutDir>..\exlib\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="dbg\DebugCamera.cpp" />
+    <ClCompile Include="dbg\DebugWireFrame.cpp" />
     <ClCompile Include="gameObject\GameObject.cpp" />
     <ClCompile Include="gameObject\GameObjectManager.cpp" />
     <ClCompile Include="gl.c">
@@ -194,6 +195,7 @@
     <ClCompile Include="math\Transform.cpp" />
     <ClCompile Include="math\Vector.cpp" />
     <ClCompile Include="physics\PhysicsEngine.cpp" />
+    <ClCompile Include="physics\PhysicsGhostObject.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -202,6 +204,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="dbg\DebugCamera.h" />
+    <ClInclude Include="dbg\DebugWireFrame.h" />
     <ClInclude Include="dbg\KaDebug.h" />
     <ClInclude Include="gameObject\GameObject.h" />
     <ClInclude Include="gameObject\GameObjectManager.h" />
@@ -228,6 +231,7 @@
     <ClInclude Include="math\Transform.h" />
     <ClInclude Include="math\Vector.h" />
     <ClInclude Include="physics\PhysicsEngine.h" />
+    <ClInclude Include="physics\PhysicsGhostObject.h" />
     <ClInclude Include="timer\GameTime.h" />
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="util\Noncopyable.h" />

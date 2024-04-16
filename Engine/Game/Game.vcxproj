@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDIr)../KaEngine;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDIr);$(ProjectDIr)../Libraries/include;$(ProjectDIr)../KaEngine;$(ProjectDir)../KaEngine/ExEngine/bulletPhysics/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDIr)../Libraries/lib;$(ProjectDir)../exlib/$(Platform)\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <AllProjectBMIsArePublic>false</AllProjectBMIsArePublic>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>

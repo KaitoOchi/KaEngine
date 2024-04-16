@@ -37,6 +37,19 @@ void Player::Update()
 	g_camera3D->Update();
 
 	CursorLock();
+
+	PhysicsEngine::RayHitObject hit;
+	Vector3 start, end;
+	start = m_position;
+	start.y -= 5.0f;
+	end = m_position + (g_camera3D->GetForward() * -1000.0f);
+	end.y -= 5.0f;
+	PhysicsEngine::GetInstance()->RayTest(start, end, hit);
+
+	if (hit.isHit) {
+		Vector3 a;
+		a = hit.position;
+	}
 }
 
 void Player::Move()
