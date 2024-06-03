@@ -18,10 +18,12 @@ namespace nsKaEngine {
 		const int width,
 		const int height,
 		const int mipLevel,
-		const GLenum format
+		const GLenum format,
+		const Vector4 clearColor
 	){
 		m_width = width;
 		m_height = height;
+		m_clearColor = clearColor;
 
 		//フレームバッファの作成。
 		if (m_fbo == 0) {

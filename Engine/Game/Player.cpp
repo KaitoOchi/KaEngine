@@ -4,7 +4,9 @@
 
 namespace
 {
-	const float MOVE_SPEED = 500.0f;								//移動速度。
+	const float PLAYER_RADIUS = 25.0f;							//プレイヤーの半径。
+	const float PLAYER_HEIGHT = 50.0f;							//プレイヤーの高さ。
+	const float MOVE_SPEED = 500.0f;							//移動速度。
 	const float ANGLE_LIMIT = Mathf::PI / 2.0f - 0.001f;		//角度の限界値。
 	const float TARGET_FORWARD = 10000.0f;						//注視点の前方向。
 }
@@ -25,6 +27,16 @@ Player::~Player()
 
 bool Player::Start()
 {
+	m_capsuleCollider.Create(PLAYER_RADIUS, PLAYER_HEIGHT);
+
+	RigidbodyInitData rbInitData;
+	rbInitData.pos = m_position;
+	rbInitData.collider = &m_capsuleCollider;
+	rbInitData.mass = 1.0f;
+	rbInitData.restitution = 0.0f;
+
+	m_rigidbody.Init(rbInitData);
+
 	return true;
 }
 
@@ -84,6 +96,8 @@ void Player::Move()
 
 	moveSpeed.Normalize();
 	moveSpeed *= MOVE_SPEED * g_gameTime->GetFrameDeltaTime();
+
+	m_rigidbody.AddForce(m_position, moveSpeed);
 
 	m_position += moveSpeed;
 

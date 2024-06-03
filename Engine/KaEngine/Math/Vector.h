@@ -718,6 +718,7 @@ namespace nsKaEngine {
 			return *this;
 		}
 
+		static const Vector4Tmp<T> Zero;
 		static const Vector4Tmp<T> White;
 		static const Vector4Tmp<T> Black;
 		static const Vector4Tmp<T> Red;

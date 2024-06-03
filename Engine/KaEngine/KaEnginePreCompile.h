@@ -7,6 +7,7 @@
 #include <array>
 #include <list>
 #include <memory>
+#include <functional>
 
 #ifdef _WIN32
 
@@ -67,8 +68,13 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 
 // physics
 #include "dbg/DebugWireFrame.h"
+#include "physics/ICollider.h"
+#include "physics/BoxCollider.h"
+#include "physics/CapsuleCollider.h"
+#include "physics/SphereCollider.h"
 #include "physics/PhysicsEngine.h"
 #include "physics/PhysicsGhostObject.h"
+#include "physics/Rigidbody.h"
 
 // Time
 #include "timer/Timer.h"
@@ -77,8 +83,8 @@ const float FRAME_BUFFER_HEIGHT = 900.0f;
 // Camera
 #include "Camera.h"
 
-// Input
-#include "Input.h"
+// HID
+#include "HID/Input.h"
 
 // GameObject
 #include "gameObject/GameObject.h"

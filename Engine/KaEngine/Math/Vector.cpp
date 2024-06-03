@@ -50,6 +50,7 @@ namespace nsKaEngine {
 	////////////////////////////////////////
 	/// Vector4�̒萔
 	////////////////////////////////////////
+	const Vector4 Vector4::Zero = { 0.0f, 0.0f, 0.0f, 0.0f };
 	const Vector4 Vector4::White = { 1.0f, 1.0f, 1.0f, 1.0f };
 	const Vector4 Vector4::Black = { 0.0f, 0.0f, 0.0f, 1.0f };
 	const Vector4 Vector4::Red = { 1.0f, 0.0f, 0.0f, 1.0f };

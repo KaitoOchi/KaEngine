@@ -21,12 +21,15 @@ private:
 	/// 回転処理。
 	/// </summary>
 	void Rotation();
+
 	/// <summary>
 	/// カーソルのロック処理。
 	/// </summary>
 	void CursorLock();
 
 private:
+	CapsuleCollider m_capsuleCollider;			//カプセルコライダー。
+	Rigidbody		m_rigidbody;				//剛体。
 	Vector2			m_rotSpeed;					//回転角度。
 	Vector3			m_position;					//座標。
 	Vector3			m_target;					//注視点。

@@ -15,26 +15,28 @@ namespace nsKaEngine {
 
 	void PhysicsGhostObject::CreateCommon(const Vector3& pos, const Quaternion& rot)
 	{
+		m_ghostObject.setCollisionShape(m_collider->GetShape());
+
 		btTransform btTrans;
 		btTrans.setOrigin({ pos.x, pos.y, pos.z });
 		btTrans.setRotation({ rot.x, rot.y, rot.z, rot.w });
 		m_ghostObject.setWorldTransform(btTrans);
+		m_ghostObject.setCustomDebugColor(btVector3(0.0f, 1.0f, 0.0f));
 
 		PhysicsEngine::GetInstance()->AddCollisionObject(m_ghostObject);
 		m_isRegistPhysicsWorld = true;
 	}
 
-	void PhysicsGhostObject::CreareBox(
+	void PhysicsGhostObject::CreateBox(
 		const Vector3& pos,
 		const Quaternion& rot,
 		const Vector3 size
 	) {
 		Release();
 
-		std::unique_ptr<btBoxShape> shape = std::make_unique<btBoxShape>(btVector3(size.x, size.y, size.z));
-		m_collider = std::move(shape);
-		m_ghostObject.setCollisionShape(m_collider.get());
-		m_ghostObject.setCustomDebugColor(btVector3(0.0f, 1.0f, 0.0f));
+		auto collider = std::make_unique<BoxCollider>();
+		collider->Create(size);
+		m_collider = std::move(collider);
 
 		CreateCommon(pos, rot);
 	}
@@ -47,10 +49,9 @@ namespace nsKaEngine {
 	) {
 		Release();
 
-		std::unique_ptr<btCapsuleShape> shape = std::make_unique<btCapsuleShape>(radius, height);
-		m_collider = std::move(shape);
-		m_ghostObject.setCollisionShape(m_collider.get());
-		m_ghostObject.setCustomDebugColor(btVector3(0.0f, 1.0f, 0.0f));
+		auto collider = std::make_unique<CapsuleCollider>();
+		collider->Create(radius, height);
+		m_collider = std::move(collider);
 
 		CreateCommon(pos, rot);
 	}
@@ -62,10 +63,9 @@ namespace nsKaEngine {
 	) {
 		Release();
 
-		std::unique_ptr<btSphereShape> shape = std::make_unique<btSphereShape>(radius);
-		m_collider = std::move(shape);
-		m_ghostObject.setCollisionShape(m_collider.get());
-		m_ghostObject.setCustomDebugColor(btVector3(0.0f, 1.0f, 0.0f));
+		auto collider = std::make_unique<SphereCollider>();
+		collider->Create(radius);
+		m_collider = std::move(collider);
 
 		CreateCommon(pos, rot);
 	}

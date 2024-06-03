@@ -13,11 +13,11 @@ namespace nsKaEngine {
 		/// </summary>
 		struct RayHitObject
 		{
-			btCollisionObject* colObj;		//コリジョン。
-			Vector3 position;				//座標。
-			Vector3 normal;					//法線。
-			float fraction;					//衝突時間。
-			bool isHit;						//衝突したかどうか。
+			btCollisionObject* colObj = nullptr;	//コリジョン。
+			Vector3 position;						//座標。
+			Vector3 normal;							//法線。
+			float fraction = 0.0f;					//衝突時間。
+			bool isHit = false;						//衝突したかどうか。
 		};
 
 	public:
@@ -71,6 +71,24 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// 剛体をワールドに登録。
+		/// </summary>
+		/// <param name="rigidbody"></param>
+		void AddRigidbody(btRigidBody& rigidbody)
+		{
+			m_dynamicWorld->addRigidBody(&rigidbody);
+		}
+
+		/// <summary>
+		/// 剛体をワールドから削除。
+		/// </summary>
+		/// <param name="rigidbody"></param>
+		void RemoveRigidbody(btRigidBody& rigidbody)
+		{
+			m_dynamicWorld->removeRigidBody(&rigidbody);
+		}
+
+		/// <summary>
 		/// レイテスト。
 		/// </summary>
 		/// <param name="rayStart"></param>
@@ -81,6 +99,40 @@ namespace nsKaEngine {
 			const Vector3& rayEnd,
 			RayHitObject& hit
 		);
+
+		/// <summary>
+		/// レイキャスト。
+		/// </summary>
+		/// <param name="rayStart"></param>
+		/// <param name="rayEnd"></param>
+		/// <param name="shape"></param>
+		/// <param name="hit"></param>
+		void RayCastHit(
+			const Vector3& rayStart,
+			const Vector3& rayEnd,
+			btCollisionShape* shape,
+			RayHitObject& hit
+		);
+
+		/// <summary>
+		/// コンタクトテスト。
+		/// </summary>
+		/// <param name="colObj"></param>
+		/// <param name="cb"></param>
+		void ContactTest(
+			btCollisionObject* colObj,
+			std::function<void(const btCollisionObject& contactCollisionObject)> cb
+		);
+
+		void ConvexSweepTest(
+			const btConvexShape* convexShape,
+			const btTransform& from,
+			const btTransform& to,
+			btCollisionWorld::ConvexResultCallback& callback,
+			btScalar allowedCcdPenetration = 0.0f
+		) const {
+			m_dynamicWorld->convexSweepTest(convexShape, from, to, callback, allowedCcdPenetration);
+		}
 
 
 		/// <summary>
@@ -138,10 +190,6 @@ namespace nsKaEngine {
 		DebugWireFrame m_debugWireFrame;
 		bool m_isDrawDebugWireFrame = true;
 #endif
-
-
-		btGhostObject m_btGhostObject;
-		std::unique_ptr<btCollisionShape> m_shape;
 	};
 
 }

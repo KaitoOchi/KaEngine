@@ -60,7 +60,7 @@ namespace nsKaEngine {
 		}
 		//指定されたテクスチャから取得。
 		else if (initData.textures[0] != nullptr) {
-			for (texNum = texNum; texNum < initData.textures.size(); ++texNum) {
+			for (texNum; texNum < initData.textures.size(); ++texNum) {
 				m_texture[texNum] = initData.textures[texNum];
 				m_texture[texNum]->TexUnit(m_shaderProgram, "texture", texNum);
 			}
@@ -189,7 +189,6 @@ namespace nsKaEngine {
 
 		//モデル用UniformBufferの更新。
 		m_spriteUB.mvp = m_worldMatrix * SPRITE_VIEW_MATRIX * projMatrix;
-		m_spriteUB.mulColor = m_mulColor;
 
 		m_shaderProgram->Activate();
 

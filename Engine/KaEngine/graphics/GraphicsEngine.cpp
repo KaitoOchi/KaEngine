@@ -59,7 +59,7 @@ namespace nsKaEngine {
 	{
 		//フレームバッファをクリア。
 		m_renderContext.UnBindRenderTarget();
-		m_renderContext.ClearRenderTarget();
+		m_renderContext.ClearRenderTarget(m_mainRenderTarget);
 
 		VIEWPORT viewport = m_renderContext.GetViewport();
 

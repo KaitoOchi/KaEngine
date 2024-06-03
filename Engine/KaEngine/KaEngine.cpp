@@ -225,15 +225,6 @@ namespace nsKaEngine {
 		m_lightUB.ptLig.ptPosition = m_lightPos;
 		m_lightUB.ptLig.ptColor = Vector3(3.0f, 0.0f, 0.0f);
 		m_lightUB.ptLig.ptRange = 300.0f;
-
-
-
-		m_sphereGhostObject.CreateSphere(
-			Vector3(-150.0f, 50.0f, 0.0f),
-			Quaternion::Identity,
-			10.0f
-		);
-
 	}
 
 	void KaEngine::Execute()
@@ -260,6 +251,8 @@ namespace nsKaEngine {
 
 	void KaEngine::EndFrame()
 	{
+		auto& rc = GraphicsEngine::GetInstance()->GetRenderContext();
+
 		//ライト用構造体の更新。
 		m_lightUB.eyePos = g_camera3D->GetPosition();
 
@@ -274,9 +267,9 @@ namespace nsKaEngine {
 
 		RenderTarget& rt = GraphicsEngine::GetInstance()->GetRenderTarget();
 
-		GraphicsEngine::GetInstance()->GetRenderContext().BindRenderTarget(rt);
+		rc.BindRenderTarget(rt);
 
-		GraphicsEngine::GetInstance()->GetRenderContext().ClearRenderTarget();
+		rc.ClearRenderTarget(rt);
 
 		m_floorMesh.Draw(m_floorModel, g_camera3D->GetViewMatrix(), g_camera3D->GetProjectionMatrix());
 
@@ -297,14 +290,13 @@ namespace nsKaEngine {
 			Vector2(0.0f, 0.0f)
 		);
 
-		auto& rc = GraphicsEngine::GetInstance()->GetRenderContext();
 		m_sprite.Draw(rc);
-
-		PhysicsEngine::GetInstance()->EndFrame();
 
 		if (Input::GetInstance()->GetKey(KeyCode::e_buttonR)) {
 			m_pyramidMesh.Delete();
 		}
+
+		PhysicsEngine::GetInstance()->EndFrame();
 
 		GraphicsEngine::GetInstance()->GetRenderContext().UnBindRenderTarget();
 

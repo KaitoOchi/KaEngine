@@ -22,7 +22,8 @@ namespace nsKaEngine {
 			const int width,
 			const int height,
 			const int mipLevel,
-			const GLenum format
+			const GLenum format,
+			const Vector4 clearColor = Vector4::Gray
 		);
 
 		/// <summary>
@@ -53,6 +54,15 @@ namespace nsKaEngine {
 		}
 
 		/// <summary>
+		/// クリアカラーを取得。
+		/// </summary>
+		/// <returns></returns>
+		const Vector4& GetClearColor() const
+		{
+			return m_clearColor;
+		}
+
+		/// <summary>
 		/// IDを取得。
 		/// </summary>
 		/// <returns></returns>
@@ -62,10 +72,11 @@ namespace nsKaEngine {
 		}
 
 	private:
-		Texture		m_renderTexture;		//レンダーテクスチャ。
-		GLuint		m_fbo = 0;				//フレームバッファー。
-		GLuint		m_depthBuffer = 0;		//深度バッファ。
-		int			m_width = 0;			//横幅。
-		int			m_height = 0;			//高さ。
+		Texture		m_renderTexture;				//レンダーテクスチャ。
+		GLuint		m_fbo = 0;						//フレームバッファー。
+		GLuint		m_depthBuffer = 0;				//深度バッファ。
+		Vector4		m_clearColor = Vector4::Gray;	//クリアカラー。
+		int			m_width = 0;					//横幅。
+		int			m_height = 0;					//高さ。
 	};
 }

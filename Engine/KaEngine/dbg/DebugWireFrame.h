@@ -70,10 +70,10 @@ namespace nsKaEngine {
 		);
 
 	private:
-		std::vector<WireFrameVertex>	m_vertexList;				//頂点リスト。
-		Shader							m_shaderProgram;			//シェーダー。
-		VAO								m_vao;						//VAO。
-		VBO								m_vbo;						//VBO。
-		UniformBuffer					m_uniformBuffer;			//定数バッファ。
+		std::vector<WireFrameVertex>	m_vertexList;					//頂点リスト。
+		Shader							m_shaderProgram;				//シェーダー。
+		VAO								m_vao;							//VAO。
+		VBO								m_vbo;							//VBO。
+		UniformBuffer					m_uniformBuffer;				//定数バッファ。
 	};
 }

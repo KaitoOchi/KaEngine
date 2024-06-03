@@ -40,7 +40,7 @@ namespace nsKaEngine {
 		/// <param name="color"></param>
 		void SetMulColor(const Vector4& color)
 		{
-			m_mulColor = color;
+			m_spriteUB.mulColor = color;
 		}
 
 		/// <summary>
@@ -89,8 +89,8 @@ namespace nsKaEngine {
 		/// </summary>
 		struct SpriteUB
 		{
-			Matrix mvp;			//ワールド行列。
-			Vector4 mulColor;	//乗算カラー。
+			Matrix mvp;							//ワールド行列。
+			Vector4 mulColor = Vector4::White;	//乗算カラー。
 		};
 
 	private:
@@ -104,7 +104,6 @@ namespace nsKaEngine {
 		UniformBuffer		m_expandUniformBuffer;			//ユーザー拡張用UniformBufferObject。
 		SpriteUB			m_spriteUB;						//スプライト用UB。
 		Matrix				m_worldMatrix;					//ワールド行列。
-		Vector4				m_mulColor = Vector4::White;	//乗算カラー。
 		Vector2				m_size;							//画像のハーフサイズ。
 		void*				m_expandUB = nullptr;			//ユーザー拡張用構造体。
 		int					m_expandUBSize = 0;				//構造体のサイズ。

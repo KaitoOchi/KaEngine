@@ -14,5 +14,5 @@ out vec4 FragColor;
 void main()
 {
 	FragColor.rgb = psIn.color;
-    FragColor.a = 1.0f;
+	FragColor.a = 1.0f;
 }

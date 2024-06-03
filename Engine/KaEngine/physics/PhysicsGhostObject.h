@@ -17,7 +17,7 @@ namespace nsKaEngine {
 		/// <param name="pos"></param>
 		/// <param name="rot"></param>
 		/// <param name="size"></param>
-		void CreareBox(
+		void CreateBox(
 			const Vector3& pos,
 			const Quaternion& rot,
 			const Vector3 size
@@ -54,6 +54,7 @@ namespace nsKaEngine {
 			btTransform trans = m_ghostObject.getWorldTransform();
 			btVector3 vec = btVector3(pos.x, pos.y, pos.z);
 			trans.setOrigin(vec);
+			m_ghostObject.setWorldTransform(trans);
 		}
 
 		/// <summary>
@@ -65,6 +66,26 @@ namespace nsKaEngine {
 			btTransform trans = m_ghostObject.getWorldTransform();
 			btQuaternion quat = btQuaternion(rot.x, rot.y, rot.z, rot.w);
 			trans.setRotation(quat);
+			m_ghostObject.setWorldTransform(trans);
+		}
+
+		/// <summary>
+		/// 自分自身かどうかを取得。
+		/// </summary>
+		/// <param name="colObj"></param>
+		/// <returns></returns>
+		const bool IsSelf(const btCollisionObject& colObj) const
+		{
+			return &colObj == &m_ghostObject;
+		}
+
+		/// <summary>
+		/// コリジョンシェイプを取得。
+		/// </summary>
+		/// <returns></returns>
+		btCollisionShape* GetbtCollisionShape()
+		{
+			return m_collider->GetShape();
 		}
 
 		/// <summary>
@@ -88,7 +109,7 @@ namespace nsKaEngine {
 
 	private:
 		btGhostObject						m_ghostObject;						//ゴーストオブジェクト。
-		std::unique_ptr<btCollisionShape>	m_collider;							//コライダー。
+		std::unique_ptr<ICollider>			m_collider;							//コライダー。
 		bool								m_isRegistPhysicsWorld = false;		//オブジェクトが登録されているかどうか。
 	};
 }

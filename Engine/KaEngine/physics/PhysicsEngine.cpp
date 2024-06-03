@@ -10,15 +10,47 @@ namespace nsKaEngine {
 
 	PhysicsEngine* PhysicsEngine::m_instance = nullptr;
 
+	struct ContactResultCallBack : public btCollisionWorld::ContactResultCallback
+	{
+		using ContantTestCallback = std::function<void(const btCollisionObject& contactCollisionObject)>;
+		ContantTestCallback  cb;
+		btCollisionObject* colObj = nullptr;
+
+		btScalar addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override
+		{
+			if (colObj == colObj0Wrap->getCollisionObject()) {
+				cb(*colObj0Wrap->getCollisionObject());
+			}
+			return 0.0f;
+		}
+	};
+
+	struct ConvexResultCallBack : public btCollisionWorld::ConvexResultCallback
+	{
+		Vector3 hitPos;							//衝突座標。
+		Vector3 hitNormal;						//法線。
+		btCollisionObject* colObj = nullptr;	//コリジョン。
+		Vector3 rayStart;						//レイの視点。
+		Vector3 rayEnd;							//レイの終点。
+		bool isHit = false;
+		virtual btScalar addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
+
+
+		{
+			isHit = true;
+			return 0.0f;
+		}
+	};
+
 	struct RayResultCallBack : public btCollisionWorld::RayResultCallback
 	{
-		Vector3 hitPos;					//衝突座標。
-		Vector3 hitNormal;				//法線。
-		btCollisionObject* colObj;		//コリジョン。
-		Vector3 rayStart;				//レイの視点。
-		Vector3 rayEnd;					//レイの終点。
-		bool isHit = false;				//衝突したかどうか。
-		bool hitFraction = 1.0f;		//衝突時間。
+		Vector3 hitPos;							//衝突座標。
+		Vector3 hitNormal;						//法線。
+		btCollisionObject* colObj = nullptr;	//コリジョン。
+		Vector3 rayStart;						//レイの視点。
+		Vector3 rayEnd;							//レイの終点。
+		bool isHit = false;						//衝突したかどうか。
+		float hitFraction = 1.0f;				//衝突時間。
 
 		btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult, bool normalInWorldSpace) override
 		{
@@ -45,26 +77,65 @@ namespace nsKaEngine {
 		start.setValue(rayStart.x, rayStart.y, rayStart.z);
 		end.setValue(rayEnd.x, rayEnd.y, rayEnd.z);
 
-		RayResultCallBack callBack;
-		callBack.rayStart = rayStart;
-		callBack.rayEnd = rayEnd;
+		RayResultCallBack callback;
+		callback.rayStart = rayStart;
+		callback.rayEnd = rayEnd;
 
 		//レイを飛ばす。
-		m_dynamicWorld->rayTest(start, end, callBack);
+		m_dynamicWorld->rayTest(start, end, callback);
 
 		//衝突したなら。
-		if (callBack.isHit) {
-			hit.colObj = callBack.colObj;
-			hit.position = callBack.hitPos;
-			hit.normal = callBack.hitNormal;
-			hit.fraction = callBack.hitFraction;
+		if (callback.isHit) {
+			hit.colObj = callback.colObj;
+			hit.position = callback.hitPos;
+			hit.normal = callback.hitNormal;
+			hit.fraction = callback.hitFraction;
 		}
-		hit.isHit = callBack.isHit;
+		hit.isHit = callback.isHit;
 
 #ifdef _DEBUG
 		//レイのデバッグ表示。
 		m_debugWireFrame.drawLine(start, end, btVector3(1.0f, 0.0f, 0.0f));
 #endif
+	}
+
+	//todo
+	void PhysicsEngine::RayCastHit(
+		const Vector3& rayStart,
+		const Vector3& rayEnd,
+		btCollisionShape* shape,
+		RayHitObject& hit
+	) {
+		btVector3 start, end;
+		start.setValue(rayStart.x, rayStart.y, rayStart.z);
+		end.setValue(rayEnd.x, rayEnd.y, rayEnd.z);
+
+		btTransform startTrans, endTrans;
+		startTrans.setIdentity();
+		endTrans.setIdentity();
+		startTrans.setOrigin(start);
+		endTrans.setOrigin(end);
+
+		ConvexResultCallBack callback;
+		callback.rayStart = rayStart;
+		callback.rayEnd = rayEnd;
+
+		ConvexSweepTest((const btConvexShape*)shape, startTrans, endTrans, callback);
+
+		if (callback.isHit) {
+			hit.position = callback.hitPos;
+			hit.normal = callback.hitNormal;
+		}
+	}
+
+	void PhysicsEngine::ContactTest(
+		btCollisionObject* colObj,
+		std::function<void(const btCollisionObject& contactCollisionObject)> cb
+	) {
+		ContactResultCallBack callback;
+		callback.cb = cb;
+		callback.colObj = colObj;
+		m_dynamicWorld->contactTest(colObj, callback);
 	}
 
 	void PhysicsEngine::Release()
@@ -108,16 +179,5 @@ namespace nsKaEngine {
 		m_debugWireFrame.Init();
 		m_dynamicWorld->setDebugDrawer(&m_debugWireFrame);
 #endif
-
-
-		std::unique_ptr<btBoxShape> shape = std::make_unique<btBoxShape>(btVector3(10, 50, 10));
-		m_shape = std::move(shape);
-		m_btGhostObject.setCollisionShape(m_shape.get());
-		m_btGhostObject.setCustomDebugColor(btVector3(0.0f, 1.0f, 0.0f));
-		btTransform btTrans;
-		btTrans.setOrigin({ 100, 150, 0 });
-		btTrans.setRotation({ 0, 0, 0, 1 });
-		m_btGhostObject.setWorldTransform(btTrans);
-		AddCollisionObject(m_btGhostObject);
 	}
 }

@@ -184,7 +184,7 @@
     <ClCompile Include="graphics\UniformBuffer.cpp" />
     <ClCompile Include="graphics\VAO.cpp" />
     <ClCompile Include="graphics\VBO.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="HID\Input.cpp" />
     <ClCompile Include="KaEngine.cpp" />
     <ClCompile Include="KaEnginePreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -194,8 +194,12 @@
     <ClCompile Include="math\Matrix.cpp" />
     <ClCompile Include="math\Transform.cpp" />
     <ClCompile Include="math\Vector.cpp" />
+    <ClCompile Include="physics\BoxCollider.cpp" />
+    <ClCompile Include="physics\CapsuleCollider.cpp" />
     <ClCompile Include="physics\PhysicsEngine.cpp" />
     <ClCompile Include="physics\PhysicsGhostObject.cpp" />
+    <ClCompile Include="physics\Rigidbody.cpp" />
+    <ClCompile Include="physics\SphereCollider.cpp" />
     <ClCompile Include="stb.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -222,7 +226,7 @@
     <ClInclude Include="graphics\UniformBuffer.h" />
     <ClInclude Include="graphics\VAO.h" />
     <ClInclude Include="graphics\VBO.h" />
-    <ClInclude Include="Input.h" />
+    <ClInclude Include="HID\Input.h" />
     <ClInclude Include="KaEngine.h" />
     <ClInclude Include="KaEnginePreCompile.h" />
     <ClInclude Include="Math\BitFlag.h" />
@@ -230,8 +234,13 @@
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Transform.h" />
     <ClInclude Include="math\Vector.h" />
+    <ClInclude Include="physics\BoxCollider.h" />
+    <ClInclude Include="physics\CapsuleCollider.h" />
+    <ClInclude Include="physics\ICollider.h" />
     <ClInclude Include="physics\PhysicsEngine.h" />
     <ClInclude Include="physics\PhysicsGhostObject.h" />
+    <ClInclude Include="physics\Rigidbody.h" />
+    <ClInclude Include="physics\SphereCollider.h" />
     <ClInclude Include="timer\GameTime.h" />
     <ClInclude Include="timer\Timer.h" />
     <ClInclude Include="util\Noncopyable.h" />
